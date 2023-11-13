@@ -1,18 +1,21 @@
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/FirebaseSetup";
+import { writeToUsersDB } from "../firebase/FirebaseHelper";
 
 export default function SignUp({ navigation }) {
+  const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
 
   const loginHandler = () => {
-    navigation.replace("Login");
+    navigation.replace("LogIn");
   };
+
   const signupHandler = async () => {
-    if (!email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword || !username) {
       Alert.alert("Please fill all the fields");
       return;
     }
@@ -27,6 +30,8 @@ export default function SignUp({ navigation }) {
         password
       );
       console.log(userCred);
+      writeToUsersDB({ email: email, password: password, username: username });
+      navigation.navigate("Profile");
     } catch (err) {
       console.log("sign up error ", err.code);
       if (err.code === "auth/invalid-email") {
@@ -38,6 +43,16 @@ export default function SignUp({ navigation }) {
   };
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>Username</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={username}
+        onChangeText={(changedText) => {
+          setUsername(changedText);
+        }}
+      />
+
       <Text style={styles.label}>Email</Text>
       <TextInput
         style={styles.input}

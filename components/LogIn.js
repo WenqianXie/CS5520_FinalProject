@@ -4,19 +4,27 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/FirebaseSetup";
 
 export default function Login({ navigation }) {
+  const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const signupHandler = () => {
     navigation.replace("SignUp");
   };
   const loginHandler = async () => {
-    if (!email || !password) {
+    if (!email || !password || !username) {
       Alert.alert("Please fill all the fields");
       return;
     }
+
     try {
-      const userCred = await signInWithEmailAndPassword(auth, email, password);
+      const userCred = await signInWithEmailAndPassword(
+        username,
+        auth,
+        email,
+        password
+      );
       console.log(userCred);
+      navigation.navigate("Profile");
     } catch (err) {
       console.log(err);
       if (err.code === "auth/invalid-login-credentials") {
@@ -27,6 +35,16 @@ export default function Login({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>Username</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={username}
+        onChangeText={(changedText) => {
+          setUsername(changedText);
+        }}
+      />
+
       <Text style={styles.label}>Email</Text>
       <TextInput
         placeholder="Email"

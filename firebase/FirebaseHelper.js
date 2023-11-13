@@ -5,19 +5,18 @@ import {
   infoDataCollectionRef,
 } from "./FirebaseSetup";
 import { database } from "./FirebaseSetup";
+import { auth } from "./FirebaseSetup";
 
 // Helper function to write to the user's collection, update, and delete documents
-export async function writeToUsersDB(userData, userId) {
+
+export async function writeToUsersDB(userData) {
   try {
-    if (userId) {
-      // if the userId exists, update the document in users collection
-      await updateDoc(doc(usersCollectionRef, userId), userData);
-      console.log("User document updated with ID: ", userId);
-    } else {
-      // if the userId does not exist, add the document to users collection
-      const docRef = await addDoc(usersCollectionRef, userData);
-      console.log("User document written with ID: ", docRef.id);
-    }
+    // Just pass the userData to addDoc with usersCollectionRef
+    const docRef = await addDoc(usersCollectionRef, {
+      ...userData,
+      userId: auth.currentUser.uid,
+    });
+    console.log("User document written with ID: ", docRef.id);
   } catch (err) {
     console.error("Error writing to users collection: ", err);
   }
@@ -25,15 +24,14 @@ export async function writeToUsersDB(userData, userId) {
 
 export async function writeToBookmarksDB(bookmarkData, bookmarkId) {
   try {
-    if (bookmarkId) {
-      await updateDoc(doc(bookmarksCollectionRef, bookmarkId), bookmarkData);
-      console.log("User document updated with ID: ", bookmarkId);
-    } else {
-      const docRef = await addDoc(bookmarksCollectionRef, bookmarkData);
-      console.log("User document written with ID: ", docRef.id);
-    }
+    // Just pass the bookmarkData to addDoc with bookmarksCollectionRef
+    const docRef = await addDoc(bookmarksCollectionRef, {
+      ...bookmarkData,
+      bookmarkId: bookmarkId,
+    });
+    console.log("Bookmark document written with ID: ", docRef.id);
   } catch (err) {
-    console.error("Error writing to users collection: ", err);
+    console.error("Error writing to bookmarks collection: ", err);
   }
 }
 

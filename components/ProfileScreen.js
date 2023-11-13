@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import PressableButton from "./PressableButton"; // Assuming this is correctly imported
+import PressableButton from "./PressableButton";
 
 export function ProfileScreen({ navigation }) {
   const handleLogInPress = () => {
-    navigation.navigate("Auth", { screen: "Login" }); // Navigate to the Login screen
+    navigation.push("Auth", { screen: "Login" }); // Navigate to the Login screen
   };
 
   return (
