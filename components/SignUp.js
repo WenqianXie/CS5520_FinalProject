@@ -30,7 +30,7 @@ export default function SignUp({ navigation }) {
         password
       );
       console.log(userCred);
-      writeToUsersDB({ email: email, password: password, username: username });
+      writeToUsersDB({ username: username, email: email });
       navigation.navigate("Profile");
     } catch (err) {
       console.log("sign up error ", err.code);
