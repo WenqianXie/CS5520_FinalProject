@@ -1,4 +1,12 @@
-import { addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import {
   usersCollectionRef,
   bookmarksCollectionRef,
@@ -11,12 +19,25 @@ import { auth } from "./FirebaseSetup";
 
 export async function writeToUsersDB(userData) {
   try {
-    // Just pass the userData to addDoc with usersCollectionRef
-    const docRef = await addDoc(usersCollectionRef, {
-      ...userData,
-      userId: auth.currentUser.uid,
-    });
-    console.log("User document written with ID: ", docRef.id);
+    const userQuery = query(
+      usersCollectionRef,
+      where("userId", "==", auth.currentUser.uid)
+    );
+    const querySnapshot = await getDocs(userQuery);
+
+    if (!querySnapshot.empty) {
+      // User document exists, update it
+      const userDocRef = querySnapshot.docs[0].ref;
+      await updateDoc(userDocRef, userData);
+      console.log("User document updated with ID: ", userDocRef.id);
+    } else {
+      // No user document, create a new one
+      const docRef = await addDoc(usersCollectionRef, {
+        ...userData,
+        userId: auth.currentUser.uid,
+      });
+      console.log("User document written with ID: ", docRef.id);
+    }
   } catch (err) {
     console.error("Error writing to users collection: ", err);
   }

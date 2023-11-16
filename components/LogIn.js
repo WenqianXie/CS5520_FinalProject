@@ -4,25 +4,20 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/FirebaseSetup";
 
 export default function Login({ navigation }) {
-  const [username, setUsername] = useState(null);
+  // const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const signupHandler = () => {
     navigation.replace("SignUp");
   };
   const loginHandler = async () => {
-    if (!email || !password || !username) {
+    if (!email || !password) {
       Alert.alert("Please fill all the fields");
       return;
     }
 
     try {
-      const userCred = await signInWithEmailAndPassword(
-        username,
-        auth,
-        email,
-        password
-      );
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
       console.log(userCred);
       navigation.navigate("Profile");
     } catch (err) {
@@ -35,7 +30,7 @@ export default function Login({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Username</Text>
+      {/* <Text style={styles.label}>Username</Text>
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -43,7 +38,7 @@ export default function Login({ navigation }) {
         onChangeText={(changedText) => {
           setUsername(changedText);
         }}
-      />
+      /> */}
 
       <Text style={styles.label}>Email</Text>
       <TextInput

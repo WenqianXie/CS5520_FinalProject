@@ -13,6 +13,7 @@ export default function PressableButton({
       style={({ pressed }) => {
         return [styles.styleByDefault, defaultStyle, pressed && pressedStyle];
       }}
+      // pressRetentionOffset={{ top: 10, left: 10, bottom: 10, right: 10 }}
     >
       {children}
     </Pressable>
@@ -21,6 +22,6 @@ export default function PressableButton({
 
 const styles = StyleSheet.create({
   styleByDefault: {
-    // backgroundColor: "beige",
+    backgroundColor: "beige",
   },
 });

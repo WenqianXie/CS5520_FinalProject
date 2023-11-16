@@ -31,7 +31,7 @@ export default function SignUp({ navigation }) {
       );
       console.log(userCred);
       writeToUsersDB({ username: username, email: email });
-      navigation.navigate("Profile");
+      navigation.navigate("LogIn");
     } catch (err) {
       console.log("sign up error ", err.code);
       if (err.code === "auth/invalid-email") {
