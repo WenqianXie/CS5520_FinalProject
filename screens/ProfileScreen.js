@@ -62,12 +62,12 @@ export function ProfileScreen({ navigation }) {
 
   const handleEmailPress = () => {
     // setResetType("email");
-    navigation.navigate("Reset", { resetType: "email" });
+    navigation.navigate("Reset", { resetType: "email", headerTitle: "Reset Email" });
   };
 
   const handlePasswordPress = () => {
     // setResetType("password");
-    navigation.navigate("Reset", { resetType: "password" });
+    navigation.navigate("Reset", { resetType: "password", headerTitle: "Reset Password"});
   };
 
   const handleLogOutPress = () => {
@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
   profile: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     marginLeft: 25,
   },
   loginButton: {

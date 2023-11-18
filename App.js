@@ -14,8 +14,8 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Auth" component={AuthNavigator} />
-        <Stack.Screen name="Reset" component={Reset} />
+        <Stack.Screen name="Auth" component={AuthNavigator} options={{ headerShown: true }}/>
+        <Stack.Screen name="Reset" component={Reset} options={({route})=> ({ headerShown: true, title: route.params.headerTitle })}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
