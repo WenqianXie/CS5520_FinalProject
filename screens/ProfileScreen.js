@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import PressableButton from "./PressableButton";
+import PressableButton from "../components/PressableButton";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/FirebaseSetup";
 import { collection, onSnapshot, query, where, doc } from "firebase/firestore";

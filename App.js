@@ -1,10 +1,10 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import WelcomeScreen from "./components/WelcomeScreen";
-import Home from "./components/Home";
-import AuthNavigator from "./components/AuthStack";
-import Reset from "./components/Reset";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import Home from "./screens/Home";
+import AuthNavigator from "./screens/AuthStack";
+import Reset from "./screens/Reset";
 
 const Stack = createStackNavigator();
 
