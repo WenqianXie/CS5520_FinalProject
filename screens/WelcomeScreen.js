@@ -7,7 +7,7 @@ export default function WelcomeScreen({ navigation }) {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate("Home");
-    }, 2000); // 3 seconds
+    }, 1000); // 1 second
   }, [navigation]);
 
   return (

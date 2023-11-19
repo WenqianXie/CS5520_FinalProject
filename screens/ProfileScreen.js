@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PressableButton from "../components/PressableButton";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/FirebaseSetup";
 import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
 import { database } from "../firebase/FirebaseSetup";
+import { colors } from "../helper/HelperColors";
 
 export function ProfileScreen({ navigation }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+  const [loading, setLoading] = useState(false); // State to track login status
   const [displayedName, setDisplayedName] = useState(null); // State to track displayed name
   const [user, setUser] = useState(null); // State to track users list
   // const [resetType, setResetType] = useState(null); // 'username', 'email', or 'password'
 
   useEffect(() => {
-    console.log("useEffect");
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // a valid user is logged in
@@ -25,10 +26,10 @@ export function ProfileScreen({ navigation }) {
       }
     });
   }, []);
-  console.log(isLoggedIn);
 
   useEffect(() => {
     if (isLoggedIn) {
+      setLoading(true); // Set loading to true while we fetch the users list
       const unsubscribe = onSnapshot(
         query(
           collection(database, "users"),
@@ -39,11 +40,11 @@ export function ProfileScreen({ navigation }) {
             let usersList = [];
             querySnapshot.docs.forEach((docSnap) => {
               usersList.push({ ...docSnap.data(), id: docSnap.id });
-              console.log("ok");
             });
             console.log(usersList);
             setUser(usersList);
             setDisplayedName(usersList[0].username);
+            setLoading(false); // Set loading to false once we have the users list
           } else {
             setUser([]); // If the collection is empty or the query returns no documents, set the users list to empty
           }
@@ -85,8 +86,11 @@ export function ProfileScreen({ navigation }) {
           style={styles.avatar} // use require to get image, it is stored in assets
         />
         {isLoggedIn ? (
-          <Text style={styles.loginButtonText}>{displayedName}</Text> // Display username if logged in
-        ) : (
+          loading ? ( // If loading is true, display an ActivityIndicator
+            <ActivityIndicator size="large" color={colors.themeDark} />
+          ) : (
+          <Text style={styles.loginButtonText}>{displayedName}</Text> // Display username if logged in and loading is false
+          )) : (
           <PressableButton
             pressedFunction={handleLogInPress}
             defaultStyle={styles.loginButton}

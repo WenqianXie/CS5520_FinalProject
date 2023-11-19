@@ -4,8 +4,14 @@ import { styles } from "../helper/HelperStyles";
 import DialogButton from "../components/DialogButton";
 
 export function ExploreScreen({navigation}) {
-  const handleEssential = () => {
+  const essentialButtonHandler = () => {
     navigation.navigate("Essential");
+  }  
+  const medicineButtonHandler = () => {
+    navigation.navigate("Medicine");
+  }
+  const transitButtonHandler = () => {
+    navigation.navigate("Transit");
   }
   return (
     <View style={styles.container}>
@@ -14,17 +20,17 @@ export function ExploreScreen({navigation}) {
         <Text style={styles.text}>Tap Your Desired Topic to Start! </Text>
 
         <DialogButton 
-          onPress={handleEssential} 
+          onPress={essentialButtonHandler} 
           text="Obtain Essential Docs" 
           position={styles.essentialButtonPosition}/>
 
         <DialogButton 
-          onPress={handleEssential} 
+          onPress={medicineButtonHandler} 
           text='See Doctor?Get Meds?'
           position={styles.medicineButtonPosition}/>
 
         <DialogButton 
-          onPress={handleEssential} 
+          onPress={transitButtonHandler} 
           text='Use Public Transit'
           position={styles.transitButtonPosition}/>
       </ImageBackground>
