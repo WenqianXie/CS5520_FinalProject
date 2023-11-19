@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/FirebaseSetup";
 import { writeToUsersDB } from "../firebase/FirebaseHelper";
 
@@ -13,6 +13,18 @@ export default function SignUp({ navigation }) {
   const loginHandler = () => {
     navigation.replace("LogIn");
   };
+
+  const autoLogin = async () => {
+    try {
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
+      navigation.navigate("Profile");
+    } catch (err) {
+      console.log(err);
+      if (err.code === "auth/invalid-login-credentials") {
+        Alert.alert("invalid credentials");
+      }
+    }
+  }
 
   const signupHandler = async () => {
     if (!email || !password || !confirmPassword || !username) {
@@ -31,7 +43,7 @@ export default function SignUp({ navigation }) {
       );
       console.log(userCred);
       writeToUsersDB({ username: username, email: email });
-      navigation.navigate("LogIn");
+      autoLogin();
     } catch (err) {
       console.log("sign up error ", err.code);
       if (err.code === "auth/invalid-email") {
@@ -41,6 +53,7 @@ export default function SignUp({ navigation }) {
       }
     }
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Username</Text>

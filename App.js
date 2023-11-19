@@ -17,7 +17,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-        <Stack.Screen name="Auth" component={AuthNavigator}/>
+        <Stack.Screen name="Auth" component={AuthNavigator} options={{ headerShown: false }}/>
         <Stack.Screen name="Reset" component={Reset} options={({route})=> ({ title: route.params.headerTitle })}/>
         <Stack.Screen name="Essential" component={EssentialDocsEntry} options={{title: "Get Essential Gov Docs"}}/>
         <Stack.Screen name="Medicine" component={MedicineEntry} options={{title: "Understanding Healthcare"}}/>

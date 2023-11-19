@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import PressableButton from "../components/PressableButton";
+import TextButton from "../components/TextButton";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/FirebaseSetup";
 import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
@@ -91,46 +91,46 @@ export function ProfileScreen({ navigation }) {
           ) : (
           <Text style={styles.loginButtonText}>{displayedName}</Text> // Display username if logged in and loading is false
           )) : (
-          <PressableButton
+          <TextButton
             pressedFunction={handleLogInPress}
             defaultStyle={styles.loginButton}
             pressedStyle={styles.loginButtonPressed}
           >
             <Text style={styles.loginButtonText}>Log in</Text>
-          </PressableButton>
+          </TextButton>
         )}
       </View>
-      <PressableButton
+      <TextButton
         pressedFunction={handleMyListPress}
         defaultStyle={styles.loginButton}
         pressedStyle={styles.loginButtonPressed}
       >
         <Text style={styles.loginButtonText}>My must-do list</Text>
-      </PressableButton>
+      </TextButton>
 
-      <PressableButton
+      <TextButton
         pressedFunction={handleEmailPress}
         defaultStyle={styles.loginButton}
         pressedStyle={styles.loginButtonPressed}
       >
         <Text style={styles.loginButtonText}>Reset Email</Text>
-      </PressableButton>
+      </TextButton>
 
-      <PressableButton
+      <TextButton
         pressedFunction={handlePasswordPress}
         defaultStyle={styles.loginButton}
         pressedStyle={styles.loginButtonPressed}
       >
         <Text style={styles.loginButtonText}>Reset Password</Text>
-      </PressableButton>
+      </TextButton>
 
-      <PressableButton
+      <TextButton
         pressedFunction={handleLogOutPress}
         defaultStyle={styles.loginButton}
         pressedStyle={styles.loginButtonPressed}
       >
         <Text style={styles.loginButtonText}>Log Out</Text>
-      </PressableButton>
+      </TextButton>
     </SafeAreaView>
   );
 }

@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet } from "react-native";
 import React from "react";
 
-export default function PressableButton({
+export default function TextButton({
   children,
   pressedFunction,
   pressedStyle,
