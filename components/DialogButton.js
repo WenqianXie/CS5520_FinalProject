@@ -8,7 +8,7 @@ const DialogButton = ({onPress, text, scale=1, position}) => {
       onPress={onPress}
       style={({pressed})=>[
         {...styles.dialogButton, height: scale*styles.dialogButton.height, width: scale*styles.dialogButton.width},
-        pressed && (styles.dialogButtonOnPress),
+        pressed && (styles.buttonOnPress),
         position
       ]}>
       <ImageBackground source={require("../assets/dialog.png")} style={styles.dialogBackgroundPic} resizeMode='contain'>

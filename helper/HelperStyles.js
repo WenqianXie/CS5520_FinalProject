@@ -22,6 +22,23 @@ export const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-start",
   },
+  arrowButton:{
+    borderRadius: 20,
+    width: 96,
+    height: 75,
+    flexDirection: "row",
+    alighItems: "center",
+  },
+  arrowButtonText:{
+    fontSize: 13,
+    fontWeight: "bold",
+    marginLeft: 5,
+  },
+  arrowButtonPosition: {
+    position: "absolute",
+    top: 20,
+    left: 300,
+  },
   dialogBackgroundPic:{
     flex: 1,
     justifyContent: "flex-start",
@@ -34,7 +51,7 @@ export const styles = StyleSheet.create({
     width: 96,
     height: 75,
   },
-  dialogButtonOnPress: {
+  buttonOnPress: {
     opacity: 0.4,
   },
   dialogTextContainer:{

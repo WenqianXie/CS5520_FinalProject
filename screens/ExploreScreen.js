@@ -1,9 +1,14 @@
 import React from "react";
-import { View, Text, ImageBackground, Image } from "react-native";
+import { View, Text, ImageBackground} from "react-native";
 import { styles } from "../helper/HelperStyles";
 import DialogButton from "../components/DialogButton";
+import { colors } from "../helper/HelperColors";
+import ArrowButton from "../components/ArrowButton";
 
 export function ExploreScreen({navigation}) {
+  const arrowButtonHandler = () => {
+    navigation.navigate("MustDo");
+  }  
   const essentialButtonHandler = () => {
     navigation.navigate("Essential");
   }  
@@ -18,6 +23,10 @@ export function ExploreScreen({navigation}) {
       <ImageBackground source={require("../assets/explore_background.png")} style={styles.backgroundPic}>
 
         <Text style={styles.text}>Tap Your Desired Topic to Start! </Text>
+        <ArrowButton
+          onPress={arrowButtonHandler}
+          text={"Lost?\nBegin Here!"}
+          position={styles.arrowButtonPosition}/>
 
         <DialogButton 
           onPress={essentialButtonHandler} 
