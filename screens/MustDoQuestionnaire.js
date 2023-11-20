@@ -25,6 +25,7 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
       });
     } else {
       await writeToUsersDB({ userSelection: { lengthInCanada, occupation } });
+      navigation.navigate("MustDoList");
     }
   };
 

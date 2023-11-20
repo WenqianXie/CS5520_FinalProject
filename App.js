@@ -9,6 +9,7 @@ import EssentialDocsEntry from "./screens/EssentialDocsEntry";
 import MedicineEntry from "./screens/MedicineEntry";
 import TransitEntry from "./screens/TransitEntry";
 import MustDoQuestionnaire from "./screens/MustDoQuestionnaire";
+import MustDoList from "./screens/MustDoList";
 
 const Stack = createStackNavigator();
 
@@ -59,6 +60,11 @@ export default function App() {
           name="MustDo"
           component={MustDoQuestionnaire}
           options={{ title: "Generate Your Must-Do List in 5 secs!" }}
+        />
+        <Stack.Screen
+          name="MustDoList"
+          component={MustDoList}
+          options={{ title: "Your Must-Do List" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
