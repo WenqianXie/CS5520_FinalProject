@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
 import { database, auth } from "../firebase/FirebaseSetup";
 import TextButton from "../components/TextButton";
-import { deleteFromUsersDB } from "../firebase/FirebaseHelper";
+import { deleteSelectionsFromUsersDB } from "../firebase/FirebaseHelper";
+import { FlatList } from "react-native-gesture-handler";
 
-export default function MustDoList() {
-  const [userLengthInCanada, setUserLengthInCanada] = useState(null);
+export default function MustDoList({navigation}) {
+  const [userSelections, setUserSelections] = useState([]); // State to track userSelection
 
   useEffect(() => {
     const userQuery = query(
@@ -15,25 +16,26 @@ export default function MustDoList() {
     );
 
     const unsubscribe = onSnapshot(userQuery, (querySnapshot) => {
-      const selections = [];
       if (!querySnapshot.empty) {
-        querySnapshot.docs.forEach((docSnap) => {
-          selections.push({ ...docSnap.data(), id: docSnap.id });
+        // console.log("log from querySnapshot.doc: ", querySnapshot.data());
+        querySnapshot.forEach((docSnap) => {
+          setUserSelections(docSnap.data().userSelection); // Set the userSelection state to the fetched data));
         });
-        console.log(selections); // Logging the fetched data
-        setUserLengthInCanada(selections[0].userSelection.lengthInCanada); // Set the userSelection state to the fetched data));
-      } else {
-        setUserSelection([]); // Set to empty if no documents are found
-      }
+      } 
     });
 
     return () => unsubscribe(); // Cleanup on unmount
   }, []); // Empty dependency array means this effect runs once after the component mounts
 
-  const handleClearData = () => {
+  const handleClearSelections = () => {
     try {
-      deleteFromUsersDB(auth.currentUser.uid);
-      Alert.alert("Data Cleared", "Your data has been successfully cleared.");
+      deleteSelectionsFromUsersDB();
+      Alert.alert("Data Cleared", "Your selections has been successfully cleared.", [
+        {
+          text: "Home",
+          onPress: () => navigation.navigate("Home"),
+        },
+      ]);
     } catch (error) {
       console.error("Error clearing data: ", error);
       Alert.alert("Error", "Failed to clear data.");
@@ -42,13 +44,12 @@ export default function MustDoList() {
 
   return (
     <View>
-      <Text>{userLengthInCanada}</Text>
+      <Text>{userSelections.lengthInCanada}</Text>
+      <Text>{userSelections.occupation}</Text>
       <TextButton
-        pressedFunction={handleClearData}
-        defaultStyle={styles.clearDataButton}
-        pressedStyle={styles.clearDataButtonPressed}
+        onPress={handleClearSelections}
       >
-        <Text style={styles.clearDataButtonText}>Clear All My Data</Text>
+        <Text style={styles.clearDataButtonText}>Clear All My Selections</Text>
       </TextButton>
     </View>
   );

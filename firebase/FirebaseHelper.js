@@ -1,6 +1,7 @@
 import {
   addDoc,
   deleteDoc,
+  setDoc,
   doc,
   updateDoc,
   query,
@@ -34,11 +35,10 @@ export async function writeToUsersDB(userData) {
       console.log("User document updated with ID: ", userDocRef.id);
     } else {
       // No user document, create a new one
-      const docRef = await addDoc(usersCollectionRef, {
+       await setDoc(doc(usersCollectionRef, auth.currentUser.uid), {
         ...userData,
         userId: auth.currentUser.uid,
       });
-      console.log("User document written with ID: ", docRef.id);
     }
   } catch (err) {
     console.error("Error writing to users collection: ", err);
@@ -60,10 +60,16 @@ export async function writeToBookmarksDB(bookmarkData, bookmarkId) {
 
 export async function writeToInfoDataDB(infoData, dataId) {}
 
-export async function deleteFromUsersDB(userId) {
+export async function deleteSelectionsFromUsersDB() {
   try {
-    await deleteDoc(doc(usersCollectionRef, userId)); // delete the document from users collection
-    console.log("User document deleted with ID: ", userId);
+    const userDoc = doc(usersCollectionRef, auth.currentUser.uid);
+    await updateDoc(userDoc, {
+      userSelection: {
+        lengthInCanada: null,
+        occupation: null,
+      },
+    });
+    // await deleteDoc(doc(usersCollectionRef, userId)); // delete the document from users collection
   } catch (err) {
     console.error("Error deleting from users collection: ", err);
   }
