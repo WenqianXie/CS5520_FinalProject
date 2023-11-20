@@ -30,7 +30,6 @@ export async function writeToUsersDB(userData) {
       const userDocRef = querySnapshot.docs[0].ref;
       await updateDoc(userDocRef, {
         ...userData,
-        // userSelection,
       });
       console.log("User document updated with ID: ", userDocRef.id);
     } else {
