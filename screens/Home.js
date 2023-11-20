@@ -17,6 +17,7 @@ export default function Home({ navigation }) {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="explore" color={color} size={size} />
           ),
+          
         }}
       />
       <Tab.Screen

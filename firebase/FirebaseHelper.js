@@ -28,7 +28,10 @@ export async function writeToUsersDB(userData) {
     if (!querySnapshot.empty) {
       // User document exists, update it
       const userDocRef = querySnapshot.docs[0].ref;
-      await updateDoc(userDocRef, userData);
+      await updateDoc(userDocRef, {
+        ...userData,
+        // userSelection,
+      });
       console.log("User document updated with ID: ", userDocRef.id);
     } else {
       // No user document, create a new one

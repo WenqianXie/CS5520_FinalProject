@@ -1,6 +1,9 @@
 import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../firebase/FirebaseSetup";
 import { writeToUsersDB } from "../firebase/FirebaseHelper";
 
@@ -24,7 +27,7 @@ export default function SignUp({ navigation }) {
         Alert.alert("invalid credentials");
       }
     }
-  }
+  };
 
   const signupHandler = async () => {
     if (!email || !password || !confirmPassword || !username) {
