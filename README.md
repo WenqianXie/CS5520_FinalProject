@@ -11,7 +11,7 @@ Profile Screen -> Log in/Sign up -> Reset Email/Password -> Log Out
 
 We implemented a welcome screen which shows our App name and slogan, automatically swithced to Explore Screen. 
 In Explore Screen, we have a map with a couple entries (topics) for users to browse. In the right corner, we built a questionnaire and generate 
-customized must-do-list for users. In profile screen, users can log in, sign up or reset email/password. Users can also have access to the must-do-list.
+customized must-do-list for users. In profile screen, users can log in, sign up or reset email/password. Users can also have access to the must-do-list in both Explore Screen and Profile Screen.
 
 Our 3 data collections:
 1. users:
