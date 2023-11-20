@@ -19,5 +19,5 @@ This includes username, email, userId and userSelections (it refers to the user'
 2. bookmarks:
 This is the user's saved detailed pages such as how to get a SIN. It includes userId and according bookmarks.
 3. details:
-This is the details of all contents that displayed in the different topics. 
+This is the details of all contents that displayed in the different topics. It will include general topics like transport with subcollection like bike share.
 
