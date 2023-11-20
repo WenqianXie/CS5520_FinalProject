@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import Checkbox from "expo-checkbox";
 import { writeToUsersDB } from "../firebase/FirebaseHelper";
-import { MaterialIcons } from "@expo/vector-icons";
+import { colors } from "../helper/HelperColors";
+import { FontAwesome5 } from '@expo/vector-icons'; 
+import TextButton from "../components/TextButton";
 
 const MustDoQuestionnaire = ({ navigation, route }) => {
   const { questionType } = route.params;
 
+  const [submitLoading, setSubmitLoading] = useState(false); // State to track submit status
   const [lengthInCanada, setLengthInCanada] = useState(null);
   const [occupation, setOccupation] = useState(null);
 
@@ -18,15 +21,10 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (questionType === "lengthInCanada") {
+  const handleNext = () => {
       navigation.navigate("MustDo", {
         questionType: "occupation",
       });
-    } else {
-      await writeToUsersDB({ userSelection: { lengthInCanada, occupation } });
-      navigation.navigate("MustDoList");
-    }
   };
 
   const handlePrevious = () => {
@@ -34,6 +32,13 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
       questionType: "lengthInCanada",
     });
   };
+
+  const handleSubmit = async () => {
+    setSubmitLoading(true); // Set loading to true while we submit the questionnaire
+    await writeToUsersDB({ userSelection: { lengthInCanada, occupation } });
+    setSubmitLoading(false); // Set loading to false once we have submitted the questionnaire
+    navigation.navigate("MustDoList");
+  }
 
   return (
     <View style={styles.container}>
@@ -52,6 +57,7 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
               I am planning to move to Canada
             </Text>
           </View>
+
           <View style={styles.optionContainer}>
             <Checkbox
               value={lengthInCanada === "JustArrived"}
@@ -66,6 +72,7 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
           </View>
         </>
       )}
+
       {questionType === "occupation" && (
         <>
           <Text style={styles.question}>What is your occupation?</Text>
@@ -111,22 +118,33 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
         </>
       )}
 
-      <MaterialIcons
-        name="navigate-next"
+      {questionType === "lengthInCanada" && (
+      <FontAwesome5 
+        name="arrow-circle-right"
         size={24}
         color="black"
-        onPress={handleSubmit}
+        onPress={handleNext}
         style={styles.submitIcon}
       />
+      )}
 
       {questionType === "occupation" && (
-        <MaterialIcons
-          name="navigate-before"
+        <>
+          <FontAwesome5 
+          name="arrow-circle-left"
           size={24}
           color="black"
           onPress={handlePrevious}
           style={styles.previousIcon}
-        />
+          />
+          <TextButton onPress={handleSubmit}>
+            {!submitLoading ? (
+              <Text>Submit</Text>
+            ) : (
+                <ActivityIndicator size="small" color={colors.themeDark} />
+            )}
+          </TextButton>
+        </>
       )}
     </View>
   );

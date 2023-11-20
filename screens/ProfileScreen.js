@@ -7,6 +7,7 @@ import { auth } from "../firebase/FirebaseSetup";
 import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
 import { database } from "../firebase/FirebaseSetup";
 import { colors } from "../helper/HelperColors";
+import { styles } from "../helper/HelperStyles";
 
 export function ProfileScreen({ navigation }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
@@ -79,92 +80,42 @@ export function ProfileScreen({ navigation }) {
     }
   };
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.profile}>
+    <SafeAreaView style={styles.profileContainer}>
+
+      <View style={styles.profilePhotoAndUsername}>
         <Image
           source={require("../assets/avatar.png")}
-          style={styles.avatar} // use require to get image, it is stored in assets
+          style={styles.profileAvatar} // use require to get image, it is stored in assets
         />
+
         {isLoggedIn ? (
           loading ? ( // If loading is true, display an ActivityIndicator
             <ActivityIndicator size="large" color={colors.themeDark} />
           ) : (
-          <Text style={styles.loginButtonText}>{displayedName}</Text> // Display username if logged in and loading is false
+          <Text style={styles.textButtonText}>{displayedName}</Text> // Display username if logged in and loading is false
           )) : (
-          <TextButton
-            pressedFunction={handleLogInPress}
-            defaultStyle={styles.loginButton}
-            pressedStyle={styles.loginButtonPressed}
-          >
-            <Text style={styles.loginButtonText}>Log in</Text>
+          <TextButton onPress={handleLogInPress}>
+            <Text style={styles.textButtonText}>Log in</Text>
           </TextButton>
         )}
       </View>
-      <TextButton
-        pressedFunction={handleMyListPress}
-        defaultStyle={styles.loginButton}
-        pressedStyle={styles.loginButtonPressed}
-      >
-        <Text style={styles.loginButtonText}>My must-do list</Text>
+
+      <TextButton onPress={handleMyListPress}>
+        <Text style={styles.textButtonText}>My Must-Do List</Text>
       </TextButton>
 
-      <TextButton
-        pressedFunction={handleEmailPress}
-        defaultStyle={styles.loginButton}
-        pressedStyle={styles.loginButtonPressed}
-      >
-        <Text style={styles.loginButtonText}>Reset Email</Text>
+      <TextButton onPress={handleEmailPress}>
+        <Text style={styles.textButtonText}>Reset Email</Text>
       </TextButton>
 
-      <TextButton
-        pressedFunction={handlePasswordPress}
-        defaultStyle={styles.loginButton}
-        pressedStyle={styles.loginButtonPressed}
-      >
-        <Text style={styles.loginButtonText}>Reset Password</Text>
+      <TextButton onPress={handlePasswordPress}>
+        <Text style={styles.textButtonText}>Reset Password</Text>
       </TextButton>
 
-      <TextButton
-        pressedFunction={handleLogOutPress}
-        defaultStyle={styles.loginButton}
-        pressedStyle={styles.loginButtonPressed}
-      >
-        <Text style={styles.loginButtonText}>Log Out</Text>
+      <TextButton onPress={handleLogOutPress}>
+        <Text style={styles.textButtonText}>Log Out</Text>
       </TextButton>
+
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // justifyContent: "center",
-    alignItems: "left",
-  },
-  profile: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: 25,
-  },
-  loginButton: {
-    padding: 10,
-    margin: 10,
-    // backgroundColor: "#007bff",
-    borderRadius: 5,
-  },
-  loginButtonPressed: {
-    // backgroundColor: "#0056b3",
-  },
-  loginButtonText: {
-    color: "black",
-    textAlign: "center",
-    fontSize: 25,
-    marginLeft: 20,
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    // alignSelf: “flex-start”,
-    margin: 10,
-  },
-});

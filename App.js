@@ -1,4 +1,5 @@
 import React from "react";
+import { Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import WelcomeScreen from "./screens/WelcomeScreen";
@@ -59,7 +60,13 @@ export default function App() {
         <Stack.Screen
           name="MustDo"
           component={MustDoQuestionnaire}
-          options={{ title: "Generate Your Must-Do List in 5 secs!" }}
+          options={{ title: "Get Your Must-Do List\nIn 5 Secs!",
+                    headerTitle: ({ style, children : title }) => {
+                      return (
+                        <Text style={style} numberOfLines={2}>{title}</Text>
+                      );  
+                    }, 
+                  }}
         />
         <Stack.Screen
           name="MustDoList"

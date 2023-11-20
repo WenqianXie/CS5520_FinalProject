@@ -1,27 +1,20 @@
 import { Pressable, StyleSheet } from "react-native";
 import React from "react";
+import { styles } from "../helper/HelperStyles";
 
 export default function TextButton({
   children,
-  pressedFunction,
-  pressedStyle,
-  defaultStyle,
+  onPress,
 }) {
   return (
     <Pressable
-      onPress={pressedFunction}
+      onPress={onPress}
       style={({ pressed }) => {
-        return [styles.styleByDefault, defaultStyle, pressed && pressedStyle];
+        return [styles.textButton, pressed && styles.buttonOnPress];
       }}
-      // pressRetentionOffset={{ top: 10, left: 10, bottom: 10, right: 10 }}
     >
       {children}
     </Pressable>
   );
 }
 
-const styles = StyleSheet.create({
-  styleByDefault: {
-    backgroundColor: "beige",
-  },
-});

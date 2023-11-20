@@ -51,6 +51,18 @@ export const styles = StyleSheet.create({
     width: 96,
     height: 75,
   },
+  textButton: {
+    padding: 10,
+    margin: 10,
+    backgroundColor: colors.themeLight,
+    borderRadius: 5,
+  },
+  textButtonText: {
+    color: "black",
+    textAlign: "center",
+    fontSize: 25,
+    marginLeft: 20,
+  },
   buttonOnPress: {
     opacity: 0.4,
   },
@@ -80,5 +92,21 @@ export const styles = StyleSheet.create({
     position: "absolute",
     top: 530,
     left: 310,
+  },
+  profileAvatar:{
+    width: 100,
+    height: 100,
+    // alignSelf: “flex-start”,
+    margin: 10,
+  },
+  profileContainer:{
+    flex: 1,
+    // justifyContent: "center",
+    alignItems: "left",
+  },
+  profilePhotoAndUsername: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 25,
   },
 });
