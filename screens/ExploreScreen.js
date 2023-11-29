@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, ImageBackground } from "react-native";
 import { styles } from "../helper/HelperStyles";
 import DialogButton from "../components/DialogButton";
-import { colors } from "../helper/HelperColors";
 import ArrowButton from "../components/ArrowButton";
 
 export function ExploreScreen({ navigation }) {

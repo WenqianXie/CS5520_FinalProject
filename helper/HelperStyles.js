@@ -36,8 +36,8 @@ export const styles = StyleSheet.create({
   },
   arrowButtonPosition: {
     position: "absolute",
-    top: 20,
-    left: 300,
+    top: '5%',
+    right: '5%',
   },
   dialogBackgroundPic:{
     flex: 1,
@@ -80,18 +80,18 @@ export const styles = StyleSheet.create({
   },
   essentialButtonPosition: {
     position: "absolute",
-    top: 150,
-    left: 150,
+    top: '20%',
+    left: '35%',
   },
   medicineButtonPosition: {
     position: "absolute",
-    top: 360,
-    left: 120,
+    bottom: '40%',
+    left: '28%',
   },
   transitButtonPosition: {
     position: "absolute",
-    top: 530,
-    left: 310,
+    bottom: '18%',
+    right: '1%',
   },
   profileAvatar:{
     width: 100,
