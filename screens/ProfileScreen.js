@@ -14,7 +14,6 @@ export function ProfileScreen({ navigation }) {
   const [loading, setLoading] = useState(false); // State to track login status
   const [displayedName, setDisplayedName] = useState(null); // State to track displayed name
   const [user, setUser] = useState(null); // State to track users list
-  // const [resetType, setResetType] = useState(null); // 'username', 'email', or 'password'
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

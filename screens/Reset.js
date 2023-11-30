@@ -16,35 +16,6 @@ export default function ResetScreen({ route, navigation }) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
-  // const handleReset = async () => {
-  //   if (resetType === "username") {
-  //     if (!username) {
-  //       Alert.alert("Please enter a new username");
-  //       return;
-  //     }
-  //     writeToUsersDB({ username: username });
-  //     navigation.navigate("Profile");
-  //   } else if (resetType === "email") {
-  //     if (!email) {
-  //       Alert.alert("Please enter a new email");
-  //       return;
-  //     }
-  //     writeToUsersDB({ email: email });
-  //     navigation.navigate("Profile");
-  //   } else if (resetType === "password") {
-  //     if (!password || !confirmPassword) {
-  //       Alert.alert("Please fill all the password fields");
-  //       return;
-  //     }
-  //     if (confirmPassword !== password) {
-  //       Alert.alert("Passwords do not match");
-  //       return;
-  //     }
-  //     // writeToUsersDB({ password: password });
-  //     navigation.navigate("Profile");
-  //   }
-  // };
-
   const handleReset = async () => {
     if (resetType === "username") {
       if (!username) {
@@ -58,15 +29,8 @@ export default function ResetScreen({ route, navigation }) {
         Alert.alert("Please enter a new email");
         return;
       }
-      updateEmail(auth.currentUser, email)
-        .then(() => {
-          writeToUsersDB({ email: email });
-          Alert.alert("Email updated successfully!");
-          navigation.navigate("Profile");
-        })
-        .catch((error) => {
-          Alert.alert("Error updating email", error.message);
-        });
+      writeToUsersDB({ email: email });
+      navigation.navigate("Profile");
     } else if (resetType === "password") {
       if (!password || !confirmPassword) {
         Alert.alert("Please fill all the password fields");
@@ -76,16 +40,52 @@ export default function ResetScreen({ route, navigation }) {
         Alert.alert("Passwords do not match");
         return;
       }
-      updatePassword(auth.currentUser, password)
-        .then(() => {
-          Alert.alert("Password updated successfully!");
-          navigation.navigate("Profile");
-        })
-        .catch((error) => {
-          Alert.alert("Error updating password", error.message);
-        });
+      // writeToUsersDB({ password: password });
+      navigation.navigate("Profile");
     }
   };
+
+  // const handleReset = async () => {
+  //   if (resetType === "username") {
+  //     if (!username) {
+  //       Alert.alert("Please enter a new username");
+  //       return;
+  //     }
+  //     writeToUsersDB({ username: username });
+  //     navigation.navigate("Profile");
+  //   } else if (resetType === "email") {
+  //     if (!email) {
+  //       Alert.alert("Please enter a new email");
+  //       return;
+  //     }
+  //     updateEmail(auth.currentUser, email)
+  //       .then(() => {
+  //         writeToUsersDB({ email: email });
+  //         Alert.alert("Email updated successfully!");
+  //         navigation.navigate("Profile");
+  //       })
+  //       .catch((error) => {
+  //         Alert.alert("Error updating email", error.message);
+  //       });
+  //   } else if (resetType === "password") {
+  //     if (!password || !confirmPassword) {
+  //       Alert.alert("Please fill all the password fields");
+  //       return;
+  //     }
+  //     if (confirmPassword !== password) {
+  //       Alert.alert("Passwords do not match");
+  //       return;
+  //     }
+  //     updatePassword(auth.currentUser, password)
+  //       .then(() => {
+  //         Alert.alert("Password updated successfully!");
+  //         navigation.navigate("Profile");
+  //       })
+  //       .catch((error) => {
+  //         Alert.alert("Error updating password", error.message);
+  //       });
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
