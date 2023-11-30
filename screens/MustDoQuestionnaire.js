@@ -1,39 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 import Checkbox from "expo-checkbox";
 import { database, auth } from "../firebase/FirebaseSetup";
 import { writeToUsersDB } from "../firebase/FirebaseHelper";
 import { colors } from "../helper/HelperColors";
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import TextButton from "../components/TextButton";
-import { async } from "@firebase/util";
 
 const MustDoQuestionnaire = ({ navigation, route }) => {
   const { questionType } = route.params;
   const [submitLoading, setSubmitLoading] = useState(false); // State to track submit status
-  const [lengthInCanada, setLengthInCanada] = useState(null);
-  const [occupation, setOccupation] = useState(null);
+  const [lengthInCanada, setLengthInCanada] = useState('');
+  const [occupation, setOccupation] = useState('');
 
-  useEffect(() => {
-    const userQuery = query(
-      collection(database, "users"),
-      where("userId", "==", auth.currentUser.uid)
-    );
+  if(auth.currentUser){
+    useEffect(() => {
+      const userQuery = query(
+        collection(database, "users"),
+        where("userId", "==", auth.currentUser.uid)
+      );
 
-    const unsubscribe = onSnapshot(userQuery, (querySnapshot) => {
-      if (!querySnapshot.empty) {
-        querySnapshot.forEach((docSnap) => {
-          if("userSelection" in docSnap.data()) {
-            setLengthInCanada(docSnap.data().userSelection.lengthInCanada); // Set the lengthInCanada state to the fetched data));
-            setOccupation(docSnap.data().userSelection.occupation); // Set the occupation state to the fetched data));
-          }
-        });
-      } 
-    });
+      const unsubscribe = onSnapshot(userQuery, (querySnapshot) => {
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((docSnap) => {
+            if("userSelection" in docSnap.data()) {
+              setLengthInCanada(docSnap.data().userSelection.lengthInCanada); // Set the lengthInCanada state to the fetched data));
+              setOccupation(docSnap.data().userSelection.occupation); // Set the occupation state to the fetched data));
+            }
+          });
+        } 
+      });
 
-    return () => unsubscribe(); // Cleanup on unmount
-  }, []); // Empty dependency array means this effect runs once after the component mounts
+      return () => unsubscribe(); // Cleanup on unmount
+    }, []); // Empty dependency array means this effect runs once after the component mounts
+  }
 
   const handleCheckboxChange = (option) => {
     if (questionType === "lengthInCanada") {
@@ -68,6 +70,7 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
       {questionType === "lengthInCanada" && (
         <>
           <Text style={styles.question}>How long have you been in Canada?</Text>
+
           <View style={styles.optionContainer}>
             <Checkbox
               value={lengthInCanada === "planningToMove"}
