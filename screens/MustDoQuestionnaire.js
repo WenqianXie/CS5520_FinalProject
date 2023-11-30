@@ -6,16 +6,29 @@ import Checkbox from "expo-checkbox";
 import { database, auth } from "../firebase/FirebaseSetup";
 import { writeToUsersDB } from "../firebase/FirebaseHelper";
 import { colors } from "../helper/HelperColors";
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import { FontAwesome5 } from "@expo/vector-icons";
 import TextButton from "../components/TextButton";
 
 const MustDoQuestionnaire = ({ navigation, route }) => {
   const { questionType } = route.params;
   const [submitLoading, setSubmitLoading] = useState(false); // State to track submit status
-  const [lengthInCanada, setLengthInCanada] = useState('');
-  const [occupation, setOccupation] = useState('');
+  const [lengthInCanada, setLengthInCanada] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
 
-  if(auth.currentUser){
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // a valid user is logged in
+        setIsLoggedIn(true);
+      } else {
+        //before authentication or after logout
+        setIsLoggedIn(false);
+      }
+    });
+  }, []);
+
+  if (auth.currentUser) {
     useEffect(() => {
       const userQuery = query(
         collection(database, "users"),
@@ -25,12 +38,12 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
       const unsubscribe = onSnapshot(userQuery, (querySnapshot) => {
         if (!querySnapshot.empty) {
           querySnapshot.forEach((docSnap) => {
-            if("userSelection" in docSnap.data()) {
+            if ("userSelection" in docSnap.data()) {
               setLengthInCanada(docSnap.data().userSelection.lengthInCanada); // Set the lengthInCanada state to the fetched data));
               setOccupation(docSnap.data().userSelection.occupation); // Set the occupation state to the fetched data));
             }
           });
-        } 
+        }
       });
 
       return () => unsubscribe(); // Cleanup on unmount
@@ -46,9 +59,9 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
   };
 
   const handleNext = () => {
-      navigation.navigate("MustDo", {
-        questionType: "occupation",
-      });
+    navigation.navigate("MustDo", {
+      questionType: "occupation",
+    });
   };
 
   const handlePrevious = () => {
@@ -57,13 +70,16 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
     });
   };
 
+  const handleLogin = () => {
+    navigation.navigate("Auth");
+  };
+
   const handleSubmit = async () => {
     setSubmitLoading(true); // Set loading to true while we submit the questionnaire
     await writeToUsersDB({ userSelection: { lengthInCanada, occupation } });
     setSubmitLoading(false); // Set loading to false once we have submitted the questionnaire
     navigation.navigate("MustDoList");
-  }
-
+  };
 
   return (
     <View style={styles.container}>
@@ -145,29 +161,47 @@ const MustDoQuestionnaire = ({ navigation, route }) => {
       )}
 
       {questionType === "lengthInCanada" && (
-      <FontAwesome5 
-        name="arrow-circle-right"
-        size={24}
-        color="black"
-        onPress={handleNext}
-        style={styles.submitIcon}
-      />
-      )}
-
-      {questionType === "occupation" && (
-        <>
-          <FontAwesome5 
-          name="arrow-circle-left"
+        <FontAwesome5
+          name="arrow-circle-right"
           size={24}
           color="black"
-          onPress={handlePrevious}
-          style={styles.previousIcon}
+          onPress={handleNext}
+          style={styles.submitIcon}
+        />
+      )}
+
+      {/* {questionType === "occupation" && (
+        <>
+          <FontAwesome5
+            name="arrow-circle-left"
+            size={24}
+            color="black"
+            onPress={handlePrevious}
+            style={styles.previousIcon}
           />
           <TextButton onPress={handleSubmit}>
             {!submitLoading ? (
               <Text>Submit</Text>
             ) : (
-                <ActivityIndicator size="small" color={colors.themeDark} />
+              <ActivityIndicator size="small" color={colors.themeDark} />
+            )}
+          </TextButton>
+        </>
+      )} */}
+      {questionType === "occupation" && (
+        <>
+          <FontAwesome5
+            name="arrow-circle-left"
+            size={24}
+            color="black"
+            onPress={handlePrevious}
+            style={styles.previousIcon}
+          />
+          <TextButton onPress={isLoggedIn ? handleSubmit : handleLogin}>
+            {!submitLoading ? (
+              <Text>{isLoggedIn ? "Submit" : "Log in to Submit"}</Text>
+            ) : (
+              <ActivityIndicator size="small" color={colors.themeDark} />
             )}
           </TextButton>
         </>
