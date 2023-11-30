@@ -13,9 +13,6 @@ export function ExploreScreen({ navigation }) {
   };
   const essentialButtonHandler = () => {
     navigation.navigate("Essential");
-    console.log("current screen width: ", width);
-    console.log("current screen scale: ", scale);
-    console.log("current buttonScale: ", buttonScale);
   };
   const medicineButtonHandler = () => {
     navigation.navigate("Medicine");
