@@ -14,7 +14,6 @@ export function ProfileScreen({ navigation }) {
   const [loading, setLoading] = useState(false); // State to track login status
   const [displayedName, setDisplayedName] = useState(null); // State to track displayed name
   const [user, setUser] = useState(null); // State to track users list
-  // const [resetType, setResetType] = useState(null); // 'username', 'email', or 'password'
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -57,20 +56,28 @@ export function ProfileScreen({ navigation }) {
   }, [isLoggedIn]); // Re-run the effect when isLoggedIn changes
 
   const handleLogInPress = () => {
-    navigation.push("Auth", { screen: "Login" }); // Navigate to the Login screen
+    navigation.push("Auth", { screen: "Login" }, "Profile"); // Navigate to the Login screen
   };
 
-  const handleMyListPress = () => {};
-
-  const handleEmailPress = () => {
-    // setResetType("email");
-    navigation.navigate("Reset", { resetType: "email", headerTitle: "Reset Email" });
+  const handleMyListPress = () => {
+    navigation.navigate("MustDoList");
   };
 
-  const handlePasswordPress = () => {
-    // setResetType("password");
-    navigation.navigate("Reset", { resetType: "password", headerTitle: "Reset Password"});
-  };
+  // const handleEmailPress = () => {
+  //   // setResetType("email");
+  //   navigation.navigate("Reset", {
+  //     resetType: "email",
+  //     headerTitle: "Reset Email",
+  //   });
+  // };
+
+  // const handlePasswordPress = () => {
+  //   // setResetType("password");
+  //   navigation.navigate("Reset", {
+  //     resetType: "password",
+  //     headerTitle: "Reset Password",
+  //   });
+  // };
 
   const handleLogOutPress = () => {
     try {
@@ -81,7 +88,6 @@ export function ProfileScreen({ navigation }) {
   };
   return (
     <SafeAreaView style={styles.profileContainer}>
-
       <View style={styles.profilePhotoAndUsername}>
         <Image
           source={require("../assets/avatar.png")}
@@ -92,8 +98,9 @@ export function ProfileScreen({ navigation }) {
           loading ? ( // If loading is true, display an ActivityIndicator
             <ActivityIndicator size="large" color={colors.themeDark} />
           ) : (
-          <Text style={styles.textButtonText}>{displayedName}</Text> // Display username if logged in and loading is false
-          )) : (
+            <Text style={styles.textButtonText}>{displayedName}</Text> // Display username if logged in and loading is false
+          )
+        ) : (
           <TextButton onPress={handleLogInPress}>
             <Text style={styles.textButtonText}>Log in</Text>
           </TextButton>
@@ -104,18 +111,17 @@ export function ProfileScreen({ navigation }) {
         <Text style={styles.textButtonText}>My Must-Do List</Text>
       </TextButton>
 
-      <TextButton onPress={handleEmailPress}>
+      {/* <TextButton onPress={handleEmailPress}>
         <Text style={styles.textButtonText}>Reset Email</Text>
       </TextButton>
 
       <TextButton onPress={handlePasswordPress}>
         <Text style={styles.textButtonText}>Reset Password</Text>
-      </TextButton>
+      </TextButton> */}
 
       <TextButton onPress={handleLogOutPress}>
         <Text style={styles.textButtonText}>Log Out</Text>
       </TextButton>
-
     </SafeAreaView>
   );
 }

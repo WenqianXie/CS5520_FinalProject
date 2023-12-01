@@ -11,6 +11,7 @@ import MedicineEntry from "./screens/MedicineEntry";
 import TransitEntry from "./screens/TransitEntry";
 import MustDoQuestionnaire from "./screens/MustDoQuestionnaire";
 import MustDoList from "./screens/MustDoList";
+import { ProfileScreen } from "./screens/ProfileScreen";
 
 const Stack = createStackNavigator();
 
@@ -60,13 +61,16 @@ export default function App() {
         <Stack.Screen
           name="MustDo"
           component={MustDoQuestionnaire}
-          options={{ title: "Get Your Must-Do List\nIn 5 Secs!",
-                    headerTitle: ({ style, children : title }) => {
-                      return (
-                        <Text style={style} numberOfLines={2}>{title}</Text>
-                      );  
-                    }, 
-                  }}
+          options={{
+            title: "Get Your Must-Do List\nIn 5 Secs!",
+            headerTitle: ({ style, children: title }) => {
+              return (
+                <Text style={style} numberOfLines={2}>
+                  {title}
+                </Text>
+              );
+            },
+          }}
         />
         <Stack.Screen
           name="MustDoList"
