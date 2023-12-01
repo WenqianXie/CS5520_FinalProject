@@ -452,6 +452,13 @@ const Questionnaire = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
+      {!isLoggedIn && (
+        <View style={styles.reminderContainer}>
+          <Text style={styles.reminderText}>
+            Please log in to save your answers, or your answers won't be saved.
+          </Text>
+        </View>
+      )}
       <FlatList
         data={questions}
         renderItem={renderQuestion}
@@ -490,6 +497,16 @@ const styles = StyleSheet.create({
   option: {
     fontSize: 16,
     marginLeft: 10,
+  },
+  reminderContainer: {
+    backgroundColor: "#ffcccb", // Light red for visibility, adjust as needed
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  reminderText: {
+    fontSize: 16,
+    color: "black", // Adjust color as needed
   },
 });
 
