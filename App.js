@@ -75,7 +75,11 @@ export default function App() {
         <Stack.Screen
           name="MustDoList"
           component={MustDoList}
-          options={{ title: "Your Must-Do List" }}
+          options={{
+            title: "Your Must-Do List",
+            headerBackVisible: false,
+            headerLeft: () => null,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

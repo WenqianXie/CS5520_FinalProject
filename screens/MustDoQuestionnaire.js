@@ -425,7 +425,7 @@ const Questionnaire = ({ navigation }) => {
         },
       });
       setSubmitLoading(false); // Set loading to false once we have submitted the questionnaire
-      navigation.navigate("MustDoList");
+      navigation.replace("MustDoList");
     } else {
       Alert.alert(
         "Authentication Required",
