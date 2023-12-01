@@ -36,7 +36,7 @@ export function ExploreScreen({ navigation }) {
 
         <DialogButton
           onPress={essentialButtonHandler}
-          text="Obtain Essential Docs"
+          text="Get Essential Docs"
           position={styles.essentialButtonPosition}
           scale={buttonScale}
         />

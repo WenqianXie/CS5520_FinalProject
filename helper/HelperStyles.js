@@ -48,8 +48,9 @@ export const styles = StyleSheet.create({
   },
   dialogButton: {
     borderRadius: 20,
-    width: 96,
+    width: 100,
     height: 75,
+    alignContent: "center",
   },
   textButton: {
     padding: 10,
@@ -70,8 +71,7 @@ export const styles = StyleSheet.create({
     marginTop: "7%",
     height: "73%",
     width: "86%",
-    borderRadius: 20,
-    padding: 5,
+    paddingLeft: "4%",
     justifyContent: "center",
   },
   dialogButtonText:{

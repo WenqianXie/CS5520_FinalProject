@@ -12,6 +12,7 @@ import TransitEntry from "./screens/TransitEntry";
 import MustDoQuestionnaire from "./screens/MustDoQuestionnaire";
 import MustDoList from "./screens/MustDoList";
 import { ProfileScreen } from "./screens/ProfileScreen";
+import Details from "./screens/Details";
 
 const Stack = createStackNavigator();
 
@@ -80,6 +81,11 @@ export default function App() {
             headerBackVisible: false,
             headerLeft: () => null,
           }}
+        />
+        <Stack.Screen
+          name="Details"
+          component={Details}
+          options={{ title: "Details" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
