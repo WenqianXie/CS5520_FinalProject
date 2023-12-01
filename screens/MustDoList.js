@@ -47,11 +47,11 @@ export default function MustDoList({ navigation }) {
   };
 
   const handleChangeAnswers = () => {
-    navigation.goBack();
+    navigation.navigate("MustDo");
   };
 
   const handleExplore = () => {
-    navigation.navigate("Home");
+    navigation.navigate("Home", { screen: "Explore" });
   };
 
   return (

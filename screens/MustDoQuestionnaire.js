@@ -327,6 +327,12 @@ const Questionnaire = ({ navigation }) => {
           if (userData && userData.userSelection) {
             setLengthInCanada(userData.userSelection.lengthInCanada);
             setOccupation(userData.userSelection.occupation);
+            setStudentWork(userData.userSelection.studentWork);
+            setDrive(userData.userSelection.drive);
+            setComeWithFamily(userData.userSelection.comeWithFamily);
+            setNeedPublicTransportation(
+              userData.userSelection.needPublicTransportation
+            );
           }
         });
       },
