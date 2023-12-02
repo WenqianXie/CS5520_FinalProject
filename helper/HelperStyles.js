@@ -140,4 +140,19 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: 25,
   },
+  bottomRow: {
+    position: "absolute",
+    bottom: 80,
+    left: 0,
+    right: 0,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  footerImage: {
+    width: 100,
+    height: 100,
+    resizeMode: "contain",
+    marginHorizontal: 5,
+  },
 });
