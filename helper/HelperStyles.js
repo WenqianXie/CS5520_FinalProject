@@ -154,4 +154,18 @@ export const styles = StyleSheet.create({
     resizeMode: "contain",
     marginHorizontal: 5,
   },
+    closeButton: {
+    alignSelf: "flex-start",
+  },
+  profileAvatarModalContainer:{
+    flex:1,
+    backgroundColor:"black",
+    alignItems: "center",
+  },
+  profileAvatarModal:{
+    width: "100%",
+    height: "45%",
+    marginTop: "40%",
+    marginBottom: "10%",
+  }
 });
