@@ -22,6 +22,7 @@ export default function App() {
       <Stack.Navigator
         screenOptions={{
           headerBackTitleVisible: false, // Hides the back button title (screen name)
+        
         }}
       >
         <Stack.Screen
