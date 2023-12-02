@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
+import { View, Text, Modal, Image, ActivityIndicator, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextButton from "../components/TextButton";
+import IconButton from "../components/IconButton";
+import ImageManager from "../components/ImageManager";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/FirebaseSetup";
 import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
-import { database } from "../firebase/FirebaseSetup";
+import { getDownloadURL, ref } from "firebase/storage";
+import { database, storage } from "../firebase/FirebaseSetup";
 import { colors } from "../helper/HelperColors";
 import { styles } from "../helper/HelperStyles";
 
@@ -13,7 +16,8 @@ export function ProfileScreen({ navigation }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
   const [loading, setLoading] = useState(false); // State to track login status
   const [displayedName, setDisplayedName] = useState(null); // State to track displayed name
-  const [user, setUser] = useState(null); // State to track users list
+  const [modalVisible, setModalVisible] = useState(false);
+  const [downloadAvatarURL, setDownloadAvatarURL] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -28,6 +32,11 @@ export function ProfileScreen({ navigation }) {
   }, []);
 
   useEffect(() => {
+    async function getURL(avatarUrl) {
+      const imageUriRef = ref(storage, avatarUrl);
+      const url = await getDownloadURL(imageUriRef);
+      setDownloadAvatarURL(url);
+    }
     if (isLoggedIn) {
       setLoading(true); // Set loading to true while we fetch the users list
       const unsubscribe = onSnapshot(
@@ -41,19 +50,45 @@ export function ProfileScreen({ navigation }) {
             querySnapshot.docs.forEach((docSnap) => {
               usersList.push({ ...docSnap.data(), id: docSnap.id });
             });
-            console.log(usersList);
-            setUser(usersList);
+            console.log("userList from ProfileScreen: ", usersList);
             setDisplayedName(usersList[0].username);
+            if (usersList[0].avatarURL) {
+              getURL(usersList[0].avatarURL);
+            }
             setLoading(false); // Set loading to false once we have the users list
-          } else {
-            setUser([]); // If the collection is empty or the query returns no documents, set the users list to empty
-          }
+          } 
         }
       );
 
       return () => unsubscribe(); // Cleanup function
     }
   }, [isLoggedIn]); // Re-run the effect when isLoggedIn changes
+
+  const getImage = (imageStyle) => {
+    if (isLoggedIn && downloadAvatarURL){
+      return (
+      <Image
+        source={{ uri: downloadAvatarURL }}
+        style={imageStyle} // if logged in and the user has uploaded an avatar photo before
+                           // use uri to get image, it is stored in firebase storage
+      />
+      )} 
+    return (
+      <Image
+        source={require("../assets/avatar.png")}
+        style={imageStyle} // if not logged in or if the user hasn't uploaded an avatar photo before
+                           // use require to get image, it is stored in assets
+      />
+    )
+  }
+
+  const closeModal = () => {
+    setModalVisible(false);
+  }
+
+  const enlargeProfilePic = () => {
+    setModalVisible(!modalVisible);
+  }
 
   const handleLogInPress = () => {
     navigation.push("Auth", { screen: "Login" }, "Profile"); // Navigate to the Login screen
@@ -88,11 +123,33 @@ export function ProfileScreen({ navigation }) {
   };
   return (
     <SafeAreaView style={styles.profileContainer}>
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <Pressable 
+          onPress={closeModal}
+          style={styles.profileAvatarModalContainer}
+        >
+          <IconButton
+            onPress={closeModal}
+            type="close"
+          />
+          {getImage(styles.profileAvatarModal)}
+          <ImageManager closeModal={closeModal}/>
+        </Pressable>
+      </Modal>
+
       <View style={styles.profilePhotoAndUsername}>
-        <Image
-          source={require("../assets/avatar.png")}
-          style={styles.profileAvatar} // use require to get image, it is stored in assets
-        />
+        <Pressable
+          onPress={isLoggedIn ? enlargeProfilePic : handleLogInPress}
+          style={({pressed})=>[
+            styles.profileAvatar,
+            pressed && (styles.buttonOnPress),
+          ]}>
+          {getImage(styles.profileAvatar)}
+        </Pressable>
 
         {isLoggedIn ? (
           loading ? ( // If loading is true, display an ActivityIndicator

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, ImageBackground, useWindowDimensions } from "react-native";
 import { styles } from "../helper/HelperStyles";
 import DialogButton from "../components/DialogButton";
-import ArrowButton from "../components/ArrowButton";
+import IconButton from "../components/IconButton";
 import { DEFAULT_SCREEN_WIDTH} from "../helper/Constants";
 
 export function ExploreScreen({ navigation }) {
@@ -27,11 +27,12 @@ export function ExploreScreen({ navigation }) {
         style={styles.backgroundPic}
       >
         <Text style={styles.text}>Tap Your Desired Topic to Start! </Text>
-        <ArrowButton
+        <IconButton
           onPress={arrowButtonHandler}
           text={"Lost?\nBegin Here!"}
           position={styles.arrowButtonPosition}
           scale={buttonScale}
+          type="arrow"
         />
 
         <DialogButton

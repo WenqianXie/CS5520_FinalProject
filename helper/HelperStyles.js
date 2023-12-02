@@ -93,7 +93,6 @@ export const styles = StyleSheet.create({
     color: "black",
     textAlign: "center",
     fontSize: 25,
-    marginLeft: 20,
   },
   buttonOnPress: {
     opacity: 0.4,
