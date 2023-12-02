@@ -32,7 +32,7 @@ export default function Home({ navigation }) {
         headerTitleStyle: {
           fontWeight: "bold",
           fontSize: 24,
-          fontFamily: "Quicksand-Regular",
+          // fontFamily: "Quicksand-Regular",
         },
         tabBarActiveTintColor: "#A35700",
         tabBarInactiveTintColor: "#ffdab9",
