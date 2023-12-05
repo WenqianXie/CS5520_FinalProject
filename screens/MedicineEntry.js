@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import { styles } from "../helper/HelperStyles";
+import IconButton from "../components/IconButton";
 
 const MedicineEntry = ({ navigation }) => {
   const requestedMap = {
@@ -36,44 +37,55 @@ const MedicineEntry = ({ navigation }) => {
         style={styles.backgroundPic}
       >
         <Text>MedicineEntry</Text>
-        <Button
-          title="Go Details"
+        {/* Removed the "Go Details" button */}
+      </ImageBackground>
+      <View style={styles.bottomRow}>
+        {/* Family Doctor */}
+        <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { requestedMap: requestedMap })
           }
-        />
-      </ImageBackground>
-      <View style={styles.bottomRow}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("MedDoc")}
-          activeOpacity={0.7} // Decreases the opacity of the image when touched
+          activeOpacity={0.7}
+          style={styles.iconContainer}
         >
           <Image
             source={require("../assets/family_doctor.png")}
             style={styles.footerImage}
           />
+          <Text style={styles.iconText}>Find Family Doctor</Text>
         </TouchableOpacity>
+
+        {/* Pharmacy */}
         <TouchableOpacity
-          onPress={() => navigation.navigate("MedDoc")}
+          onPress={() =>
+            navigation.navigate("Details", { requestedMap: requestedMap })
+          }
           activeOpacity={0.7}
+          style={styles.iconContainer}
         >
           <Image
             source={require("../assets/medicine_icon.png")}
             style={styles.footerImage}
           />
+          <Text style={styles.iconText}>Find Pharmacy</Text>
         </TouchableOpacity>
+
+        {/* Hospital */}
         <TouchableOpacity
-          onPress={() => navigation.navigate("MedDoc")}
+          onPress={() =>
+            navigation.navigate("Details", { requestedMap: requestedMap })
+          }
           activeOpacity={0.7}
+          style={styles.iconContainer}
         >
           <Image
             source={require("../assets/hospital.png")}
             style={styles.footerImage}
           />
+          <Text style={styles.iconText}>Find Hospital</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
 export default MedicineEntry;

@@ -8,11 +8,9 @@ import AuthNavigator from "./screens/AuthStack";
 import Reset from "./screens/Reset";
 import EssentialDocsEntry from "./screens/EssentialDocsEntry";
 import MedicineEntry from "./screens/MedicineEntry";
-import MedicalDocuments from "./screens/MedicalDocuments";
 import TransitEntry from "./screens/TransitEntry";
 import MustDoQuestionnaire from "./screens/MustDoQuestionnaire";
 import MustDoList from "./screens/MustDoList";
-import { ProfileScreen } from "./screens/ProfileScreen";
 import Details from "./screens/Details";
 
 const Stack = createStackNavigator();
@@ -87,11 +85,6 @@ export default function App() {
           name="Details"
           component={Details}
           options={{ title: "Details" }}
-        />
-        <Stack.Screen
-          name="MedDoc"
-          component={MedicalDocuments}
-          options={{ title: "Medical Documents" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

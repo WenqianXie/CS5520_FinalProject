@@ -1,5 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { colors } from "./HelperColors";
+import { BASE_ICON_SIZE } from "./Constants";
+import { imageScale } from "./Constants";
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,13 +9,6 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  // welcomeTitle: {
-  //   fontSize: 24,
-  //   fontWeight: "bold",
-  // },
-  // welcomeSlogan: {
-  //   fontSize: 18,
-  // },
   welcomeTitle: {
     fontSize: 38,
     fontWeight: "bold",
@@ -145,27 +140,35 @@ export const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
   },
   footerImage: {
-    width: 100,
-    height: 100,
+    width: BASE_ICON_SIZE * imageScale,
+    height: BASE_ICON_SIZE * imageScale,
     resizeMode: "contain",
     marginHorizontal: 5,
   },
-    closeButton: {
+  iconContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconText: {
+    fontWeight: "bold",
+    marginTop: 5,
+  },
+  closeButton: {
     alignSelf: "flex-start",
   },
-  profileAvatarModalContainer:{
-    flex:1,
-    backgroundColor:"black",
+  profileAvatarModalContainer: {
+    flex: 1,
+    backgroundColor: "black",
     alignItems: "center",
   },
-  profileAvatarModal:{
+  profileAvatarModal: {
     width: "100%",
     height: "45%",
     marginTop: "40%",
     marginBottom: "10%",
-  }
+  },
 });
