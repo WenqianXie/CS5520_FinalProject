@@ -17,6 +17,7 @@ export function ProfileScreen({ navigation }) {
   const [loading, setLoading] = useState(false); // State to track login status
   const [displayedName, setDisplayedName] = useState(null); // State to track displayed name
   const [modalVisible, setModalVisible] = useState(false);
+  const [currAvatarURL, setCurrAvatarURL] = useState("");
   const [downloadAvatarURL, setDownloadAvatarURL] = useState("");
 
   useEffect(() => {
@@ -53,6 +54,7 @@ export function ProfileScreen({ navigation }) {
             console.log("userList from ProfileScreen: ", usersList);
             setDisplayedName(usersList[0].username);
             if (usersList[0].avatarURL) {
+              setCurrAvatarURL(usersList[0].avatarURL);
               getURL(usersList[0].avatarURL);
             }
             setLoading(false); // Set loading to false once we have the users list
@@ -64,6 +66,7 @@ export function ProfileScreen({ navigation }) {
     }
   }, [isLoggedIn]); // Re-run the effect when isLoggedIn changes
 
+  //Function to get the image to display, depending on whether the user is logged in and has uploaded an avatar photo before
   const getImage = (imageStyle) => {
     if (isLoggedIn && downloadAvatarURL){
       return (
@@ -124,10 +127,12 @@ export function ProfileScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.profileContainer}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         visible={modalVisible}
         onRequestClose={closeModal}
       >
+        {/* Wrap the whole modal in a Pressable to close the modal when the user clicks outside of the modal */}
+        {/* The Pressable will be disabled when some function is running, to prevent the user from closing the modal before the function is finished */}
         <Pressable 
           onPress={closeModal}
           style={styles.profileAvatarModalContainer}
@@ -137,7 +142,7 @@ export function ProfileScreen({ navigation }) {
             type="close"
           />
           {getImage(styles.profileAvatarModal)}
-          <ImageManager closeModal={closeModal}/>
+          <ImageManager closeModal={closeModal} currAvatarURL={currAvatarURL}/>
         </Pressable>
       </Modal>
 
