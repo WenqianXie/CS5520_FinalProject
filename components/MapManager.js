@@ -5,9 +5,9 @@ import * as Location from "expo-location";
 import { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 
-const MapManager = () => {
-  const route = useRoute();
-  const requestedMap = route.params.requestedMap;
+const MapManager = ({requestedMap}) => {
+  // const route = useRoute();
+  // const requestedMap = route.params.requestedMap;
   const [showRegion, setShowRegion] = useState(requestedMap.initialRegion);
   const [status, requestPermission] = Location.useForegroundPermissions();
   const [userLocation, setUserLocation] = useState(null);

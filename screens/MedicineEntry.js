@@ -30,6 +30,21 @@ const MedicineEntry = ({ navigation }) => {
     style: null,
   };
 
+  const detailsContent = {
+    title: "Hospital",
+    contents: [
+      {
+        subtitle: "Emergency",
+        content: "Call 911",
+      },
+      {
+        subtitle: "Non-Emergency",
+        content: "Call 311",
+        map: requestedMap,
+      },
+    ],
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -43,7 +58,7 @@ const MedicineEntry = ({ navigation }) => {
         {/* Family Doctor */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { requestedMap: requestedMap })
+            navigation.navigate("Details", { detailsContent : detailsContent })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -58,7 +73,7 @@ const MedicineEntry = ({ navigation }) => {
         {/* Pharmacy */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { requestedMap: requestedMap })
+            navigation.navigate("Details", { detailsContent : detailsContent })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -73,7 +88,7 @@ const MedicineEntry = ({ navigation }) => {
         {/* Hospital */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { requestedMap: requestedMap })
+            navigation.navigate("Details", { detailsContent : detailsContent })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
