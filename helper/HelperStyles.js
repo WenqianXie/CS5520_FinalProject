@@ -3,6 +3,10 @@ import { colors } from "./HelperColors";
 import { BASE_ICON_SIZE } from "./Constants";
 import { imageScale } from "./Constants";
 
+// Get the device's width and height
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -121,12 +125,10 @@ export const styles = StyleSheet.create({
   profileAvatar: {
     width: 100,
     height: 100,
-    // alignSelf: “flex-start”,
     margin: 10,
   },
   profileContainer: {
     flex: 1,
-    // justifyContent: "center",
     alignItems: "left",
   },
   profilePhotoAndUsername: {
@@ -135,13 +137,17 @@ export const styles = StyleSheet.create({
     marginLeft: 25,
   },
   bottomRow: {
-    position: "absolute",
-    bottom: 80,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    position: "absolute", // Keeps the component in a fixed position
+    flexDirection: "column", // Stacks the children vertically
+    justifyContent: "center", // Centers the children vertically within the container
+    alignItems: "flex-start", // Aligns children to the start (left side) of the container
+    backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent white background
+    width: "95%", // Adjust the width as needed
+    height: windowHeight * 0.35,
+    borderRadius: 20,
+    shaloowColor: "black",
+    shadowRadius: 50,
+    elevation: 20,
   },
   footerImage: {
     width: BASE_ICON_SIZE * imageScale,
@@ -150,12 +156,16 @@ export const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   iconContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: "row", // Aligns the image and text horizontally within each TouchableOpacity
+    alignItems: "center", // Centers the items vertically within the TouchableOpacity
+    marginLeft: 40,
+    marginVertical: 3,
   },
   iconText: {
     fontWeight: "bold",
+    fontSize: 20,
     marginTop: 5,
+    marginLeft: 8,
   },
   closeButton: {
     alignSelf: "flex-start",

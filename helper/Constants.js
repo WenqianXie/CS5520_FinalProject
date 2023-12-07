@@ -1,6 +1,6 @@
 export const DEFAULT_SCREEN_WIDTH = 411.42857142857144;
 export const FONTSIZE_CONTROLLER = 0.95;
-export const BASE_ICON_SIZE = 65;
+export const BASE_ICON_SIZE = 50;
 import { Dimensions } from "react-native";
 
 const screenWidth = Dimensions.get("window").width;

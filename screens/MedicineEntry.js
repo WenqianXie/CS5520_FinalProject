@@ -50,30 +50,38 @@ const MedicineEntry = ({ navigation }) => {
       <ImageBackground
         source={require("../assets/medicine.png")}
         style={styles.backgroundPic}
-      >
-        <Text>MedicineEntry</Text>
-        {/* Removed the "Go Details" button */}
-      </ImageBackground>
+      ></ImageBackground>
       <View style={styles.bottomRow}>
         {/* Family Doctor */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent : detailsContent })
+            navigation.navigate("Details", { detailsContent: detailsContent })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
           <Image
-            source={require("../assets/family_doctor.png")}
+            source={require("../assets/healthcare_card.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Find Family Doctor</Text>
+          <Text style={styles.iconText}>Get Medical Service Plan</Text>
         </TouchableOpacity>
-
-        {/* Pharmacy */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent : detailsContent })
+            navigation.navigate("Details", { detailsContent: detailsContent })
+          }
+          activeOpacity={0.7}
+          style={styles.iconContainer}
+        >
+          <Image
+            source={require("../assets/hospital.png")}
+            style={styles.footerImage}
+          />
+          <Text style={styles.iconText}>Find Hospital</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Details", { detailsContent: detailsContent })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -84,20 +92,18 @@ const MedicineEntry = ({ navigation }) => {
           />
           <Text style={styles.iconText}>Find Pharmacy</Text>
         </TouchableOpacity>
-
-        {/* Hospital */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent : detailsContent })
+            navigation.navigate("Details", { detailsContent: detailsContent })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
           <Image
-            source={require("../assets/hospital.png")}
+            source={require("../assets/family_doctor.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Find Hospital</Text>
+          <Text style={styles.iconText}>Find Family Doctor</Text>
         </TouchableOpacity>
       </View>
     </View>
