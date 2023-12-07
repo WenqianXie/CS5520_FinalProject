@@ -9,22 +9,32 @@ import { FlatList } from "react-native-gesture-handler";
 export default function MustDoList({ navigation }) {
   const [userSelections, setUserSelections] = useState([]); // State to track userSelection
   const [randomImageUrl, setRandomImageUrl] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
-    const userQuery = query(
-      collection(database, "users"),
-      where("userId", "==", auth.currentUser.uid)
-    );
+    // Check if a user is logged in
+    setIsLoggedIn(auth.currentUser != null);
 
-    const unsubscribe = onSnapshot(userQuery, (querySnapshot) => {
-      if (!querySnapshot.empty) {
-        // console.log("log from querySnapshot.doc: ", querySnapshot.data());
-        querySnapshot.forEach((docSnap) => {
-          setUserSelections(docSnap.data().userSelection); // Set the userSelection state to the fetched data));
-        });
-      }
-    });
+    if (auth.currentUser) {
+      const userQuery = query(
+        collection(database, "users"),
+        where("userId", "==", auth.currentUser.uid)
+      );
 
-    return () => unsubscribe(); // Cleanup on unmount
+      const unsubscribe = onSnapshot(userQuery, (querySnapshot) => {
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((docSnap) => {
+            setUserSelections(docSnap.data().userSelection); // Set the userSelection state to the fetched data
+          });
+        }
+      });
+
+      // Return the unsubscribe function to be called on cleanup
+      return () => unsubscribe();
+    } else {
+      // No user is logged in
+      console.log("Please log in");
+    }
   }, []); // Empty dependency array means this effect runs once after the component mounts
 
   const handleClearSelections = () => {
@@ -92,11 +102,15 @@ export default function MustDoList({ navigation }) {
 
   return (
     <View>
-      <Image
-        source={{ uri: randomImageUrl }}
-        style={{ width: "100%", height: 400 }} // Adjust the width and height as needed
-        resizeMode="cover"
-      />
+      {randomImageUrl ? (
+        <Image
+          source={{ uri: randomImageUrl }}
+          style={{ width: "100%", height: 400 }}
+          resizeMode="cover"
+        />
+      ) : null}
+      {!isLoggedIn && <Text>Please log in to view your selections!</Text>}
+
       <Text>{userSelections.lengthInCanada}</Text>
       <Text>{userSelections.occupation}</Text>
       <Text>{userSelections.occupation}</Text>
