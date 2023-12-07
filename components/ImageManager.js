@@ -46,8 +46,9 @@ const ImageManager = ({closeModal, currAvatarURL}) => {
       const imageName = localUri.substring(localUri.lastIndexOf("/") + 1);
       const imageRef = await ref(storage, `UserAvatarImages/${imageName}`);
       const uploadResult = await uploadBytesResumable(imageRef, imageBlob);
-      console.log("old url: ", currAvatarURL);
-      deleteObject(ref(storage, currAvatarURL)); // delete the old avatar image
+      if(currAvatarURL){
+        deleteObject(ref(storage, currAvatarURL)); // delete the old avatar image
+      }
       return uploadResult.metadata.fullPath;
     } catch (err) {
       console.log(err);
