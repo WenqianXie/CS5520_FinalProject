@@ -41,6 +41,10 @@ const MedicineEntry = ({ navigation }) => {
         subtitle: "Non-Emergency",
         content: "Call 311",
         map: requestedMap,
+        link: {
+          title: "Boston 311",
+          url: "https://www.boston.gov/departments/311",
+        }
       },
     ],
   };

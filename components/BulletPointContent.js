@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import MapManager from './MapManager'
+import WebLink from './WebLink'
+import { styles } from '../helper/HelperStyles'
 
 const BulletPointContent = ({bulletPointContent}) => {
   return (
@@ -18,10 +20,15 @@ const BulletPointContent = ({bulletPointContent}) => {
 
         {/* Content */}
         <View style={bulletPointContentStyles.contentContainer}>
-          <Text style={bulletPointContentStyles.content}>
+          <Text style={styles.detailsContent}>
             {bulletPointContent.content}
           </Text>
         </View>
+
+        {/* WebLink if needed */}
+        { bulletPointContent.link &&
+          <WebLink linkRequest={bulletPointContent.link} />
+        }
 
         {/* Map if needed */}
         { bulletPointContent.map &&
@@ -59,8 +66,5 @@ const bulletPointContentStyles = StyleSheet.create({
     alignSelf: 'right',
     justifyContent: 'flex-start',
   },
-  content: {
-    fontSize: 14,
-    color: 'black', 
-  },
+  
 })
