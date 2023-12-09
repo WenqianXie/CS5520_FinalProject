@@ -123,6 +123,45 @@ const bus = {
   ],
 };
 
+const seabus = {
+  title: "Using the Seabus",
+  contents: [
+    {
+      subtitle: "What is Seabus?",
+      content:
+        "- The SeaBus is a passenger-only ferry service in Metro Vancouver, British Columbia, Canada. It crosses Burrard Inlet to connect the cities of Vancouver and North Vancouver.",
+    },
+    {
+      content:
+        "- Children 12 and under can ride TransLink services free of charge!",
+    },
+    {
+      subtitle: "How to take a Bus?",
+      content:
+        "- Compass Cards are convenient, reloadable fare cards that can be used when taking transit within Metro Vancouver.",
+      link: {
+        title: "- Purchase a compass card",
+        url: "https://www.translink.ca/transit-fares/where-to-buy",
+      },
+    },
+    {
+      content:
+        "- U-Passes are available to students enrolled in participating universities only, they are linked to the Compass Card",
+      link: {
+        title: "- Purchase a U-Pass",
+        url: "https://upassbc.translink.ca/",
+      },
+    },
+    { content: " - Or you can simply tap your credit card!" },
+    {
+      subtitle: "Where to take a Seabus?",
+      content:
+        "- Waterfront Station, a main transit hub for all forms of Vancouver public transit. ",
+    },
+    { content: "- 601 W Cordova St, Vancouver, BC V6B 1G1" },
+  ],
+};
+
 const TransitEntry = ({ navigation }) => {
   return (
     <View style={styles.container}>
@@ -160,7 +199,7 @@ const TransitEntry = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: detailsContent })
+            navigation.navigate("Details", { detailsContent: seabus })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
