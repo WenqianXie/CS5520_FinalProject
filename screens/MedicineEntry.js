@@ -49,6 +49,64 @@ const MedicineEntry = ({ navigation }) => {
     ],
   };
 
+  const msp = {
+    title: "Applying for MSP",
+    contents : [
+      {
+        subtitle: "What is MSP?",
+        content: "The Medical Services Plan (MSP) is BC's health insurance for residents, covering healthcare benefits."
+      },
+      {
+        subtitle: "Who can apply?",
+        content: "- BC residents must enrol, under the Medicare Protection Act."
+      },
+      {
+        content: "- Study and work permit holders."
+      },
+      {
+        content: "- Individuals arriving from Ukraine under CUAET."
+      },
+      {
+        content: "- Spouse and children of MSP beneficiaries.",
+        link: {
+          title: "- Check full eligibility",
+          url: "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/eligibility-and-enrolment/are-you-eligible"
+        }
+      },
+      {
+        subtitle: "When to apply?",
+        content: "- As soon as you arrive in BC."
+      },
+      {
+        content: "- Coverage may start about 3 months after arriving in BC (Coverage Wait Period)."
+      },
+      {
+        content: "- During Wait Period, you should get private insurance or former medical plan to cover medical costs."
+      },
+      {
+        subtitle: "What services are covered by MSP?",
+        content: "- Medically required services you receive from physicians and midwives and diagnostic services including x-rays.",
+        link: {
+          title: "- Check details on What's Covered and What's Not",
+          url: "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/benefits"
+        }
+      },
+      {
+        subtitle: "How to apply?",
+        link: {
+          title: "- Apply online, by mail or by phone",
+          url: "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/ahdc"
+        }
+      },
+      {
+        link: {
+          title: "- Apply in person at a ServiceBC location",
+          url: "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/ministries/citizens-services/servicebc"
+        }
+      }
+    ]
+  }
+
   const familyDoctor = {
     title: "Finding Canadian Family Doctor",
     contents: [
@@ -131,7 +189,7 @@ const MedicineEntry = ({ navigation }) => {
         {/* Family Doctor */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: detailsContent})
+            navigation.navigate("Details", { detailsContent: msp})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
