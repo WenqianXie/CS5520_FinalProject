@@ -10,6 +10,20 @@ const Details = ({ navigation, route }) => {
     navigation.setOptions({ title: headerTitle });
   }, [navigation]);
 
+  // useEffect(() => {
+  //   const getContent = async () => {
+  //     try{
+  //       console.log("topic is : ", route.params.topic)
+  //     const downloadedContent = await readInfoData(route.params.topic)
+  //     console.log("downloadedContent is: ", downloadedContent)
+  //     setContents(downloadedContent)
+  //     } catch (err){
+  //       console.log(err)
+  //     }
+  //   }
+  //   getContent()
+  // },[navigation])
+
   return (
     <SafeAreaView style={detailsStyles.detailsContainer}>
       {detailsContent.contents.map((bulletPointContent, index) => (

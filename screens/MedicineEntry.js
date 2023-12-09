@@ -228,7 +228,8 @@ const MedicineEntry = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: familyDoctor })
+            // navigation.navigate("Details", { detailsContent: familyDoctor, category: "medicine", docID: "familyDoctor" })
+            navigation.navigate("Details", {topic: "familyDoctor"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}

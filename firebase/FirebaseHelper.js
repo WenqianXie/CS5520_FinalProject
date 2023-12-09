@@ -7,6 +7,7 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
 } from "firebase/firestore";
 import {
   usersCollectionRef,
@@ -58,7 +59,28 @@ export async function writeToBookmarksDB(bookmarkData, bookmarkId) {
   }
 }
 
-export async function writeToInfoDataDB(infoData, dataId) {}
+export async function writeToInfoDataDB(infoData, category, dataId) {
+  try{
+    let collectionName;
+    switch (category){
+      case "medicine":
+        collectionName = "medicineCollection";
+        break;
+      case "transit":
+        collectionName = "transitCollection";
+        break;
+      case "essentials":
+        collectionName = "essentialsCollection";
+        break;
+    }
+    const infoDataDoc = doc(infoDataCollectionRef, category, collectionName, dataId);
+    await updateDoc(infoDataDoc, {
+      ...infoData,
+    });
+  } catch (err) {
+    console.error("Error writing to infoData collection: ", err);
+  }
+}
 
 export async function deleteSelectionsFromUsersDB() {
   try {
@@ -72,5 +94,23 @@ export async function deleteSelectionsFromUsersDB() {
     // await deleteDoc(doc(usersCollectionRef, userId)); // delete the document from users collection
   } catch (err) {
     console.error("Error deleting from users collection: ", err);
+  }
+}
+
+export async function readInfoData(topic){
+  try{
+    let docRef;
+    switch(topic){
+      case "msp":
+        docRef = doc(infoDataCollectionRef, "medicine", "medicineCollection", "msp")
+        break;
+      case "familyDoctor":
+        docRef = doc(infoDataCollectionRef, "medicine", "medicineCollection", "familyDoctor")
+        break;
+    }
+    const docSnap = await getDoc(docRef)
+    return docSnap.data();
+  } catch (err){
+    console.log(err)
   }
 }
