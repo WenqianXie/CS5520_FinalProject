@@ -1,11 +1,17 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { StyleSheet, Text, SafeAreaView, Button } from "react-native";
 import React from "react";
 import { useEffect } from "react";
 import BulletPointContent from "../components/BulletPointContent";
+import { readInfoData, writeToInfoDataDB } from "../firebase/FirebaseHelper";
 
 const Details = ({ navigation, route }) => {
-  const detailsContent = route.params.detailsContent;
-  const headerTitle = detailsContent.title;
+  const contents = route.params.detailsContent;
+  const category = route.params.category;
+  const docID = route.params.docID;
+  const headerTitle = contents.title;
+  // const [contents, setContents] = useState("")
+
+
   useEffect(() => {
     navigation.setOptions({ title: headerTitle });
   }, [navigation]);
@@ -26,12 +32,19 @@ const Details = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={detailsStyles.detailsContainer}>
-      {detailsContent.contents.map((bulletPointContent, index) => (
+    {/*!contents  ? <Text>Loading</Text>
+                  : contents.contents.map((bulletPointContent, index) => (
+        <BulletPointContent bulletPointContent={bulletPointContent} key={index}/>
+                  )) */}
+      {contents.contents.map((bulletPointContent, index) => (
         <BulletPointContent
           bulletPointContent={bulletPointContent}
           key={index}
         />
       ))}
+      {category && 
+        <Button title="All good. Upload to Firebase" onPress={() => writeToInfoDataDB(contents, category, docID)}/>
+      }
     </SafeAreaView>
   );
 };
