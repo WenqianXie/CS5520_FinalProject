@@ -100,20 +100,60 @@ export default function MustDoList({ navigation }) {
     fetchImage();
   }, []); // The empty dependency array ensures this effect runs once after the initial render
 
+  const goToDetails = () => {
+    // navigation.navigate("Details");
+  };
+
   return (
     <View>
       {randomImageUrl ? (
         <Image
           source={{ uri: randomImageUrl }}
-          style={{ width: "100%", height: 400 }}
-          resizeMode="cover"
+          style={{ width: "100%", height: 300 }}
+          resizeMode="contain"
         />
       ) : null}
       {!isLoggedIn && <Text>Please log in to view your selections!</Text>}
 
-      <Text>{userSelections.lengthInCanada}</Text>
-      <Text>{userSelections.occupation}</Text>
-      <Text>{userSelections.occupation}</Text>
+      {/* Conditional Button: Get a private health care insurance */}
+      {["Planning to move", "Just arrived - 3 months"].includes(
+        userSelections.lengthInCanada
+      ) && (
+        <TextButton onPress={goToDetails}>
+          <Text>Get a private health care insurance</Text>
+        </TextButton>
+      )}
+      {/* Button: Apply for Medical Service Plan */}
+      {[
+        "Planning to move",
+        "Just arrived - 3 months",
+        "More than 3 months",
+      ].includes(userSelections.lengthInCanada) && (
+        <TextButton onPress={goToDetails}>
+          <Text>Apply for Medical Service Plan</Text>
+        </TextButton>
+      )}
+      {/* Conditional Button: Apply for Social Insurance Number */}
+      {userSelections.occupation === "Worker" ||
+        (userSelections.studentWork === "Yes" && (
+          <TextButton onPress={goToDetails}>
+            <Text>Apply for Social Insurance Number</Text>
+          </TextButton>
+        ))}
+
+      {/* Conditional Button: Apply for driver's license */}
+      {userSelections.drive === "Yes" && (
+        <TextButton onPress={goToDetails}>
+          <Text>Apply for driver's license</Text>
+        </TextButton>
+      )}
+
+      {/* Conditional Button: Get a compass card */}
+      {userSelections.needPublicTransportation === "Yes" && (
+        <TextButton onPress={goToDetails}>
+          <Text>Get a compass card</Text>
+        </TextButton>
+      )}
       <TextButton onPress={handleClearSelections}>
         <Text style={styles.clearDataButtonText}>Clear All My Selections</Text>
       </TextButton>
