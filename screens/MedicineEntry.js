@@ -49,6 +49,78 @@ const MedicineEntry = ({ navigation }) => {
     ],
   };
 
+  const familyDoctor = {
+    title: "Finding Canadian Family Doctor",
+    contents: [
+      {
+        subtitle: "What is a Family Doctor?",
+        content: "In the Canadian healthcare system, a family doctor (aka a general practitioner, or primary care physician):",
+      },
+      {
+        content: "- Serves as the first point of medical contact;",
+      },
+      {
+        content: "- Provides comprehensive care to patients of all ages;",
+      },
+      {
+        content: "- For basic medical services and general health concerns;",
+      },
+      {
+        content: "- Refers patients to specialists when necessary",
+      },
+      {
+        subtitle: "When to Seek",
+        content: "- Family Doctor is the first people you see when having a health concern or question.",
+      },
+      {
+        content: "- If you are experiencing a medical emergency, call 9-1-1 or go to the nearest emergency department.",
+      },
+      {
+        content: "- If you are unsure whether where to seek help, call Healthlink BC at 8-1-1 or 7-1-1 if you are hearing impaired.",
+      },
+      {
+        subtitle: "How to Find",
+        link: {
+          title: "- Register for BC's Health Connect Registry",
+          url: "https://www.healthlinkbc.ca/health-connect-registry",
+        }
+      },
+      {
+        link: {
+          title: "- Visit the Pathways Medical Care Directory",
+          url: "https://pathwaysmedicalcare.ca/"
+        },
+      },
+      {
+        content: "- Contact Healthlink BC at 8-1-1 or 7-1-1 if you are hearing impaired."
+      },
+      {
+        link: {
+          title: "- Contact local Division of Family Practice.",
+          url: "https://divisionsbc.ca/",
+        }
+      },
+      {
+        link: {
+          title: "- Check third-party websites, such as",
+          link: {
+            title: "Find a Doctor BC",
+            url: "https://www.findadoctorbc.ca/"
+          }
+        }
+      },
+      {
+        content: "- Ask your family or friends to introduce you to their own family doctor."
+      },
+      {
+        conteng: "- If you are visiting another health care provider, such as a specialist, ask them if they know of any family doctors that are accepting patients."
+      },
+      {
+        conteng: "- If you are visiting a walk-in clinic, ask the doctor if they would be willing to take you on as a patient."
+      }
+    ],
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -59,7 +131,7 @@ const MedicineEntry = ({ navigation }) => {
         {/* Family Doctor */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: detailsContent })
+            navigation.navigate("Details", { detailsContent: detailsContent})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -98,7 +170,7 @@ const MedicineEntry = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: detailsContent })
+            navigation.navigate("Details", { detailsContent: familyDoctor })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}

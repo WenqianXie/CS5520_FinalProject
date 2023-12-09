@@ -12,7 +12,7 @@ const Details = ({navigation, route}) => {
   }, [navigation]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={detailsStyles.detailsContainer}>
       {detailsContent.contents.map((bulletPointContent, index) => (
         <BulletPointContent bulletPointContent={bulletPointContent} key={index}/>
       )) }
@@ -23,6 +23,9 @@ const Details = ({navigation, route}) => {
 export default Details
 
 const detailsStyles = StyleSheet.create({
+detailsContainer: {
+  padding: "7%"
+},
 title: {
     fontSize: 20,
     fontWeight: 'bold',

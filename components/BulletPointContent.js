@@ -1,29 +1,32 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Platform } from 'react-native'
 import React from 'react'
 import MapManager from './MapManager'
 import WebLink from './WebLink'
-import { styles } from '../helper/HelperStyles'
 
 const BulletPointContent = ({bulletPointContent}) => {
   return (
     <>
       <View>
-        {/* Subtitle */}
-        <View style={bulletPointContentStyles.subtitleContainer}>
-          <Text style={bulletPointContentStyles.bullet}>
-            •
-          </Text>
-          <Text style={bulletPointContentStyles.subtitle}>
-            {bulletPointContent.subtitle}
-          </Text>
-        </View>
+        {/* Subtitle if needed */}
+        {bulletPointContent.subtitle &&
+          <View style={bulletPointContentStyles.subtitleContainer}>
+            <Text style={bulletPointContentStyles.bullet}>
+              •
+            </Text>
+            <Text style={bulletPointContentStyles.subtitle}>
+              {bulletPointContent.subtitle}
+            </Text>
+          </View>
+        }
 
-        {/* Content */}
-        <View style={bulletPointContentStyles.contentContainer}>
-          <Text style={styles.detailsContent}>
-            {bulletPointContent.content}
-          </Text>
-        </View>
+        {/* Content if needed*/}
+        {bulletPointContent.content &&
+          <View style={bulletPointContentStyles.contentContainer}>
+            <Text style={bulletPointContent.detailsContent}>
+              {bulletPointContent.content}
+            </Text>
+          </View>
+        }
 
         {/* WebLink if needed */}
         { bulletPointContent.link &&
@@ -44,11 +47,11 @@ export default BulletPointContent
 
 const bulletPointContentStyles = StyleSheet.create({
   subtitleContainer: {
-    width:"90%",
     alignSelf: 'right',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    margin: "3%",
   },
   bullet: {
     fontSize: 16,
@@ -62,9 +65,21 @@ const bulletPointContentStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   contentContainer: {
-    width:"85%",
     alignSelf: 'right',
     justifyContent: 'flex-start',
+    margin: "1%",
   },
-  
+  detailsContent:{
+    ...Platform.select({
+      ios: {
+        fontFamily: 'San Francisco', // 在 iOS 上使用 San Francisco 字体
+      },
+      android: {
+        fontFamily: 'Roboto', // 在 Android 上使用 Roboto 字体
+      },
+    }),
+    fontSize: 16,
+    letterSpacing: 3,
+    lineHeight: 30,
+  }
 })

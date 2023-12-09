@@ -15,7 +15,7 @@ const WebLink = ({linkRequest}) => {
           {linkRequest.title}
         </Text>
         <View style={webLinkStyles.linkIcon}>
-          <EvilIcons name="external-link" size={14} color="blue" />
+          <EvilIcons name="external-link" size={14} color="steelblue" />
         </View>
       </TouchableOpacity>
     </View>
@@ -27,10 +27,13 @@ export default WebLink;
 const webLinkStyles = StyleSheet.create({
   linkContainer: {
     flexDirection: 'row',
+    alignSelf: 'right',
+    justifyContent: 'flex-start',
+    margin: "1%",
   },
   linkURL: {
     textDecorationLine: 'underline',
-    color: 'blue',
+    color: 'steelblue',
   },
   linkIcon: {
     alignSelf: "flex-start"
