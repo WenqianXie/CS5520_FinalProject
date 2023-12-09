@@ -75,8 +75,49 @@ const skyTrain = {
         url: "https://upassbc.translink.ca/",
       },
     },
+    { content: "- Or you can purchase a single fare ticket at the station!" },
+    { content: " - Or you can simply tap your credit card!" },
     {
-      content: "- Find out your SkyTrain stations nearby",
+      content:
+        "- Find out your SkyTrain stations nearby and tap your card on the card reader!",
+      map: requestedMap,
+    },
+  ],
+};
+
+const bus = {
+  title: "Using the Bus",
+  contents: [
+    {
+      subtitle: "What is Bus?",
+      content:
+        "- Buses connect all neighbourhoods of Vancouver and run frequently. All buses are equipped with accessibility measures for wheelchairs and strollers. ",
+    },
+    {
+      content:
+        "- Children 12 and under can ride TransLink services free of charge!",
+    },
+    {
+      subtitle: "How to take a Bus?",
+      content:
+        "- Compass Cards are convenient, reloadable fare cards that can be used when taking transit within Metro Vancouver.",
+      link: {
+        title: "- Purchase a compass card",
+        url: "https://www.translink.ca/transit-fares/where-to-buy",
+      },
+    },
+    {
+      content:
+        "- U-Passes are available to students enrolled in participating universities only, they are linked to the Compass Card",
+      link: {
+        title: "- Purchase a U-Pass",
+        url: "https://upassbc.translink.ca/",
+      },
+    },
+    { content: " - Or you can simply tap your credit card!" },
+    {
+      content:
+        "- Find out your bus stations nearby and tap your card on the card reader!",
       map: requestedMap,
     },
   ],
@@ -106,7 +147,7 @@ const TransitEntry = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: skyTrain })
+            navigation.navigate("Details", { detailsContent: bus })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
