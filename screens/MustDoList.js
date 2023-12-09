@@ -82,20 +82,15 @@ export default function MustDoList({ navigation }) {
         // Call the API inside the useEffect to make sure it's awaited
         const jsonData = await getPhotosFromApi();
 
-        // Filter for horizontal images
-        const horizontalImages = jsonData.results.filter(
-          (photo) => photo.width > photo.height
-        );
-
-        // Check if there are any horizontal images
-        if (horizontalImages.length > 0) {
+        // Check if jsonData has results
+        if (jsonData && jsonData.results.length > 0) {
           const randomIndex = Math.floor(
-            Math.random() * horizontalImages.length
+            Math.random() * jsonData.results.length
           );
-          const randomPhoto = horizontalImages[randomIndex];
+          const randomPhoto = jsonData.results[randomIndex];
           setRandomImageUrl(randomPhoto.urls.regular);
         } else {
-          console.log("No horizontal images found");
+          console.log("No results found");
         }
       } catch (error) {
         console.error("Error fetching image:", error);
@@ -114,8 +109,8 @@ export default function MustDoList({ navigation }) {
       {randomImageUrl ? (
         <Image
           source={{ uri: randomImageUrl }}
-          style={{ width: "100%", height: 300 }}
-          resizeMode="contain"
+          style={{ width: "100%", height: "50%" }}
+          resizeMode="cover"
         />
       ) : null}
       {!isLoggedIn && <Text>Please log in to view your selections!</Text>}
