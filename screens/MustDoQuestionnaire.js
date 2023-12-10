@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet, Alert } from "react-native";
+import { View, Text, FlatList, StyleSheet, Alert, ActivityIndicator } from "react-native";
 import Checkbox from "expo-checkbox";
 import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
@@ -198,7 +198,11 @@ const Questionnaire = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         ListFooterComponent={() => (
           <TextButton onPress={handleSubmit}>
+            {submitLoading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
             <Text>Submit</Text>
+            )}
           </TextButton>
         )}
         ListFooterComponentStyle={{

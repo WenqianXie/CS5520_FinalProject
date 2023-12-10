@@ -21,22 +21,25 @@ import { auth } from "./FirebaseSetup";
 
 export async function writeToUsersDB(userData) {
   try {
-    const userQuery = query(
-      usersCollectionRef,
-      where("userId", "==", auth.currentUser.uid)
-    );
-    const querySnapshot = await getDocs(userQuery);
+    const userDocRef = doc(usersCollectionRef, auth.currentUser.uid);
+    const docSnap = await getDoc(userDocRef);
+    // const userQuery = query(
+    //   usersCollectionRef,
+    //   where("userId", "==", auth.currentUser.uid)
+    // );
+    // const querySnapshot = await getDocs(userQuery);
 
-    if (!querySnapshot.empty) {
+    // if (!querySnapshot.empty) {
+      // const userDocRef = querySnapshot.docs[0].ref;
+
       // User document exists, update it
-      const userDocRef = querySnapshot.docs[0].ref;
+    if(docSnap.exists()){
       await updateDoc(userDocRef, {
         ...userData,
       });
-      console.log("User document updated with ID: ", userDocRef.id);
     } else {
       // No user document, create a new one
-       await setDoc(doc(usersCollectionRef, auth.currentUser.uid), {
+       await setDoc(userDocRef, {
         ...userData,
         userId: auth.currentUser.uid,
       });
@@ -46,14 +49,22 @@ export async function writeToUsersDB(userData) {
   }
 }
 
-export async function writeToBookmarksDB(bookmarkData, bookmarkId) {
+export async function writeToBookmarksDB(bookmarkData) {
   try {
     // Just pass the bookmarkData to addDoc with bookmarksCollectionRef
-    const docRef = await addDoc(bookmarksCollectionRef, {
-      ...bookmarkData,
-      bookmarkId: bookmarkId,
-    });
-    console.log("Bookmark document written with ID: ", docRef.id);
+    const bookmarkDocRef = doc(bookmarksCollectionRef, auth.currentUser.uid);
+    const docSnap = await getDoc(bookmarkDocRef);
+
+    if (docSnap.exists()) {
+      await updateDoc(bookmarkDocRef, {
+        ...bookmarkData,
+      });
+    } else {
+      await setDoc(bookmarkDocRef, {
+        ...bookmarkData,
+        userID: auth.currentUser.uid,
+      });
+    }
   } catch (err) {
     console.error("Error writing to bookmarks collection: ", err);
   }
@@ -107,6 +118,12 @@ export async function readInfoData(topic){
       case "familyDoctor":
         docRef = doc(infoDataCollectionRef, "medicine", "medicineCollection", "familyDoctor")
         break;
+      case "hospital":
+        docRef = doc(infoDataCollectionRef, "medicine", "medicineCollection", "hospital")
+        break;
+      case "pharmacy":
+        docRef = doc(infoDataCollectionRef, "medicine", "medicineCollection", "pharmacy")
+        break;
       case "skyTrain":
         docRef = doc(infoDataCollectionRef, "transit", "transitCollection", "skyTrain")
         break;
@@ -115,6 +132,18 @@ export async function readInfoData(topic){
         break;
       case "seabus":
         docRef = doc(infoDataCollectionRef, "transit", "transitCollection", "seabus")
+        break;
+      case "bike":
+        docRef = doc(infoDataCollectionRef, "transit", "transitCollection", "bike")
+        break;
+      case "driverLicense":
+        docRef = doc(infoDataCollectionRef, "essentials", "essentialsCollection", "driverLicense")
+        break;
+      case "sin":
+        docRef = doc(infoDataCollectionRef, "essentials", "essentialsCollection", "sin")
+        break;
+      case "photoID":
+        docRef = doc(infoDataCollectionRef, "essentials", "essentialsCollection", "photoID")
         break;
     }
     const docSnap = await getDoc(docRef)
