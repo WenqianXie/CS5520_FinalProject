@@ -1,24 +1,49 @@
-import { View, Button, FlatList, StyleSheet } from 'react-native'
+import { View, Button, StyleSheet } from 'react-native'
 import React from 'react'
 import MapView, {Marker} from "react-native-maps";
 import * as Location from "expo-location";
 import { useEffect, useState } from 'react';
-import { useRoute } from '@react-navigation/native';
+import { colors } from '../helper/HelperColors';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const MapManager = ({requestedMap}) => {
-  // const route = useRoute();
-  // const requestedMap = route.params.requestedMap;
-  const [showRegion, setShowRegion] = useState(requestedMap.initialRegion);
+  const [minLatitude, setMinLatitude] = useState(0);
+  const [maxLatitude, setMaxLatitude] = useState(0);
+  const [minLongitude, setMinLongitude] = useState(0);
+  const [maxLongitude, setMaxLongitude] = useState(0);
+  const [showRegion, setShowRegion] = useState("");
   const [status, requestPermission] = Location.useForegroundPermissions();
   const [userLocation, setUserLocation] = useState(null);
-  /*
+
   useEffect(() => {
-    if (route.params) {
-      // I have come from interactive map
-      setUserLocation(route.params.selectedCoord);
+    if (requestedMap.initialRegion) {
+      setShowRegion(requestedMap.initialRegion);
+    } else if (requestedMap.markersList) {
+       // Calculate bounding box
+      const minLatitude_temp = Math.min(...requestedMap.markersList.map(marker => marker.coordinate.latitude));
+      setMinLatitude(minLatitude_temp);
+      const maxLatitude_temp = Math.max(...requestedMap.markersList.map(marker => marker.coordinate.latitude));
+      setMaxLatitude(maxLatitude_temp)
+      const minLongitude_temp = Math.min(...requestedMap.markersList.map(marker => marker.coordinate.longitude));
+      setMinLongitude(minLongitude_temp);
+      const maxLongitude_temp = Math.max(...requestedMap.markersList.map(marker => marker.coordinate.longitude));
+      setMaxLongitude(maxLongitude_temp);
+
+      // Calculate center and deltas
+      const centerLatitude = (minLatitude_temp + maxLatitude_temp) / 2;
+      const centerLongitude = (minLongitude_temp + maxLongitude_temp) / 2;
+      const latitudeDelta = (maxLatitude_temp - minLatitude_temp) + 0.02; // Add margin
+      const longitudeDelta = (maxLongitude_temp - minLongitude_temp) +0.02;// Add margin
+      setShowRegion({
+        latitude: centerLatitude,
+        longitude: centerLongitude,
+        latitudeDelta: latitudeDelta,
+        longitudeDelta:longitudeDelta,
+      });
+    } else {
+      console.log("No initial region or markers list")
     }
-  }, [route]);
-  */
+  }, []);
 
   const verifyPermission = async () => {
     if (status.granted) {
@@ -47,17 +72,15 @@ const MapManager = ({requestedMap}) => {
   }
   
   const zoomRegionToIncludeUserLocation = (userLocation) => {
+    const minLatitude_temp = Math.min(minLatitude, userLocation.latitude);
+    const maxLatitude_temp = Math.max(maxLatitude, userLocation.latitude);
+    const minLongitude_temp = Math.min(minLongitude, userLocation.longitude);
+    const maxLongitude_temp = Math.max(maxLongitude, userLocation.longitude);
     const updatedRegion = {
-          latitude: (userLocation.latitude + requestedMap.initialRegion.latitude) / 2,
-          longitude: (userLocation.longitude + requestedMap.initialRegion.longitude) / 2,
-          latitudeDelta: Math.max(
-            Math.abs(userLocation.latitude - requestedMap.initialRegion.latitude) * 2,
-            requestedMap.initialRegion.latitudeDelta
-          ),
-          longitudeDelta: Math.max(
-            Math.abs(userLocation.longitude - requestedMap.initialRegion.longitude) * 2,
-            requestedMap.initialRegion.longitudeDelta
-          ),
+          latitude: (minLatitude_temp + maxLatitude_temp) / 2,
+          longitude: (minLongitude_temp + maxLongitude_temp) / 2,
+          latitudeDelta: (maxLatitude_temp - minLatitude_temp) + 0.02, //Add a small margin
+          longitudeDelta: (maxLongitude_temp - minLongitude_temp) + 0.02, //Add a small margin
         };
     setShowRegion(updatedRegion);
   }
@@ -81,7 +104,9 @@ const MapManager = ({requestedMap}) => {
             key={index}
             coordinate={marker.coordinate}
             title={marker.title}
-          />
+          >
+            <MaterialIcons name={marker.icon? marker.icon : "location-pin"} size={24} color={colors.themeDark}/>
+          </Marker>
           ))
         }
 
@@ -90,7 +115,9 @@ const MapManager = ({requestedMap}) => {
             coordinate={userLocation}
             title="My Location"
             pinColor='blue'
-          />
+          >
+            <MaterialIcons name="person-pin-circle" size={30} color="dodgerblue"/>
+          </Marker>
         )}
 
       </MapView>
@@ -105,11 +132,15 @@ const styles = StyleSheet.create({
   mapContainer: {
     width:"100%",
     height:"100%",
-    backgroundColor: "red"
+    margin: "1%",
   },
   mapView: {
     width:"100%",
     height: 200,
     alignSelf: "center",
+  },
+  marker: {
+    borderWidth: 0.5,
+    borderColor: "white",
   }
 })

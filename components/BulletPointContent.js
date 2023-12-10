@@ -1,9 +1,32 @@
-import { StyleSheet, Text, View, Platform } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Platform, Image } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import MapManager from './MapManager'
 import WebLink from './WebLink'
+import WebView from 'react-native-webview'
+import { getDownloadURL, ref } from 'firebase/storage'
+import { storage } from '../firebase/FirebaseSetup'
+import { ActivityIndicator } from 'react-native'
+import { colors } from '../helper/HelperColors'
 
 const BulletPointContent = ({bulletPointContent}) => {
+  const [downloadImageURL, setDownloadImageURL] = useState(null)
+    useEffect(() => {
+      if (bulletPointContent.image) {
+        console.log("bulletPointContent.image: ", bulletPointContent.image)
+        const getURL = async () => {
+          try{
+            const imageRef = ref(storage, bulletPointContent.image)
+            console.log("imageRef: ", imageRef)
+            const url = await getDownloadURL(imageRef)
+            console.log("download url: ", url)
+            setDownloadImageURL(url)
+          } catch (err){
+            console.log(err)
+          }
+        }
+        getURL()
+      }
+    }, [])
   return (
     <>
       <View>
@@ -33,11 +56,29 @@ const BulletPointContent = ({bulletPointContent}) => {
           <WebLink linkRequest={bulletPointContent.link} />
         }
 
+        {/* Image if needed */}
+        { bulletPointContent.image &&
+          <View>
+            {!downloadImageURL ? (
+              <ActivityIndicator size="large" color={colors.themeDark} />
+            ) : (
+              <Image
+                source={{ uri: downloadImageURL }}
+                style={bulletPointContentStyles.image}
+                resizeMode="cover"
+              />
+            )}
+          </View>
+        }
+
         {/* Map if needed */}
         { bulletPointContent.map &&
-          <View style={{flex: 1}}>
           <MapManager requestedMap={bulletPointContent.map} />
-          </View>
+        }
+
+        {/* Webview if needed */}
+        { bulletPointContent.webview &&
+          <WebView source={{ uri: bulletPointContent.webview }} style={bulletPointContentStyles.webview} />
         }
 
       </View>
@@ -82,5 +123,17 @@ const bulletPointContentStyles = StyleSheet.create({
     fontSize: 16,
     letterSpacing: 3,
     lineHeight: 30,
+  },
+  map: {
+    margin: "1%",
+  },
+  webview: {
+    height: 400,
+    margin: "1%",
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    margin: "1%",
   }
 })

@@ -107,6 +107,15 @@ export async function readInfoData(topic){
       case "familyDoctor":
         docRef = doc(infoDataCollectionRef, "medicine", "medicineCollection", "familyDoctor")
         break;
+      case "skyTrain":
+        docRef = doc(infoDataCollectionRef, "transit", "transitCollection", "skyTrain")
+        break;
+      case "bus":
+        docRef = doc(infoDataCollectionRef, "transit", "transitCollection", "bus")
+        break;
+      case "seabus":
+        docRef = doc(infoDataCollectionRef, "transit", "transitCollection", "seabus")
+        break;
     }
     const docSnap = await getDoc(docRef)
     return docSnap.data();

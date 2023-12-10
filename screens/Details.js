@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView, Button, ScrollView, FlatList } from "react-native";
+import { StyleSheet, Text, SafeAreaView, Button, FlatList } from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
 import BulletPointContent from "../components/BulletPointContent";
