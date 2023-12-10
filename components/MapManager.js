@@ -105,10 +105,11 @@ const styles = StyleSheet.create({
   mapContainer: {
     width:"100%",
     height:"100%",
+    backgroundColor: "red"
   },
   mapView: {
-    width:"90%",
-    height:"30%",
+    width:"100%",
+    height: 200,
     alignSelf: "center",
   }
 })

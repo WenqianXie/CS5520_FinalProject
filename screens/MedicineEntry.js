@@ -190,6 +190,7 @@ const MedicineEntry = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { detailsContent: msp, category: "medicine", docID: "msp"})
+            // navigation.navigate("Details", {topic: "msp"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}

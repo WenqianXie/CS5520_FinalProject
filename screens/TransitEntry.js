@@ -76,11 +76,28 @@ const skyTrain = {
       },
     },
     { content: "- Or you can purchase a single fare ticket at the station!" },
-    { content: " - Or you can simply tap your credit card!" },
+    { content: "- Or you can simply tap your credit card!" },
     {
       content:
-        "- Find out your SkyTrain stations nearby and tap your card on the card reader!",
-      map: requestedMap,
+        "- Find out your SkyTrain stations nearby and tap your card on the card reader!"},
+    { map: {
+        initialRegion: {
+          latitude: 42.3601,
+          longitude: -71.0589,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        },
+        markersList: [
+          {
+            coordinate: {
+              latitude: 42.3601,
+              longitude: -71.0589,
+            },
+            title: "This is a Marker's Title",
+          },
+        ],
+        style: null,
+      },
     },
   ],
 };
@@ -114,11 +131,10 @@ const bus = {
         url: "https://upassbc.translink.ca/",
       },
     },
-    { content: " - Or you can simply tap your credit card!" },
+    { content: "- Or you can simply tap your credit card!" },
     {
       content:
         "- Find out your bus stations nearby and tap your card on the card reader!",
-      map: requestedMap,
     },
   ],
 };
@@ -152,13 +168,31 @@ const seabus = {
         url: "https://upassbc.translink.ca/",
       },
     },
-    { content: " - Or you can simply tap your credit card!" },
+    { content: "- Or you can simply tap your credit card!" },
     {
       subtitle: "Where to take a Seabus?",
       content:
         "- Waterfront Station, a main transit hub for all forms of Vancouver public transit. ",
     },
-    { content: "- 601 W Cordova St, Vancouver, BC V6B 1G1" },
+    { content: "- 601 W Cordova St, Vancouver, BC V6B 1G1"},
+    { map: {
+        initialRegion: {
+          latitude: 42.3601,
+          longitude: -71.0589,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        },
+        markersList: [
+          {
+            coordinate: {
+              latitude: 42.3601,
+              longitude: -71.0589,
+            },
+            title: "This is a Marker's Title",
+          },
+        ],
+        style: null,
+      }, },
   ],
 };
 
@@ -173,7 +207,7 @@ const TransitEntry = ({ navigation }) => {
         {/* Family Doctor */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: skyTrain })
+            navigation.navigate("Details", { detailsContent: skyTrain, category: "transit", docID: "skyTrain"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -186,7 +220,7 @@ const TransitEntry = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: bus })
+            navigation.navigate("Details", { detailsContent: bus, category: "transit", docID: "bus" })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -199,7 +233,7 @@ const TransitEntry = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: seabus })
+            navigation.navigate("Details", { detailsContent: seabus, category: "transit", docID: "seabus" })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}

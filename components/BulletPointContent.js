@@ -35,7 +35,9 @@ const BulletPointContent = ({bulletPointContent}) => {
 
         {/* Map if needed */}
         { bulletPointContent.map &&
+          <View style={{flex: 1}}>
           <MapManager requestedMap={bulletPointContent.map} />
+          </View>
         }
 
       </View>
@@ -50,8 +52,7 @@ const bulletPointContentStyles = StyleSheet.create({
     alignSelf: 'right',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    margin: "3%",
+    marginVertical: "3%",
   },
   bullet: {
     fontSize: 16,
