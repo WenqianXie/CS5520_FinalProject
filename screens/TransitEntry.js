@@ -47,6 +47,63 @@ const requestedMap = {
   style: null,
 };
 
+const compassCard = {
+  title: "Get A Compass Card",
+  constents: [
+    {
+      subtitle: "What is Compass Card?",
+      content:
+        "- Compass Cards are convenient, reloadable fare cards that can be used when taking transit within Metro Vancouver.",
+    },
+    {
+      content:
+        "- Compass Cards can be loaded with Stored Value, or with prepaid passes (such as Monthly and DayPasses). Stored Value can be used to pay for single fares, DayPasses, and add-ons such as the YVR AddFare. Passes can be used for unlimited travel within the selected zones and time period.",
+    },
+    {
+      subtitle: "How compass card works?",
+      content:
+        "- Tap your card on the reader when entering buses, HandyDART, and at the gates when entering and exiting SkyTrain stations or SeaBus terminals.",
+    },
+    {
+      content:
+        "The fare is automatically deducted from the stored value on your card.",
+    },
+    {
+      content:
+        "- You can also use your Compass Card to transfer between SkyTrain, SeaBus and West Coast Express.",
+    },
+    {
+      subtitle: "Where to get a compass card?",
+      content:
+        "- Compass Cards can be purchased at Compass Vending Machines located at all SkyTrain, SeaBus and West Coast Express stations.",
+    },
+    {
+      content: "- It requires a $6 refundable deposit. Also ... you can",
+    },
+    {
+      link: {
+        title: "Purchase Online",
+        url: "https://www.compasscard.ca/OrderCard",
+      },
+    },
+    {
+      subtitle: "Wait.. If you are a student!",
+      content:
+        "- U-Passes are available to students enrolled in participating universities only, they are linked to the Compass Card",
+    },
+    {
+      content:
+        "- U-passes offer lower transit fares across all zones–including unlimited use of bus, SkyTrain and SeaBus services within Metro Vancouver",
+    },
+    {
+      link: {
+        title: "Purchase a U-Pass",
+        url: "https://upassbc.translink.ca/",
+      },
+    },
+  ],
+};
+
 // const skyTrain = {
 //   title: "Using the SkyTrain",
 //   contents: [
@@ -194,11 +251,27 @@ const TransitEntry = ({ navigation }) => {
       />
 
       <View style={styles.bottomRow}>
+        {/* Compass / UPass */}
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Details", { topic: "compassCard" })
+          }
+          activeOpacity={0.7}
+          style={styles.iconContainer}
+        >
+          <Image
+            source={require("../assets/pass.png")}
+            style={styles.footerImage}
+          />
+          <Text style={styles.iconText}>
+            {EntryButtonTextHelper("compassCard")}
+          </Text>
+        </TouchableOpacity>
 
         {/* SkyTrain */}
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Details", {topic: "skyTrain"})
+          onPress={
+            () => navigation.navigate("Details", { topic: "skyTrain" })
             // navigation.navigate('Details', {detailsContent: skyTrain, category: "transit", docID: "skyTrain"})
           }
           activeOpacity={0.7}
@@ -208,14 +281,14 @@ const TransitEntry = ({ navigation }) => {
             source={require("../assets/metro.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>{EntryButtonTextHelper("skyTrain")}</Text>
+          <Text style={styles.iconText}>
+            {EntryButtonTextHelper("skyTrain")}
+          </Text>
         </TouchableOpacity>
 
         {/* Bus */}
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Details", {topic : "bus"})
-          }
+          onPress={() => navigation.navigate("Details", { topic: "bus" })}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -228,9 +301,7 @@ const TransitEntry = ({ navigation }) => {
 
         {/* Seabus */}
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Details", {topic : "seabus"})
-          }
+          onPress={() => navigation.navigate("Details", { topic: "seabus" })}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -240,22 +311,6 @@ const TransitEntry = ({ navigation }) => {
           />
           <Text style={styles.iconText}>{EntryButtonTextHelper("seabus")}</Text>
         </TouchableOpacity>
-
-        {/* Bike */}
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Details", { detailsContent: detailsContent })
-          }
-          activeOpacity={0.7}
-          style={styles.iconContainer}
-        >
-          <Image
-            source={require("../assets/bike.png")}
-            style={styles.footerImage}
-          />
-          <Text style={styles.iconText}>{EntryButtonTextHelper("bike")}</Text>
-        </TouchableOpacity>
-
       </View>
     </View>
   );
