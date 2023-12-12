@@ -1,14 +1,15 @@
-import { View, Text } from "react-native";
+import { auth } from "../firebase/FirebaseSetup";
 import React, { useState, useEffect } from "react";
 import { ExploreScreen } from "./ExploreScreen";
 import { ProfileScreen } from "./ProfileScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Font from "expo-font";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Tab = createBottomTabNavigator();
 
-export default function Home({ navigation }) {
+export default function Home({ navigation}) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {

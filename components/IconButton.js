@@ -6,7 +6,7 @@ import React from 'react'
 import { styles } from '../helper/HelperStyles';
 import { FONTSIZE_CONTROLLER } from '../helper/Constants';
 
-const IconButton = ({onPress, text="", scale=1, position, type}) => {
+const IconButton = ({onPress, text="", scale=1, position=null, type}) => {
   let fontScale = 1;
   //control the scalling of the fontSize
   if (scale < 1){

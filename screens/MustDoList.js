@@ -49,45 +49,74 @@ export default function MustDoList({ navigation, route }) {
         setGeneratedMustDoList(route.params.generatedMustDoList);
       }
     }
-  }, []); // Empty dependency array means this effect runs once after the component mounts
+  }, [isLoggedIn, auth.currentUser]); // Empty dependency array means this effect runs once after the component mounts
 
-  const handleClearSelections = () => {
+  const finishDeletionAlert = () => (
+    Alert.alert(
+      "Data Cleared",
+      "Your selections has been successfully cleared.",
+      [
+        {
+          text: "Home",
+          onPress: () => navigation.replace("Home", {
+            screen: "Explore",
+            params: null
+          }),
+        },
+      ]
+    )
+  )
+
+  const clearData = async () => {
     try {
-      if(isLoggedIn){
-        deleteSelectionsFromUsersDB();
-      }
-        Alert.alert(
-          "Data Cleared",
-          "Your selections has been successfully cleared.",
-          [
-            {
-              text: "Generate My List",
-              onPress: () => navigation.replace("MustDo")
-            },
-            {
-              text: "Home",
-              onPress: () => navigation.replace("Home"),
-            },
-          ]
-        );
-    } catch (error) {
+      await deleteSelectionsFromUsersDB();
+      finishDeletionAlert();
+    } catch (err) {
       console.error("Error clearing data: ", error);
       Alert.alert("Error", "Failed to clear data.");
     }
+  }
+
+  const handleClearSelections = () => {
+      if(isLoggedIn){
+        Alert.alert(
+          "Notice",
+          "Confirm to clear? This will also wipe out your current Must-Do List.",
+          [
+            {
+              text: "Cancel"
+            },
+            {
+              text: "Confirm",
+              onPress: clearData
+            }]
+        )
+      } else {
+        finishDeletionAlert()
+      }
   };
 
   const handleChangeAnswers = () => {
     if(isLoggedIn){
       navigation.navigate("MustDo");
     } else {
-      if(route.params?.userSelection)
-      navigation.navigate("MustDo", {userSelection: route.params.userSelection});
+      if(route.params?.userSelection){
+        navigation.navigate("MustDo", {userSelection: route.params.userSelection});
     }
-
   };
+}
 
   const handleExplore = () => {
-    navigation.navigate("Home", { screen: "Explore" });
+    if(isLoggedIn){
+      navigation.navigate("Home");
+    } else {
+        navigation.navigate("Home", {
+          screen: "Explore", 
+          params: {
+            generatedMustDoList : generatedMustDoList, 
+            userSelection: route.params.userSelection
+          }})
+      }
   };
 
   const getPhotosFromApi = async () => {

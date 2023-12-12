@@ -55,8 +55,9 @@ export async function readFromUsersDB(targetField=null){
     const docSnap = await getDoc(userDocRef);
     if(docSnap.exists()){
       if(targetField){
-        if(docSnap.data().targetField){
-          return docSnap.data().targetField;
+        if(docSnap.data()[targetField]){
+          console.log("if docSnap.data().targetField === true")
+          return docSnap.data()[targetField]
         } else {
           return null
         }
@@ -119,11 +120,12 @@ export async function deleteSelectionsFromUsersDB() {
   try {
     const userDoc = doc(usersCollectionRef, auth.currentUser.uid);
     await updateDoc(userDoc, {
-      userSelection: {
-        lengthInCanada: null,
-        occupation: null,
-      },
+      userSelection: null
     });
+    const bookmarkDoc = doc(bookmarksCollectionRef, auth.currentUser.uid)
+    await updateDoc(bookmarkDoc,{
+      generatedMustDoList: null
+    })
     // await deleteDoc(doc(usersCollectionRef, userId)); // delete the document from users collection
   } catch (err) {
     console.error("Error deleting from users collection: ", err);

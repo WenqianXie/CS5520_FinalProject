@@ -33,31 +33,39 @@ const Questionnaire = ({ navigation, route }) => {
   }, [auth.currentUser]);
 
   useEffect(() => {
-    console.log("Route.params: ", route.params )
+    const getUserSelection = async () => {
     // Ensure currentUser is available
-    if (isLoggedIn){
-      const userSelection = readFromUsersDB("userSelection");
-      if(userSelection){
-        setLengthInCanada(userSelection.lengthInCanada);
-        setOccupation(userSelection.occupation);
-        setStudentWork(userSelection.studentWork);
-        setDrive(userSelection.drive);
-        setComeWithFamily(userSelection.comeWithFamily);
-        setNeedPublicTransportation(userSelection.needPublicTransportation);
-      }
-    } else {
-      // If user is not logged in, set the userSelection state to the passed in data if any
-      if (route.params?.userSelection) {
-        setLengthInCanada(route.params.userSelection.lengthInCanada);
-        setOccupation(route.params.userSelection.occupation);
-        setStudentWork(route.params.userSelection.studentWork);
-        setDrive(route.params.userSelection.drive);
-        setComeWithFamily(route.params.userSelection.comeWithFamily);
-        setNeedPublicTransportation(route.params.userSelection.needPublicTransportation);
+      try{
+        if (isLoggedIn){
+          setReadDataLoading(true); // Set loading to true while we fetch the userSelection
+          const userSelection = await readFromUsersDB("userSelection");
+          if(userSelection){
+            console.log("read online userSelection in quiz from database: ", userSelection);
+            setLengthInCanada(userSelection.lengthInCanada);
+            setOccupation(userSelection.occupation);
+            setStudentWork(userSelection.studentWork);
+            setDrive(userSelection.drive);
+            setComeWithFamily(userSelection.comeWithFamily);
+            setNeedPublicTransportation(userSelection.needPublicTransportation);
+          }
+        } else {
+          // If user is not logged in, set the userSelection state to the passed in data if any
+          if (route.params?.userSelection) {
+            setLengthInCanada(route.params.userSelection.lengthInCanada);
+            setOccupation(route.params.userSelection.occupation);
+            setStudentWork(route.params.userSelection.studentWork);
+            setDrive(route.params.userSelection.drive);
+            setComeWithFamily(route.params.userSelection.comeWithFamily);
+            setNeedPublicTransportation(route.params.userSelection.needPublicTransportation);
+          }
+        }
+        setReadDataLoading(false);
+      } catch (err){
+        console.log("Error from getting remote userSelection of quiz: ", err)
       }
     }
-    setReadDataLoading(false);
-  }, []);
+    getUserSelection();
+  }, [isLoggedIn, auth.currentUser]);
 
 
   const questions = [
@@ -110,25 +118,30 @@ const Questionnaire = ({ navigation, route }) => {
     // Add more questions as needed
   ];
 
-  const renderQuestion = ({ item }) => (
-    <View style={styles.questionContainer}>
-      <Text style={styles.question}>{item.question}</Text>
-      {item.options.map((option, index) => (
-        <View key={index} style={styles.optionContainer}>
-          <Checkbox
-            value={item.answer === option}
-            onValueChange={(newValue) => {
-              if (newValue) {
-                item.setAnswer(option);
-              }
-            }}
-            color={item.answer === option ? "#4630EB" : undefined}
-          />
-          <Text style={styles.option}>{option}</Text>
-        </View>
-      ))}
-    </View>
-  );
+  const renderQuestion = ({ item }) => {
+    if (item.id === '3' && occupation !== "Student") {
+        return null;
+      } else {
+    return (
+      <View style={styles.questionContainer}>
+        <Text style={styles.question}>{item.question}</Text>
+        {item.options.map((option, index) => (
+          <View key={index} style={styles.optionContainer}>
+            <Checkbox
+              value={item.answer === option}
+              onValueChange={(newValue) => {
+                if (newValue) {
+                  item.setAnswer(option);
+                }
+              }}
+              color={item.answer === option ? "#4630EB" : undefined}
+            />
+            <Text style={styles.option}>{option}</Text>
+          </View>
+        ))}
+      </View>
+    )}
+  };
 
   const generateMustDoList = () => {
     let mustDoList = [];
@@ -211,7 +224,7 @@ const Questionnaire = ({ navigation, route }) => {
       {!isLoggedIn && (
         <View style={styles.reminderContainer}>
           <Text style={styles.reminderText}>
-            Please log in to save your answers, or your answers won't be saved.
+            Log in to save your answers
           </Text>
         </View>
       )}
@@ -265,13 +278,14 @@ const styles = StyleSheet.create({
   },
   reminderContainer: {
     backgroundColor: "#ffcccb", // Light red for visibility, adjust as needed
-    padding: 10,
+    padding: 5,
     alignItems: "center",
     justifyContent: "center",
   },
   reminderText: {
     fontSize: 16,
     color: "black", // Adjust color as needed
+    alignSelf: "center"
   },
 });
 

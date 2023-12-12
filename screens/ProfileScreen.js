@@ -30,7 +30,7 @@ export function ProfileScreen({ navigation }) {
         setIsLoggedIn(false);
       }
     });
-  }, []);
+  }, [auth.currentUser]);
 
   useEffect(() => {
     async function getURL(avatarUrl) {
@@ -64,7 +64,7 @@ export function ProfileScreen({ navigation }) {
 
       return () => unsubscribe(); // Cleanup function
     }
-  }, [isLoggedIn]); // Re-run the effect when isLoggedIn changes
+  }, [isLoggedIn, auth.currentUser]); // Re-run the effect when isLoggedIn changes or auth.currentUser changes
 
   //Function to get the image to display, depending on whether the user is logged in and has uploaded an avatar photo before
   const getImage = (imageStyle) => {
