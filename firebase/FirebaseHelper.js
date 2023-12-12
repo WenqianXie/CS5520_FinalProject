@@ -49,6 +49,28 @@ export async function writeToUsersDB(userData) {
   }
 }
 
+export async function readFromUsersDB(targetField=null){
+  try{
+    const userDocRef = doc(usersCollectionRef, auth.currentUser.uid);
+    const docSnap = await getDoc(userDocRef);
+    if(docSnap.exists()){
+      if(targetField){
+        if(docSnap.data().targetField){
+          return docSnap.data().targetField;
+        } else {
+          return null
+        }
+      } else {
+        return docSnap.data();
+      }
+    } else {
+      console.log("No such document! Error from readFromUsersDB");
+    }
+  } catch (err) {
+    console.error("Error reading from users collection: ", err);
+  }
+}
+
 export async function writeToBookmarksDB(bookmarkData) {
   try {
     // Just pass the bookmarkData to addDoc with bookmarksCollectionRef

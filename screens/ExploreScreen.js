@@ -9,7 +9,7 @@ export function ExploreScreen({ navigation }) {
   const {width} = useWindowDimensions();
   const buttonScale = width / DEFAULT_SCREEN_WIDTH;
   const arrowButtonHandler = () => {
-    navigation.navigate("MustDo", { questionType: "lengthInCanada" });
+    navigation.navigate("MustDo");
   };
   const essentialButtonHandler = () => {
     navigation.navigate("Essential");

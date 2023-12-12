@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { styles } from "../helper/HelperStyles";
 import React from "react";
+import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
 
 const detailsContent = {
   title: "Hospital",
@@ -190,9 +191,11 @@ const TransitEntry = ({ navigation }) => {
       <ImageBackground
         source={require("../assets/transportation.png")}
         style={styles.backgroundPic}
-      ></ImageBackground>
+      />
+
       <View style={styles.bottomRow}>
-        {/* Family Doctor */}
+
+        {/* SkyTrain */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", {topic: "skyTrain"})
@@ -205,8 +208,10 @@ const TransitEntry = ({ navigation }) => {
             source={require("../assets/metro.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Take SkyTrain</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("skyTrain")}</Text>
         </TouchableOpacity>
+
+        {/* Bus */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", {topic : "bus"})
@@ -218,8 +223,10 @@ const TransitEntry = ({ navigation }) => {
             source={require("../assets/bus.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Take Bus</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("bus")}</Text>
         </TouchableOpacity>
+
+        {/* Seabus */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", {topic : "seabus"})
@@ -231,8 +238,10 @@ const TransitEntry = ({ navigation }) => {
             source={require("../assets/seabus.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Take Seabus</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("seabus")}</Text>
         </TouchableOpacity>
+
+        {/* Bike */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { detailsContent: detailsContent })
@@ -244,8 +253,9 @@ const TransitEntry = ({ navigation }) => {
             source={require("../assets/bike.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Ride Share Bike</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("bike")}</Text>
         </TouchableOpacity>
+
       </View>
     </View>
   );

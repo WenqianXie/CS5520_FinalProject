@@ -5,51 +5,71 @@ import { database, auth } from "../firebase/FirebaseSetup";
 import TextButton from "../components/TextButton";
 import { deleteSelectionsFromUsersDB } from "../firebase/FirebaseHelper";
 import { FlatList } from "react-native-gesture-handler";
+import { bookmarksCollectionRef } from "../firebase/FirebaseSetup";
+import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
+import { onAuthStateChanged } from "firebase/auth";
 
-export default function MustDoList({ navigation }) {
-  const [userSelections, setUserSelections] = useState([]); // State to track userSelection
-  const [randomImageUrl, setRandomImageUrl] = useState("");
+export default function MustDoList({ navigation, route }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [generatedMustDoList, setGeneratedMustDoList] = useState([]); 
+  const [bookmarkList, setBookmarkList] = useState([]); 
+  const [randomImageUrl, setRandomImageUrl] = useState("");
 
   useEffect(() => {
-    // Check if a user is logged in
-    setIsLoggedIn(auth.currentUser != null);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // a valid user is logged in
+        setIsLoggedIn(true);
+      } else {
+        //before authentication or after logout
+        setIsLoggedIn(false);
+      }
+    });
+  }, [auth.currentUser]);
 
-    if (auth.currentUser) {
-      const userQuery = query(
-        collection(database, "users"),
-        where("userId", "==", auth.currentUser.uid)
-      );
+  useEffect(() => {
+    // if a user is logged in, fetch the data from the database
+    if (isLoggedIn) {
+      const bookmarkDocRef = doc(bookmarksCollectionRef, auth.currentUser.uid);
 
-      const unsubscribe = onSnapshot(userQuery, (querySnapshot) => {
-        if (!querySnapshot.empty) {
-          querySnapshot.forEach((docSnap) => {
-            setUserSelections(docSnap.data().userSelection); // Set the userSelection state to the fetched data
-          });
+      const unsubscribe = onSnapshot(bookmarkDocRef, (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          console.log("Received generatedMustDoList from database: ", docSnapshot.data().generatedMustDoList);
+          setGeneratedMustDoList(docSnapshot.data().generatedMustDoList); // Set the userSelection state to the fetched data
+          setBookmarkList(docSnapshot.data().bookmarkList); // Set the userSelection state to the fetched data
         }
       });
 
-      // Return the unsubscribe function to be called on cleanup
       return () => unsubscribe();
+
     } else {
-      // No user is logged in
-      console.log("Please log in");
+      // if no user is logged in, set generatedMustDoList to the passed in data if any
+      if (route.params?.generatedMustDoList) {
+        console.log("Received generatedMustDoList from quiz: ", route.params.generatedMustDoList)
+        setGeneratedMustDoList(route.params.generatedMustDoList);
+      }
     }
   }, []); // Empty dependency array means this effect runs once after the component mounts
 
   const handleClearSelections = () => {
     try {
-      deleteSelectionsFromUsersDB();
-      Alert.alert(
-        "Data Cleared",
-        "Your selections has been successfully cleared.",
-        [
-          {
-            text: "Home",
-            onPress: () => navigation.navigate("Home"),
-          },
-        ]
-      );
+      if(isLoggedIn){
+        deleteSelectionsFromUsersDB();
+      }
+        Alert.alert(
+          "Data Cleared",
+          "Your selections has been successfully cleared.",
+          [
+            {
+              text: "Generate My List",
+              onPress: () => navigation.replace("MustDo")
+            },
+            {
+              text: "Home",
+              onPress: () => navigation.replace("Home"),
+            },
+          ]
+        );
     } catch (error) {
       console.error("Error clearing data: ", error);
       Alert.alert("Error", "Failed to clear data.");
@@ -57,7 +77,13 @@ export default function MustDoList({ navigation }) {
   };
 
   const handleChangeAnswers = () => {
-    navigation.navigate("MustDo");
+    if(isLoggedIn){
+      navigation.navigate("MustDo");
+    } else {
+      if(route.params?.userSelection)
+      navigation.navigate("MustDo", {userSelection: route.params.userSelection});
+    }
+
   };
 
   const handleExplore = () => {
@@ -100,8 +126,8 @@ export default function MustDoList({ navigation }) {
     fetchImage();
   }, []); // The empty dependency array ensures this effect runs once after the initial render
 
-  const goToDetails = () => {
-    // navigation.navigate("Details");
+  const goToDetails = (topic) => {
+    navigation.navigate("Details", { topic: topic });
   };
 
   return (
@@ -113,47 +139,18 @@ export default function MustDoList({ navigation }) {
           resizeMode="cover"
         />
       ) : null}
-      {!isLoggedIn && <Text>Please log in to view your selections!</Text>}
 
-      {/* Conditional Button: Get a private health care insurance */}
-      {["Planning to move", "Just arrived - 3 months"].includes(
-        userSelections.lengthInCanada
-      ) && (
-        <TextButton onPress={goToDetails}>
-          <Text>Get a private health care insurance</Text>
-        </TextButton>
-      )}
-      {/* Button: Apply for Medical Service Plan */}
-      {[
-        "Planning to move",
-        "Just arrived - 3 months",
-        "More than 3 months",
-      ].includes(userSelections.lengthInCanada) && (
-        <TextButton onPress={goToDetails}>
-          <Text>Apply for Medical Service Plan</Text>
-        </TextButton>
-      )}
-      {/* Conditional Button: Apply for Social Insurance Number */}
-      {userSelections.occupation === "Worker" ||
-        (userSelections.studentWork === "Yes" && (
-          <TextButton onPress={goToDetails}>
-            <Text>Apply for Social Insurance Number</Text>
+      <FlatList
+        data={generatedMustDoList}
+        renderItem={({ item, index }) => (
+          <TextButton onPress={() => goToDetails(item)}>
+            <Text>
+              {EntryButtonTextHelper(item)}
+            </Text>
           </TextButton>
-        ))}
+        )}
+        />
 
-      {/* Conditional Button: Apply for driver's license */}
-      {userSelections.drive === "Yes" && (
-        <TextButton onPress={goToDetails}>
-          <Text>Apply for driver's license</Text>
-        </TextButton>
-      )}
-
-      {/* Conditional Button: Get a compass card */}
-      {userSelections.needPublicTransportation === "Yes" && (
-        <TextButton onPress={goToDetails}>
-          <Text>Get a compass card</Text>
-        </TextButton>
-      )}
       <TextButton onPress={handleClearSelections}>
         <Text style={styles.clearDataButtonText}>Clear All My Selections</Text>
       </TextButton>
@@ -184,3 +181,45 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+      // {!isLoggedIn && <Text>Please log in to view your selections!</Text>}
+
+      // {/* Conditional Button: Get a private health care insurance */}
+      // {["Planning to move", "Just arrived - 3 months"].includes(
+      //   userSelections.lengthInCanada
+      // ) && (
+      //   <TextButton onPress={goToDetails}>
+      //     <Text>Get a private health care insurance</Text>
+      //   </TextButton>
+      // )}
+      // {/* Button: Apply for Medical Service Plan */}
+      // {[
+      //   "Planning to move",
+      //   "Just arrived - 3 months",
+      //   "More than 3 months",
+      // ].includes(userSelections.lengthInCanada) && (
+      //   <TextButton onPress={goToDetails}>
+      //     <Text>Apply for Medical Service Plan</Text>
+      //   </TextButton>
+      // )}
+      // {/* Conditional Button: Apply for Social Insurance Number */}
+      // {userSelections.occupation === "Worker" ||
+      //   (userSelections.studentWork === "Yes" && (
+      //     <TextButton onPress={goToDetails}>
+      //       <Text>Apply for Social Insurance Number</Text>
+      //     </TextButton>
+      //   ))}
+
+      // {/* Conditional Button: Apply for driver's license */}
+      // {userSelections.drive === "Yes" && (
+      //   <TextButton onPress={goToDetails}>
+      //     <Text>Apply for driver's license</Text>
+      //   </TextButton>
+      // )}
+
+      // {/* Conditional Button: Get a compass card */}
+      // {userSelections.needPublicTransportation === "Yes" && (
+      //   <TextButton onPress={goToDetails}>
+      //     <Text>Get a compass card</Text>
+      //   </TextButton>
+      // )}

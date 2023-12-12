@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { styles } from "../helper/HelperStyles";
 import React from "react";
+import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
 
 const detailsContent = {
   title: "Medical Service Plan",
@@ -28,9 +29,11 @@ const EssentialDocsEntry = ({ navigation }) => {
       <ImageBackground
         source={require("../assets/essential.png")}
         style={styles.backgroundPic}
-      ></ImageBackground>
+      />
+
       <View style={styles.bottomRow}>
-        {/* Family Doctor */}
+
+        {/* MSP */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { detailsContent: detailsContent })
@@ -42,8 +45,10 @@ const EssentialDocsEntry = ({ navigation }) => {
             source={require("../assets/medical_insurance.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Get Medical Service Plan</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("msp")}</Text>
         </TouchableOpacity>
+
+        {/* Driver License */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { detailsContent: detailsContent })
@@ -55,8 +60,10 @@ const EssentialDocsEntry = ({ navigation }) => {
             source={require("../assets/driver_license.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Get Driver License</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("driverLicense")}</Text>
         </TouchableOpacity>
+
+        {/* SIN */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { detailsContent: detailsContent })
@@ -68,8 +75,10 @@ const EssentialDocsEntry = ({ navigation }) => {
             source={require("../assets/photo_id_2.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Get Social Insurance Number</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("sin")}</Text>
         </TouchableOpacity>
+
+        {/* Photo ID */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { detailsContent: detailsContent })
@@ -81,7 +90,7 @@ const EssentialDocsEntry = ({ navigation }) => {
             source={require("../assets/photo_id_1.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Get Photo ID</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("photoID")}</Text>
         </TouchableOpacity>
       </View>
     </View>

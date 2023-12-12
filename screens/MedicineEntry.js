@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import { styles } from "../helper/HelperStyles";
-import IconButton from "../components/IconButton";
+import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
 
 const MedicineEntry = ({ navigation }) => {
   const requestedMap = {
@@ -184,13 +184,15 @@ const MedicineEntry = ({ navigation }) => {
       <ImageBackground
         source={require("../assets/medicine.png")}
         style={styles.backgroundPic}
-      ></ImageBackground>
+      />
+
       <View style={styles.bottomRow}>
-        {/* Family Doctor */}
+
+        {/* MSP */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: msp, category: "medicine", docID: "msp"})
-            // navigation.navigate("Details", {topic: "msp"})
+            // navigation.navigate("Details", { detailsContent: msp, category: "medicine", docID: "msp"})
+            navigation.navigate("Details", {topic: "msp"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -199,8 +201,10 @@ const MedicineEntry = ({ navigation }) => {
             source={require("../assets/healthcare_card.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Get Medical Service Plan</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("msp")}</Text>
         </TouchableOpacity>
+
+        {/* Hospital */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { detailsContent: detailsContent })
@@ -212,8 +216,10 @@ const MedicineEntry = ({ navigation }) => {
             source={require("../assets/hospital.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Find Hospital</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("hospital")}</Text>
         </TouchableOpacity>
+
+        {/* Pharmacy */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { detailsContent: detailsContent })
@@ -225,8 +231,10 @@ const MedicineEntry = ({ navigation }) => {
             source={require("../assets/medicine_icon.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Find Pharmacy</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("pharmacy")}</Text>
         </TouchableOpacity>
+
+        {/* Family Doctor */}
         <TouchableOpacity
           onPress={() =>
             // navigation.navigate("Details", { detailsContent: familyDoctor, category: "medicine", docID: "familyDoctor" })
@@ -239,7 +247,7 @@ const MedicineEntry = ({ navigation }) => {
             source={require("../assets/family_doctor.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>Find Family Doctor</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("familyDoctor")}</Text>
         </TouchableOpacity>
       </View>
     </View>
