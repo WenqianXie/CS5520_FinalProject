@@ -14,7 +14,11 @@ import MustDoList from "./screens/MustDoList";
 import Details from "./screens/Details";
 
 const Stack = createStackNavigator();
-
+{/* <Stack.Screen
+          name="Welcome"
+          component={WelcomeScreen}
+          options={{ headerShown: false }}
+        /> */}
 export default function App() {
   return (
     <NavigationContainer>
@@ -23,11 +27,7 @@ export default function App() {
           headerBackTitleVisible: false, // Hides the back button title (screen name)
         }}
       >
-        <Stack.Screen
-          name="Welcome"
-          component={WelcomeScreen}
-          options={{ headerShown: false }}
-        />
+        
         <Stack.Screen
           name="Home"
           component={Home}

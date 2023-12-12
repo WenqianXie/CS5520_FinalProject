@@ -4,12 +4,12 @@ import { View, Text } from "react-native";
 import { styles } from "../helper/HelperStyles";
 import { LinearGradient } from "expo-linear-gradient";
 
-export default function WelcomeScreen({ navigation }) {
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate("Home");
-    }, 2000); // 2 second
-  }, [navigation]);
+export default function WelcomeScreen() {
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     navigation.navigate("Home");
+  //   }, 2000); // 2 second
+  // }, [navigation]);
 
   return (
     <LinearGradient

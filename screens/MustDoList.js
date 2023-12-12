@@ -45,7 +45,7 @@ export default function MustDoList({ navigation, route }) {
     } else {
       // if no user is logged in, set generatedMustDoList to the passed in data if any
       if (route.params?.generatedMustDoList) {
-        console.log("Received generatedMustDoList from quiz: ", route.params.generatedMustDoList)
+        console.log("Received generatedMustDoList from local: ", route.params.generatedMustDoList)
         setGeneratedMustDoList(route.params.generatedMustDoList);
       }
     }
