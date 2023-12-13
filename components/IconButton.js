@@ -6,7 +6,7 @@ import React from 'react'
 import { styles } from '../helper/HelperStyles';
 import { FONTSIZE_CONTROLLER } from '../helper/Constants';
 
-const IconButton = ({onPress, text="", scale=1, position=null, type}) => {
+const IconButton = ({onPress, type, text="", scale=1, position=null, textStyle=null}) => {
   let fontScale = 1;
   //control the scalling of the fontSize
   if (scale < 1){
@@ -28,14 +28,26 @@ const IconButton = ({onPress, text="", scale=1, position=null, type}) => {
         )
       ]}>
       {
-      type === "arrow" &&
-      <FontAwesome5 name="location-arrow" size={30*scale} color={colors.themeLight} />
+        type === "arrow" &&
+        <FontAwesome5 name="location-arrow" size={30*scale} color={colors.themeLight} />
       }
       {
         type === "close" &&
-        <AntDesign name="close" size={24*scale} color={colors.themeLight} />
+        <AntDesign name="close" size={24*scale} color="white" />
       }
-      <Text style={{...styles.arrowButtonText, fontSize: fontScale*styles.arrowButtonText.fontSize}}>{text}</Text>
+      {
+        type === "reminder" &&
+        <AntDesign name="calendar" size={24*scale} color={colors.themeDark} />
+      }
+
+      <Text 
+        style={[
+          {...styles.arrowButtonText, fontSize: fontScale*styles.arrowButtonText.fontSize}, 
+          textStyle
+          ]}
+      >
+        {text}
+      </Text>
     </Pressable>
   )
 }

@@ -8,6 +8,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { bookmarksCollectionRef } from "../firebase/FirebaseSetup";
 import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
 import { onAuthStateChanged } from "firebase/auth";
+import NotificationReminder from "../components/NotificationReminder";
 
 export default function MustDoList({ navigation, route }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -179,6 +180,11 @@ export default function MustDoList({ navigation, route }) {
           </TextButton>
         )}
         />
+
+      <NotificationReminder 
+        title="try title" 
+        body="notification body"
+        data={{ url: "https://google.com" }}/>
 
       <TextButton onPress={handleClearSelections}>
         <Text style={styles.clearDataButtonText}>Clear All My Selections</Text>
