@@ -18,6 +18,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { database, storage } from "../firebase/FirebaseSetup";
 import { colors } from "../helper/HelperColors";
 import { profileStyles } from "../helper/HelperStyles";
+import { LinearGradient } from "expo-linear-gradient";
 
 export function ProfileScreen({ navigation }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
@@ -117,55 +118,72 @@ export function ProfileScreen({ navigation }) {
     }
   };
   return (
-    <SafeAreaView style={profileStyles.profileContainer}>
-      <Modal
-        animationType="fade"
-        visible={modalVisible}
-        onRequestClose={closeModal}
-      >
-        {/* Wrap the whole modal in a Pressable to close the modal when the user clicks outside of the modal */}
-        {/* The Pressable will be disabled when some function is running, to prevent the user from closing the modal before the function is finished */}
-        <Pressable
-          onPress={closeModal}
-          style={profileStyles.profileAvatarModalContainer}
-        >
-          <IconButton onPress={closeModal} type="close" />
-          {getImage(profileStyles.profileAvatarModal)}
-          <ImageManager closeModal={closeModal} currAvatarURL={currAvatarURL} />
-        </Pressable>
-      </Modal>
+    <LinearGradient
+      // Background Linear Gradient
+      colors={["#FEC542", "#C84000"]}
+      start={{ x: 1, y: 1 }}
+      end={{ x: 0, y: 1 }}
+      style={profileStyles.welcomeBackground}
+    >
+      <SafeAreaView style={profileStyles.profileContainer}>
+        {/* <View style={profileStyles.profilePhotoAndUsername}>
+          <Pressable
+            onPress={isLoggedIn ? enlargeProfilePic : handleLogInPress}
+            style={({ pressed }) => [
+              profileStyles.profileAvatar,
+              pressed && profileStyles.buttonOnPress,
+            ]}
+          >
+            {getImage(profileStyles.profileAvatar)}
+          </Pressable>
 
-      <View style={profileStyles.profilePhotoAndUsername}>
-        <Pressable
-          onPress={isLoggedIn ? enlargeProfilePic : handleLogInPress}
-          style={({ pressed }) => [
-            profileStyles.profileAvatar,
-            pressed && profileStyles.buttonOnPress,
-          ]}
-        >
-          {getImage(profileStyles.profileAvatar)}
-        </Pressable>
-
-        {isLoggedIn ? (
-          loading ? ( // If loading is true, display an ActivityIndicator
-            <ActivityIndicator size="large" color={colors.themeDark} />
+          {isLoggedIn ? (
+            loading ? (
+              <ActivityIndicator size="large" color={colors.themeDark} />
+            ) : (
+              <Text style={profileStyles.buttonText}>{displayedName}</Text>
+            )
           ) : (
-            <Text style={profileStyles.textButtonText}>{displayedName}</Text> // Display username if logged in and loading is false
-          )
-        ) : (
-          <TextButton onPress={handleLogInPress}>
-            <Text style={profileStyles.textButtonText}>Log in</Text>
-          </TextButton>
-        )}
-      </View>
+            <TextButton onPress={handleLogInPress}>
+              <Text style={profileStyles.buttonText}>Log in</Text>
+            </TextButton>
+          )}
+        </View> */}
+        <View style={profileStyles.profilePhotoAndUsername}>
+          <Pressable
+            onPress={isLoggedIn ? enlargeProfilePic : null} // Pressable only enlarges the profile picture if logged in, does nothing if not logged in
+            style={({ pressed }) => [
+              profileStyles.profileAvatar,
+              pressed && profileStyles.buttonOnPress,
+            ]}
+          >
+            {getImage(profileStyles.profileAvatar)}
+          </Pressable>
 
-      <TextButton onPress={handleMyListPress}>
-        <Text style={profileStyles.textButtonText}>My Must-Do List</Text>
-      </TextButton>
+          {isLoggedIn &&
+            (loading ? (
+              <ActivityIndicator size="large" color={colors.themeDark} />
+            ) : (
+              <Text style={profileStyles.buttonText}>{displayedName}</Text>
+            ))}
+        </View>
 
-      <TextButton onPress={handleLogOutPress}>
-        <Text style={profileStyles.textButtonText}>Log Out</Text>
-      </TextButton>
-    </SafeAreaView>
+        <TextButton
+          onPress={handleMyListPress}
+          style={profileStyles.fullWidthButton}
+        >
+          <Text style={profileStyles.buttonText}>To-Do List</Text>
+        </TextButton>
+
+        <TextButton
+          onPress={isLoggedIn ? handleLogOutPress : handleLogInPress}
+          style={profileStyles.fullWidthButton}
+        >
+          <Text style={profileStyles.buttonText}>
+            {isLoggedIn ? "Log Out" : "Log In"}
+          </Text>
+        </TextButton>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }

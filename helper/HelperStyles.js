@@ -20,9 +20,9 @@ export const authStyles = StyleSheet.create({
   },
   label: {
     fontWeight: "bold",
-    alignSelf: "flex-start", 
-    fontSize: 18, 
-    marginBottom: 5, 
+    alignSelf: "flex-start",
+    fontSize: 18,
+    marginBottom: 5,
   },
   input: {
     borderColor: "transparent",
@@ -55,20 +55,9 @@ export const authStyles = StyleSheet.create({
 });
 
 export const profileStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.themeLight,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  profileContainer: {
-    flex: 1,
-    alignItems: "left",
-  },
-  profilePhotoAndUsername: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: 25,
+  profileAvatar: {
+    width: 150,
+    height: 150,
   },
   profileAvatarModalContainer: {
     flex: 1,
@@ -78,8 +67,43 @@ export const profileStyles = StyleSheet.create({
   profileAvatarModal: {
     width: "100%",
     height: "45%",
-    marginTop: "40%",
-    marginBottom: "10%",
+  },
+  profileContainer: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  profilePhotoAndUsername: {
+    alignItems: "center",
+    flexDirection: "column",
+    marginTop: -200,
+    borderRadius: 50,
+    marginBottom: 50,
+  },
+  fullWidthButton: {
+    paddingHorizontal: 0,
+    paddingVertical: 20,
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+    width: "100%",
+  },
+  buttonText: {
+    fontSize: 22,
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  buttonContainer: {
+    paddingHorizontal: 10,
+  },
+  welcomeBackground: {
+    flex: 1,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+    position: "absolute",
+    top: 0,
+    left: 0,
   },
 });
 
@@ -92,13 +116,13 @@ export const styles = StyleSheet.create({
   welcomeTitle: {
     fontSize: 38,
     fontWeight: "bold",
-    fontStyle: "italic", // Aligns with the artistic tilt of the slogan
-    letterSpacing: 1.5, // Subtle spacing to enhance the artistic feel
-    textTransform: "uppercase", // Consistency with the slogan style
-    color: "#EAE2B7", // A color that stands out yet complements the slogan
-    textShadowColor: "rgba(0, 0, 0, 0.5)", // Soft shadow for depth
-    textShadowOffset: { width: 2, height: 2 }, // Slightly more pronounced shadow for the title
-    textShadowRadius: 3, // A bit more blur to make the title pop
+    fontStyle: "italic",
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+    color: "#EAE2B7",
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 3,
   },
 
   welcomeSlogan: {
