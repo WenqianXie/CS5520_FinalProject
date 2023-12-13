@@ -157,8 +157,8 @@ export async function readInfoData(topic){
       case "seabus":
         docRef = doc(infoDataCollectionRef, "transit", "transitCollection", "seabus")
         break;
-      case "bike":
-        docRef = doc(infoDataCollectionRef, "transit", "transitCollection", "bike")
+      case "compassCard":
+        docRef = doc(infoDataCollectionRef, "transit", "transitCollection", "compassCard")
         break;
       case "driverLicense":
         docRef = doc(infoDataCollectionRef, "essentials", "essentialsCollection", "driverLicense")
@@ -166,8 +166,8 @@ export async function readInfoData(topic){
       case "sin":
         docRef = doc(infoDataCollectionRef, "essentials", "essentialsCollection", "sin")
         break;
-      case "photoID":
-        docRef = doc(infoDataCollectionRef, "essentials", "essentialsCollection", "photoID")
+      case "bcServicesCard":
+        docRef = doc(infoDataCollectionRef, "essentials", "essentialsCollection", "bcServicesCard")
         break;
     }
     const docSnap = await getDoc(docRef)

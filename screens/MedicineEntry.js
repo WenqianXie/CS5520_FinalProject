@@ -50,7 +50,7 @@ const MedicineEntry = ({ navigation }) => {
   };
 
   const msp = {
-    title: "Applying for MSP",
+    title: "Applying for Health Insurance",
     contents: [
       {
         subtitle: "What is MSP?",
@@ -293,7 +293,8 @@ const MedicineEntry = ({ navigation }) => {
         {/* Hospital */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: detailsContent })
+            navigation.navigate("Details", { topic : "hospital" })
+            // navigation.navigate("Details", { detailsContent: hospital, category: "medicine", docID: "hospital"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -310,7 +311,8 @@ const MedicineEntry = ({ navigation }) => {
         {/* Pharmacy */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { detailsContent: detailsContent })
+            navigation.navigate("Details", { topic : "pharmacy" })
+            // navigation.navigate("Details", { detailsContent: pharmacy, category: "medicine", docID: "pharmacy"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}

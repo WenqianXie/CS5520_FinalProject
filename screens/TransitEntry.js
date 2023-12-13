@@ -49,7 +49,7 @@ const requestedMap = {
 
 const compassCard = {
   title: "Get A Compass Card",
-  constents: [
+  contents: [
     {
       subtitle: "What is Compass Card?",
       content:
@@ -249,6 +249,7 @@ const TransitEntry = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { topic: "compassCard" })
+            // navigation.navigate("Details", { detailsContent: compassCard, category: "transit", docID: "compassCard"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}

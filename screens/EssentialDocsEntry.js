@@ -155,6 +155,7 @@ const EssentialDocsEntry = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { topic: "driverLicense" })
+            // navigation.navigate("Details", { detailsContent: driverLicense, category: "essentials", docID: "driverLicense"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -170,7 +171,10 @@ const EssentialDocsEntry = ({ navigation }) => {
 
         {/* SIN */}
         <TouchableOpacity
-          onPress={() => navigation.navigate("Details", { topic: "SIN" })}
+          onPress={() => 
+            navigation.navigate("Details", { topic: "sin" })
+            // navigation.navigate("Details", { detailsContent: SIN, category: "essentials", docID: "sin"})
+          }
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -178,13 +182,14 @@ const EssentialDocsEntry = ({ navigation }) => {
             source={require("../assets/photo_id_2.png")}
             style={styles.footerImage}
           />
-          <Text style={styles.iconText}>{EntryButtonTextHelper("SIN")}</Text>
+          <Text style={styles.iconText}>{EntryButtonTextHelper("sin")}</Text>
         </TouchableOpacity>
 
         {/* Photo ID */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { topic: "BCServicesCard" })
+            navigation.navigate("Details", { topic: "bcServicesCard" })
+            // navigation.navigate("Details", { detailsContent: BCServicesCard, category: "essentials", docID: "bcServicesCard"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -194,7 +199,7 @@ const EssentialDocsEntry = ({ navigation }) => {
             style={styles.footerImage}
           />
           <Text style={styles.iconText}>
-            {EntryButtonTextHelper("BCServicesCard")}
+            {EntryButtonTextHelper("bcServicesCard")}
           </Text>
         </TouchableOpacity>
       </View>

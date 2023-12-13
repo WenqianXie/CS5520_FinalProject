@@ -3,14 +3,14 @@ const EntryButtonTextHelper = (topic) => {
     // Essentials Entry
     case "driverLicense":
       return "Get Driver License";
-    case "SIN":
+    case "sin":
       return "Get Social Insurance Number";
-    case "BCServicesCard":
+    case "bcServicesCard":
       return "BC Services Card";
 
     // Medicine Entry
     case "msp":
-      return "Get Medical Service Plan";
+      return "Apply for Health Insurance";
     case "hospital":
       return "Visit Doctor at Hospital";
     case "pharmacy":
