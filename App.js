@@ -12,6 +12,17 @@ import TransitEntry from "./screens/TransitEntry";
 import MustDoQuestionnaire from "./screens/MustDoQuestionnaire";
 import MustDoList from "./screens/MustDoList";
 import Details from "./screens/Details";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async function (notification) {
+    return {
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    };
+  },
+});
 
 const Stack = createStackNavigator();
 {/* <Stack.Screen
@@ -19,6 +30,7 @@ const Stack = createStackNavigator();
           component={WelcomeScreen}
           options={{ headerShown: false }}
         /> */}
+
 export default function App() {
   return (
     <NavigationContainer>

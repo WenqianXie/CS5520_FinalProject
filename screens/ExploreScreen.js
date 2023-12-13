@@ -8,6 +8,7 @@ import { auth } from "../firebase/FirebaseSetup";
 import { bookmarksCollectionRef } from "../firebase/FirebaseSetup";
 import { getDoc, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import { useIsFocused } from "@react-navigation/native";
 
 export function ExploreScreen({ navigation, route }) {
   const {width} = useWindowDimensions();
@@ -16,6 +17,7 @@ export function ExploreScreen({ navigation, route }) {
   const [generatedMustDoList, setGeneratedMustDoList] = useState([])
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -32,16 +34,17 @@ export function ExploreScreen({ navigation, route }) {
   //Dynamically change the Text of the ArrowButton on the upper right corner
   useEffect(()=>{
     const getMustDoList = async () => {
-      console.log("isLoggedIn from Explore: ", isLoggedIn)
       try{
         if(isLoggedIn){
+          console.log("isLoggedIn useEffect triggered from Explore: ", isLoggedIn)
           const bookmarkDocRef = doc(bookmarksCollectionRef, auth.currentUser.uid);
           const docSnapshot = await getDoc(bookmarkDocRef)
           if (docSnapshot.exists()){
             setGeneratedMustDoList(docSnapshot.data().generatedMustDoList)
           } 
           setIsLoading(false)
-        } else {
+        } else if (isFocused) {
+          console.log("isFocused useEffect triggered from Explore: ", isFocused)
           setGeneratedMustDoList(route.params?.generatedMustDoList)
           setIsLoading(false)
         }
@@ -51,7 +54,7 @@ export function ExploreScreen({ navigation, route }) {
     }
 
     getMustDoList()
-  }, [auth.currentUser, isLoggedIn])
+  }, [auth.currentUser, isLoggedIn, isFocused])
 
   useEffect(()=>{
     if( generatedMustDoList && generatedMustDoList?.length !== 0){

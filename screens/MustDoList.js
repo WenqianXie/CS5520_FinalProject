@@ -35,8 +35,8 @@ export default function MustDoList({ navigation, route }) {
       const unsubscribe = onSnapshot(bookmarkDocRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
           console.log("Received generatedMustDoList from database: ", docSnapshot.data().generatedMustDoList);
-          setGeneratedMustDoList(docSnapshot.data().generatedMustDoList); // Set the userSelection state to the fetched data
-          setBookmarkList(docSnapshot.data().bookmarkList); // Set the userSelection state to the fetched data
+          setGeneratedMustDoList(docSnapshot.data().generatedMustDoList); 
+          setBookmarkList(docSnapshot.data().bookmarkList); 
         }
       });
 
@@ -114,7 +114,7 @@ export default function MustDoList({ navigation, route }) {
           screen: "Explore", 
           params: {
             generatedMustDoList : generatedMustDoList, 
-            userSelection: route.params.userSelection
+            userSelection: route.params?.userSelection
           }})
       }
   };
