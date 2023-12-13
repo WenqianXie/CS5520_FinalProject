@@ -15,39 +15,44 @@ const IconButton = ({onPress, type, text="", scale=1, position=null, textStyle=n
   else if (scale > 1){
     fontScale = scale*FONTSIZE_CONTROLLER;
   }
+
+  let buttonStyle = null;
+  let iconButton = null;
+  switch (type){
+    case "arrow":
+      buttonStyle = styles.arrowButton;
+      iconButton = <FontAwesome5 name="location-arrow" size={30*scale} color={colors.themeLight} />;
+      break;
+    case "close":
+      buttonStyle = styles.closeButton;
+      iconButton = <AntDesign name="close" size={24*scale} color="white" />;
+      break;
+    case "reminder":
+      buttonStyle = styles.reminderButton;
+      iconButton = <AntDesign name="calendar" size={24*scale} color={colors.themeDark} />;
+      break;
+  }
   return (
     <Pressable
       onPress={onPress}
       style={({pressed})=>[
         pressed && (styles.buttonOnPress),
         position,
-        type === "arrow" ? (
-          {...styles.arrowButton, height: scale*styles.arrowButton.height, width: scale*styles.arrowButton.width})
-        : (
-          styles.closeButton
-        )
+        buttonStyle
       ]}>
-      {
-        type === "arrow" &&
-        <FontAwesome5 name="location-arrow" size={30*scale} color={colors.themeLight} />
-      }
-      {
-        type === "close" &&
-        <AntDesign name="close" size={24*scale} color="white" />
-      }
-      {
-        type === "reminder" &&
-        <AntDesign name="calendar" size={24*scale} color={colors.themeDark} />
-      }
 
-      <Text 
-        style={[
-          {...styles.arrowButtonText, fontSize: fontScale*styles.arrowButtonText.fontSize}, 
-          textStyle
-          ]}
-      >
-        {text}
-      </Text>
+      {iconButton}
+      
+      {text !== "" && 
+        <Text 
+          style={[
+            {...styles.arrowButtonText, fontSize: fontScale*styles.arrowButtonText.fontSize}, 
+            textStyle
+            ]}
+        >
+          {text}
+        </Text>
+      }
     </Pressable>
   )
 }
