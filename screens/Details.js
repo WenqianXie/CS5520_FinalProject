@@ -13,7 +13,7 @@ const Details = ({ navigation, route }) => {
   //Online data
   const [contents, setContents] = useState("")
 
-  let headerTitle; //to be deleted
+  let headerTitle; 
   if (manualContents) {
     headerTitle = manualContents.title;
   }  else {

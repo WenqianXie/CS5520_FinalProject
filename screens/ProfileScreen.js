@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Modal, Image, ActivityIndicator, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  Modal,
+  Image,
+  ActivityIndicator,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextButton from "../components/TextButton";
 import IconButton from "../components/IconButton";
@@ -10,7 +17,7 @@ import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { database, storage } from "../firebase/FirebaseSetup";
 import { colors } from "../helper/HelperColors";
-import { styles } from "../helper/HelperStyles";
+import { profileStyles } from "../helper/HelperStyles";
 
 export function ProfileScreen({ navigation }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
@@ -58,7 +65,7 @@ export function ProfileScreen({ navigation }) {
               getURL(usersList[0].avatarURL);
             }
             setLoading(false); // Set loading to false once we have the users list
-          } 
+          }
         }
       );
 
@@ -68,30 +75,31 @@ export function ProfileScreen({ navigation }) {
 
   //Function to get the image to display, depending on whether the user is logged in and has uploaded an avatar photo before
   const getImage = (imageStyle) => {
-    if (isLoggedIn && downloadAvatarURL){
+    if (isLoggedIn && downloadAvatarURL) {
       return (
-      <Image
-        source={{ uri: downloadAvatarURL }}
-        style={imageStyle} // if logged in and the user has uploaded an avatar photo before
-                           // use uri to get image, it is stored in firebase storage
-      />
-      )} 
+        <Image
+          source={{ uri: downloadAvatarURL }}
+          style={imageStyle} // if logged in and the user has uploaded an avatar photo before
+          // use uri to get image, it is stored in firebase storage
+        />
+      );
+    }
     return (
       <Image
         source={require("../assets/avatar.png")}
         style={imageStyle} // if not logged in or if the user hasn't uploaded an avatar photo before
-                           // use require to get image, it is stored in assets
+        // use require to get image, it is stored in assets
       />
-    )
-  }
+    );
+  };
 
   const closeModal = () => {
     setModalVisible(false);
-  }
+  };
 
   const enlargeProfilePic = () => {
     setModalVisible(!modalVisible);
-  }
+  };
 
   const handleLogInPress = () => {
     navigation.push("Auth", { screen: "Login" }, "Profile"); // Navigate to the Login screen
@@ -101,22 +109,6 @@ export function ProfileScreen({ navigation }) {
     navigation.navigate("MustDoList");
   };
 
-  // const handleEmailPress = () => {
-  //   // setResetType("email");
-  //   navigation.navigate("Reset", {
-  //     resetType: "email",
-  //     headerTitle: "Reset Email",
-  //   });
-  // };
-
-  // const handlePasswordPress = () => {
-  //   // setResetType("password");
-  //   navigation.navigate("Reset", {
-  //     resetType: "password",
-  //     headerTitle: "Reset Password",
-  //   });
-  // };
-
   const handleLogOutPress = () => {
     try {
       signOut(auth);
@@ -125,7 +117,7 @@ export function ProfileScreen({ navigation }) {
     }
   };
   return (
-    <SafeAreaView style={styles.profileContainer}>
+    <SafeAreaView style={profileStyles.profileContainer}>
       <Modal
         animationType="fade"
         visible={modalVisible}
@@ -133,56 +125,46 @@ export function ProfileScreen({ navigation }) {
       >
         {/* Wrap the whole modal in a Pressable to close the modal when the user clicks outside of the modal */}
         {/* The Pressable will be disabled when some function is running, to prevent the user from closing the modal before the function is finished */}
-        <Pressable 
+        <Pressable
           onPress={closeModal}
-          style={styles.profileAvatarModalContainer}
+          style={profileStyles.profileAvatarModalContainer}
         >
-          <IconButton
-            onPress={closeModal}
-            type="close"
-          />
-          {getImage(styles.profileAvatarModal)}
-          <ImageManager closeModal={closeModal} currAvatarURL={currAvatarURL}/>
+          <IconButton onPress={closeModal} type="close" />
+          {getImage(profileStyles.profileAvatarModal)}
+          <ImageManager closeModal={closeModal} currAvatarURL={currAvatarURL} />
         </Pressable>
       </Modal>
 
-      <View style={styles.profilePhotoAndUsername}>
+      <View style={profileStyles.profilePhotoAndUsername}>
         <Pressable
           onPress={isLoggedIn ? enlargeProfilePic : handleLogInPress}
-          style={({pressed})=>[
-            styles.profileAvatar,
-            pressed && (styles.buttonOnPress),
-          ]}>
-          {getImage(styles.profileAvatar)}
+          style={({ pressed }) => [
+            profileStyles.profileAvatar,
+            pressed && profileStyles.buttonOnPress,
+          ]}
+        >
+          {getImage(profileStyles.profileAvatar)}
         </Pressable>
 
         {isLoggedIn ? (
           loading ? ( // If loading is true, display an ActivityIndicator
             <ActivityIndicator size="large" color={colors.themeDark} />
           ) : (
-            <Text style={styles.textButtonText}>{displayedName}</Text> // Display username if logged in and loading is false
+            <Text style={profileStyles.textButtonText}>{displayedName}</Text> // Display username if logged in and loading is false
           )
         ) : (
           <TextButton onPress={handleLogInPress}>
-            <Text style={styles.textButtonText}>Log in</Text>
+            <Text style={profileStyles.textButtonText}>Log in</Text>
           </TextButton>
         )}
       </View>
 
       <TextButton onPress={handleMyListPress}>
-        <Text style={styles.textButtonText}>My Must-Do List</Text>
+        <Text style={profileStyles.textButtonText}>My Must-Do List</Text>
       </TextButton>
-
-      {/* <TextButton onPress={handleEmailPress}>
-        <Text style={styles.textButtonText}>Reset Email</Text>
-      </TextButton>
-
-      <TextButton onPress={handlePasswordPress}>
-        <Text style={styles.textButtonText}>Reset Password</Text>
-      </TextButton> */}
 
       <TextButton onPress={handleLogOutPress}>
-        <Text style={styles.textButtonText}>Log Out</Text>
+        <Text style={profileStyles.textButtonText}>Log Out</Text>
       </TextButton>
     </SafeAreaView>
   );

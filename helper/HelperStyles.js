@@ -7,6 +7,82 @@ import { imageScale } from "./Constants";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
+export const authStyles = StyleSheet.create({
+  fullscreen: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  contentContainer: {
+    flex: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  label: {
+    fontWeight: "bold",
+    alignSelf: "flex-start", 
+    fontSize: 18, 
+    marginBottom: 5, 
+  },
+  input: {
+    borderColor: "transparent",
+    borderRadius: 20,
+    padding: 15,
+    fontSize: 16,
+    backgroundColor: "white",
+    marginBottom: 10,
+    width: "100%",
+  },
+  customButton: {
+    backgroundColor: "#FFB703",
+    padding: 15,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    margin: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+});
+
+export const profileStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.themeLight,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  profileContainer: {
+    flex: 1,
+    alignItems: "left",
+  },
+  profilePhotoAndUsername: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 25,
+  },
+  profileAvatarModalContainer: {
+    flex: 1,
+    backgroundColor: "black",
+    alignItems: "center",
+  },
+  profileAvatarModal: {
+    width: "100%",
+    height: "45%",
+    marginTop: "40%",
+    marginBottom: "10%",
+  },
+});
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
