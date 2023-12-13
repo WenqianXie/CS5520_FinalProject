@@ -259,19 +259,27 @@ export default function MustDoList({ navigation, route }) {
 
       <FlatList
         data={generatedMustDoList}
-        renderItem={({ item, index }) => (
-          <View style={mustDoListStyles.toDoTask}>
-            <TextButton onPress={() => goToDetails(item)}>
+        renderItem={({ item, index }) => {
+          if (item === "nothing") {
+            return (
               <Text>
-                {EntryButtonTextHelper(item)}
-              </Text>
-            </TextButton>
-            <IconButton
-                onPress={(item) => createReminderHandler(item)}
-                type="reminder"
-              />
-          </View>
-        )}
+                {"Great news!\nYou've covered all the essential tasks based on the information provided."}
+              </Text>);
+          } else {
+            return (
+            <View style={mustDoListStyles.toDoTask}>
+              <TextButton onPress={() => goToDetails(item)}>
+                <Text>
+                  {EntryButtonTextHelper(item)}
+                </Text>
+              </TextButton>
+              <IconButton
+                  onPress={(item) => createReminderHandler(item)}
+                  type="reminder"
+                />
+            </View>)
+          }
+        }}
         />
 
       <TextButton onPress={handleClearSelections}>
