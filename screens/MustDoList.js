@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, Alert, Image } from "react-native";
+import { View, Text, StyleSheet, Alert, Image, Modal } from "react-native";
 import React, { useEffect, useState } from "react";
-import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
-import { database, auth } from "../firebase/FirebaseSetup";
+import { onSnapshot, doc } from "firebase/firestore";
+import { auth } from "../firebase/FirebaseSetup";
 import TextButton from "../components/TextButton";
 import { deleteSelectionsFromUsersDB } from "../firebase/FirebaseHelper";
 import { FlatList } from "react-native-gesture-handler";
@@ -9,12 +9,55 @@ import { bookmarksCollectionRef } from "../firebase/FirebaseSetup";
 import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
 import { onAuthStateChanged } from "firebase/auth";
 import NotificationReminder from "../components/NotificationReminder";
+import DateTimePickerManager from "../components/DateTimePickerManager";
+import createLocalNotification from "../helper/CreateLocalNotification";
+import IconButton from "../components/IconButton";
 
 export default function MustDoList({ navigation, route }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [generatedMustDoList, setGeneratedMustDoList] = useState([]); 
   const [bookmarkList, setBookmarkList] = useState([]); 
   const [randomImageUrl, setRandomImageUrl] = useState("");
+  const [dateTime, setDateTime] = useState(new Date()); // default date and time is now
+  const [modalVisible, setModalVisible] = useState(false); 
+  const [dateTimePickerVisible, setDateTimePickerVisible] = useState(false); // show the date and time picker
+  const [dateTimePickerMode, setDateTimePickerMode] = useState("date"); // show the date and time picker
+  const [reminderTitle, setReminderTitle] = useState("");
+  const [reminderBody, setReminderBody] = useState("");
+  const [reminderData, setReminderData] = useState(null);
+
+  const callDatePicker = () => {
+    setDateTimePickerMode("date")
+    setDateTimePickerVisible(true)
+  }
+
+  const callTimePicker = () => {
+    setDateTimePickerMode("time")
+    setDateTimePickerVisible(true)
+  }
+
+  const cancelSettingReminderHandler = () => {
+    setDateTimePickerVisible(false)
+    setModalVisible(false)
+  }
+
+  const confirmSettingReminderHandler = () => {
+    createLocalNotification(dateTime, reminderTitle, reminderBody, reminderData)
+    setDateTimePickerVisible(false)
+    setModalVisible(false)
+  }
+
+  const passDateTime = (currentDate) => {
+    setDateTime(currentDate)
+  }
+
+  const createReminderHandler = (item) => {
+    const title = EntryButtonTextHelper(item)
+    setReminderTitle(title)
+    setReminderBody("Tap to know how to" + title)
+    setReminderData(null)
+    setModalVisible(true)
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -73,7 +116,7 @@ export default function MustDoList({ navigation, route }) {
       await deleteSelectionsFromUsersDB();
       finishDeletionAlert();
     } catch (err) {
-      console.error("Error clearing data: ", error);
+      console.error("Error clearing data: ", err);
       Alert.alert("Error", "Failed to clear data.");
     }
   }
@@ -162,6 +205,50 @@ export default function MustDoList({ navigation, route }) {
 
   return (
     <View>
+      {/*Modal for setting reminder by dateTime*/}
+        <Modal
+          transparent={true}
+          animationType="fade"
+          visible={modalVisible}
+        >
+          <View style={mustDoListStyles.modal}>
+          <View style={mustDoListStyles.reminderSettingBanner}>
+            <Text>Create Your Reminder</Text>
+            <View style={mustDoListStyles.reminderSettingButtonRow}>
+              <TextButton onPress={callDatePicker}>
+                <Text>Set Date</Text>
+              </TextButton>
+
+              <TextButton onPress={callTimePicker}>
+                <Text>Set Time</Text>
+              </TextButton>
+            </View>
+            
+            {dateTimePickerVisible && (
+              <DateTimePickerManager 
+                currentMode={dateTimePickerMode}
+                dateTime={dateTime}
+                passDateTime={passDateTime}
+                />
+            )}
+
+            <Text>Do you want to set a reminder at</Text>
+            <Text>{dateTime.toLocaleString()}</Text>
+
+            <View style={mustDoListStyles.reminderSettingButtonRow}>
+              <TextButton onPress={cancelSettingReminderHandler}>
+                <Text>Cancel</Text>
+              </TextButton>
+
+              <TextButton onPress={confirmSettingReminderHandler}>
+                <Text>Confirm</Text>
+              </TextButton>
+            </View>
+          </View>
+          </View>
+        </Modal>
+
+      {/*Screen*/}
       {randomImageUrl ? (
         <Image
           source={{ uri: randomImageUrl }}
@@ -172,49 +259,80 @@ export default function MustDoList({ navigation, route }) {
 
       <FlatList
         data={generatedMustDoList}
-        renderItem={({ item, index }) => (
-          <TextButton onPress={() => goToDetails(item)}>
-            <Text>
-              {EntryButtonTextHelper(item)}
-            </Text>
-          </TextButton>
-        )}
+        renderItem={({ item, index }) => {
+          if (item === "nothing") {
+            return (
+              <Text>
+                {"Great news!\nYou've covered all the essential tasks based on the information provided."}
+              </Text>);
+          } else {
+            return (
+            <View style={mustDoListStyles.toDoTask}>
+              <TextButton onPress={() => goToDetails(item)}>
+                <Text>
+                  {EntryButtonTextHelper(item)}
+                </Text>
+              </TextButton>
+              <IconButton
+                  onPress={(item) => createReminderHandler(item)}
+                  type="reminder"
+                />
+            </View>)
+          }
+        }}
         />
 
-      <NotificationReminder 
-        title="try title" 
-        body="notification body"
-        data={{ url: "https://google.com" }}/>
-
       <TextButton onPress={handleClearSelections}>
-        <Text style={styles.clearDataButtonText}>Clear All My Selections</Text>
+        <Text style={mustDoListStyles.clearDataButtonText}>Clear All My Selections</Text>
       </TextButton>
       <TextButton onPress={handleChangeAnswers}>
-        <Text style={styles.clearDataButtonText}>Update My Answers</Text>
+        <Text style={mustDoListStyles.clearDataButtonText}>Update My Answers</Text>
       </TextButton>
       <TextButton onPress={handleExplore}>
-        <Text style={styles.clearDataButtonText}>Ready To Explore</Text>
+        <Text style={mustDoListStyles.clearDataButtonText}>Ready To Explore</Text>
       </TextButton>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  clearDataButton: {
-    backgroundColor: "#f44336", // Example red color, change as needed
-    padding: 10,
-    borderRadius: 5,
-    alignItems: "center",
+const mustDoListStyles = StyleSheet.create({
+  modal: {
+    flex: 1,
     justifyContent: "center",
-    margin: 10,
+    backgroundColor: "rgba(255, 255, 255, 0)", // Transparent background
   },
-  clearDataButtonPressed: {
-    backgroundColor: "#d32f2f", // Darker shade for pressed state
+  reminderSettingButtonRow:{
+    flexDirection: "row"
   },
   clearDataButtonText: {
     color: "white", // Text color, change as needed
     fontSize: 16,
   },
+  reminderSettingBanner: {
+    alignSelf: "center",
+    width: "60%",
+    height: "35%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    borderRadius: 10,
+  },
+  toDoTask: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  }
+  // clearDataButton: {
+  //   backgroundColor: "#f44336", // Example red color, change as needed
+  //   padding: 10,
+  //   borderRadius: 5,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   margin: 10,
+  // },
+  // clearDataButtonPressed: {
+  //   backgroundColor: "#d32f2f", // Darker shade for pressed state
+  // },
 });
 
       // {!isLoggedIn && <Text>Please log in to view your selections!</Text>}

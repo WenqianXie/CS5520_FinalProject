@@ -270,6 +270,9 @@ export const styles = StyleSheet.create({
   closeButton: {
     alignSelf: "flex-start",
   },
+  reminderButton: {
+    alignSelf: "center",
+  },
   profileAvatarModalContainer: {
     flex: 1,
     backgroundColor: "black",

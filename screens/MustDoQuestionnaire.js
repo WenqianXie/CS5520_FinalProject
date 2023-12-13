@@ -145,7 +145,7 @@ const Questionnaire = ({ navigation, route }) => {
 
   const generateMustDoList = () => {
     let mustDoList = [];
-    mustDoList.push("privateHealthInsurance");
+    mustDoList.push("nothing");
 
     if(lengthInCanada === "More than 3 months" && occupation !== "Traveller"){
       mustDoList.push("msp");
