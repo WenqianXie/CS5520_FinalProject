@@ -309,7 +309,9 @@ export const bulletPointListStyles = StyleSheet.create({
 });
 
 export const mustDoListStyles = StyleSheet.create({
-  outerContainer: {},
+  activityIndicatorContainer: {
+    marginTop: 40,
+  },
   fullscreen: {
     flex: 1,
   },
