@@ -9,7 +9,6 @@ import { bulletPointListStyles } from "../helper/HelperStyles";
 import SingleBulletPoint from "./SingleBulletPoint";
 
 const BulletPointList = ({ bulletPointList }) => {
-  console.log("bulletPointList: ", bulletPointList);
 
   // return (
   //   <>
@@ -80,15 +79,18 @@ const BulletPointList = ({ bulletPointList }) => {
           </View>
         )}
 
-        {/* Bullet Point List if needed */}
-        {bulletPointList.list && (
+        {/* if there are multiple bulletpoints, render with FlatList. Otherwise, render directly */}
+        {bulletPointList.list ? (
           <FlatList
             data={bulletPointList.list}
             renderItem={({ item, index}) => (
               <SingleBulletPoint singleBulletPoint={item} key={index}/>
             )}
             />
-        )}
+        ) : (
+          <SingleBulletPoint singleBulletPoint={bulletPointList}/>
+        )
+      }
       </View>
     </>
   );
