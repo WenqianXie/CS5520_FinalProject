@@ -73,7 +73,7 @@ export default function MustDoList({ navigation, route }) {
         setGeneratedMustDoList(route.params.generatedMustDoList);
       }
     }
-  }, [isLoggedIn, auth.currentUser]); // Empty dependency array means this effect runs once after the component mounts
+  }, [isLoggedIn, auth.currentUser]); // only re-run the effect if isLoggedIn or auth.currentUser changes
 
   const passModalVisible = (visible) => {
     setModalVisible(visible);
@@ -83,7 +83,6 @@ export default function MustDoList({ navigation, route }) {
     setReminderDateTime(new Date()); // default reminder's date and time is now
     const info = EntryButtonTextHelper(item);
     const data = { navigation: item };
-    console.log("reminder data: ", data);
     setReminderInfo({
       title: info,
       body: "Tap to know how to " + info,
@@ -202,7 +201,7 @@ export default function MustDoList({ navigation, route }) {
     };
 
     fetchImage();
-  }, []); // The empty dependency array ensures this effect runs once after the initial render
+  }, []); // only run this effect once
 
   const goToDetails = (topic) => {
     navigation.navigate("Details", { topic: topic });
