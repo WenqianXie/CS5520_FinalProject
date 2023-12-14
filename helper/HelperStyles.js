@@ -1,3 +1,5 @@
+// Support file for styling the app
+
 import { StyleSheet, Dimensions } from "react-native";
 import { colors } from "./HelperColors";
 import { BASE_ICON_SIZE } from "./Constants";

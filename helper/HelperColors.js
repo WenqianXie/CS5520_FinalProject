@@ -1,3 +1,5 @@
+// Purpose: Helper file for colors used across the app
+
 export const colors = {
   themeLight: "#FEC542",
   themeDark: "#C84000",
