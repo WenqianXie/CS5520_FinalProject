@@ -10,7 +10,7 @@ import React from "react";
 import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
 
 const EssentialDocsEntry = ({ navigation }) => {
-  // this is the entry page for essential documents
+  // this is the entry page for essential documents related topics
   return (
     <View style={styles.container}>
       <ImageBackground
