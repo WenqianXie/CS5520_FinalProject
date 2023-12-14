@@ -226,74 +226,76 @@ export default function MustDoList({ navigation, route }) {
           keepOpen={passModalVisible}
         />
       </Modal>
-      <FlatList
-        data={generatedMustDoList}
-        renderItem={({ item, index }) => {
-          if (item === "nothing") {
-            return (
-              <View style={mustDoListStyles.taskContainer}>
-                <Text style={mustDoListStyles.taskText}>
-                  {
-                    "Great news!\nYou've covered all the essential tasks based on the information provided."
-                  }
-                </Text>
-              </View>
-            );
-          } else {
-            return (
-              <View style={mustDoListStyles.taskContainer}>
-                <View style={mustDoListStyles.toDoTask}>
-                  <TouchableOpacity
-                    onPress={() => goToDetails(item)}
-                    style={mustDoListStyles.buttonTextContainer}
-                  >
-                    <Text style={mustDoListStyles.taskText}>
-                      {EntryButtonTextHelper(item)}
-                    </Text>
-                  </TouchableOpacity>
-                  <IconButton
-                    onPress={() => createReminderHandler(item)}
-                    type="reminder"
-                  />
+      <View style={mustDoListStyles.outerContainer}>
+        <FlatList
+          data={generatedMustDoList}
+          style={{ marginTop: 100, marginBottom: 10 }}
+          renderItem={({ item, index }) => {
+            if (item === "nothing") {
+              return (
+                <View style={mustDoListStyles.taskContainer}>
+                  <Text style={mustDoListStyles.taskText}>
+                    {
+                      "Great news!\nYou've covered all the essential tasks based on the information provided."
+                    }
+                  </Text>
                 </View>
-              </View>
-            );
-          }
-        }}
-      />
-
-      <TouchableOpacity
-        onPress={handleClearSelections}
-        style={mustDoListStyles.button}
-      >
-        <Text style={mustDoListStyles.clearDataButtonText}>
-          Clear All My Selections
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={handleChangeAnswers}
-        style={mustDoListStyles.button}
-      >
-        <Text style={mustDoListStyles.clearDataButtonText}>
-          Update My Answers
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleExplore} style={mustDoListStyles.button}>
-        <Text style={mustDoListStyles.clearDataButtonText}>
-          Ready To Explore
-        </Text>
-      </TouchableOpacity>
+              );
+            } else {
+              return (
+                <View style={mustDoListStyles.taskContainer}>
+                  <View style={mustDoListStyles.toDoTask}>
+                    <TouchableOpacity
+                      onPress={() => goToDetails(item)}
+                      style={mustDoListStyles.buttonTextContainer}
+                    >
+                      <Text style={mustDoListStyles.taskText}>
+                        {EntryButtonTextHelper(item)}
+                      </Text>
+                    </TouchableOpacity>
+                    <IconButton
+                      onPress={() => createReminderHandler(item)}
+                      type="reminder"
+                    />
+                  </View>
+                </View>
+              );
+            }
+          }}
+        />
+      </View>
+      <View style={mustDoListStyles.buttonContainer}>
+        <TouchableOpacity
+          onPress={handleClearSelections}
+          style={mustDoListStyles.button}
+        >
+          <Text style={mustDoListStyles.clearDataButtonText}>
+            Clear All My Selections
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleChangeAnswers}
+          style={mustDoListStyles.button}
+        >
+          <Text style={mustDoListStyles.clearDataButtonText}>
+            Update My Answers
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleExplore}
+          style={mustDoListStyles.button}
+        >
+          <Text style={mustDoListStyles.clearDataButtonText}>
+            Ready To Explore
+          </Text>
+        </TouchableOpacity>
+      </View>
     </ImageBackground>
   );
 }
 
 const mustDoListStyles = StyleSheet.create({
-  outerContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 100,
-  },
+  outerContainer: {},
   fullscreen: {
     flex: 1,
   },
@@ -324,12 +326,13 @@ const mustDoListStyles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  buttonContainer: { marginTop: 50 },
   button: {
     backgroundColor: "#FFB703",
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     marginBottom: 10,
   },
   clearDataButtonText: {

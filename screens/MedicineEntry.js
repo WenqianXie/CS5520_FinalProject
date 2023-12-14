@@ -108,15 +108,15 @@ const MedicineEntry = ({ navigation }) => {
             url: "https://www.healthlinkbc.ca/health-connect-registry",
           },
           {
-            title: "- Visit the Pathways Medical Care Directory",
+            title: "Visit the Pathways Medical Care Directory",
             url: "https://pathwaysmedicalcare.ca/",
           },
           {
-            title: "- Contact local Division of Family Practice.",
+            title: "Contact local Division of Family Practice.",
             url: "https://divisionsbc.ca/",
           },
           {
-            title: "- Check third-party websites, such as",
+            title: "Check third-party websites, such as",
             link: {
               title: "Find a Doctor BC",
               url: "https://www.findadoctorbc.ca/",
@@ -160,7 +160,7 @@ const MedicineEntry = ({ navigation }) => {
             url: "https://pharmacy.londondrugs.com/pharmacy-services",
           },
         ],
-        content: "Visit a walk-in clinic or a family doctor.",
+        content: "- Visit a walk-in clinic or a family doctor.",
       },
     ],
   };
@@ -208,9 +208,14 @@ const MedicineEntry = ({ navigation }) => {
       <View style={styles.bottomRow}>
         {/* MSP */}
         <TouchableOpacity
-          onPress={() => 
+          onPress={() =>
             // navigation.navigate("Details", { topic: "msp" })}
-            navigation.navigate("Details", { detailsContent: msp, category: "medicine", docID: "msp"})}
+            navigation.navigate("Details", {
+              detailsContent: msp,
+              category: "medicine",
+              docID: "msp",
+            })
+          }
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -223,9 +228,14 @@ const MedicineEntry = ({ navigation }) => {
 
         {/* Hospital */}
         <TouchableOpacity
-          onPress={() => 
+          onPress={() =>
             // navigation.navigate("Details", { topic: "hospital" })}
-            navigation.navigate("Details", { detailsContent: hospital, category: "medicine", docID: "hospital"})}
+            navigation.navigate("Details", {
+              detailsContent: hospital,
+              category: "medicine",
+              docID: "hospital",
+            })
+          }
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -240,9 +250,14 @@ const MedicineEntry = ({ navigation }) => {
 
         {/* Pharmacy */}
         <TouchableOpacity
-          onPress={() => 
+          onPress={() =>
             // navigation.navigate("Details", { topic: "pharmacy" })}
-            navigation.navigate("Details", { detailsContent: pharmacy, category: "medicine", docID: "pharmacy"})}
+            navigation.navigate("Details", {
+              detailsContent: pharmacy,
+              category: "medicine",
+              docID: "pharmacy",
+            })
+          }
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -259,7 +274,12 @@ const MedicineEntry = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             // navigation.navigate("Details", { topic: "familyDoctor" })
-            navigation.navigate("Details", { detailsContent: familyDoctor, category: "medicine", docID: "familyDoctor"})}
+            navigation.navigate("Details", {
+              detailsContent: familyDoctor,
+              category: "medicine",
+              docID: "familyDoctor",
+            })
+          }
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
