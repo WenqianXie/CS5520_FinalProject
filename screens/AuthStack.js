@@ -6,6 +6,7 @@ import SignUp from "./SignUp";
 const Stack = createStackNavigator();
 
 export default function AuthNavigator() {
+  // this is the navigator for the authentication screens
   return (
     <Stack.Navigator
       screenOptions={{
