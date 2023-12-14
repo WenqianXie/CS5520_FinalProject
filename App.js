@@ -25,11 +25,6 @@ Notifications.setNotificationHandler({
 });
 
 const Stack = createStackNavigator();
-{/* <Stack.Screen
-          name="Welcome"
-          component={WelcomeScreen}
-          options={{ headerShown: false }}
-        /> */}
 
 export default function App() {
   return (
@@ -39,7 +34,6 @@ export default function App() {
           headerBackTitleVisible: false, // Hides the back button title (screen name)
         }}
       >
-        
         <Stack.Screen
           name="Home"
           component={Home}
@@ -82,6 +76,7 @@ export default function App() {
                 </Text>
               );
             },
+            headerStyle: { backgroundColor: "#FFBF1F" },
           }}
         />
         <Stack.Screen
@@ -91,12 +86,16 @@ export default function App() {
             title: "Your Must-Do List",
             headerBackVisible: false,
             headerLeft: () => null,
+            headerStyle: { backgroundColor: "#FFBF1F" },
           }}
         />
         <Stack.Screen
           name="Details"
           component={Details}
-          options={{ title: "Details" }}
+          options={{
+            title: "Details",
+            headerStyle: { backgroundColor: "#FFBF1F" },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

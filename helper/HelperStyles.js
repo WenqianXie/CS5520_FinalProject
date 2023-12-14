@@ -128,6 +128,8 @@ export const exploreStyles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    color: "#023047",
+    fontStyle: "italic",
   },
   arrowButtonPosition: {
     position: "absolute",
@@ -155,6 +157,53 @@ export const exploreStyles = StyleSheet.create({
     right: "1%",
   },
 });
+
+export const questionnaireStyles = StyleSheet.create({
+  questionContainer: {
+    marginVertical: 8,
+    padding: 15,
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 4,
+  },
+  question: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#333333",
+    marginBottom: 15,
+  },
+  optionContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    paddingLeft: 10,
+  },
+  option: {
+    fontSize: 16,
+    color: "#555555",
+  },
+  reminderContainer: {
+    backgroundColor: "#D48788",
+    padding: 10,
+    justifyContent: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#cccccc",
+  },
+  reminderText: {
+    fontSize: 18,
+    color: "#0D1B2A",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+});
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,

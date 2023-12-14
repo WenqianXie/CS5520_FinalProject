@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet, Alert, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import Checkbox from "expo-checkbox";
-import { collection, onSnapshot, query, where, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { database, auth } from "../firebase/FirebaseSetup";
-import { writeToUsersDB, readFromUsersDB, writeToBookmarksDB } from "../firebase/FirebaseHelper";
-import { colors } from "../helper/HelperColors";
+import {
+  writeToUsersDB,
+  readFromUsersDB,
+  writeToBookmarksDB,
+} from "../firebase/FirebaseHelper";
 import TextButton from "../components/TextButton";
+import { questionnaireStyles } from "../helper/HelperStyles";
 
 const Questionnaire = ({ navigation, route }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
@@ -18,7 +21,8 @@ const Questionnaire = ({ navigation, route }) => {
   const [studentWork, setStudentWork] = useState(null);
   const [comeWithFamily, setComeWithFamily] = useState(null);
   const [drive, setDrive] = useState(null);
-  const [needPublicTransportation, setNeedPublicTransportation] = useState(null);
+  const [needPublicTransportation, setNeedPublicTransportation] =
+    useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -34,13 +38,16 @@ const Questionnaire = ({ navigation, route }) => {
 
   useEffect(() => {
     const getUserSelection = async () => {
-    // Ensure currentUser is available
-      try{
-        if (isLoggedIn){
+      // Ensure currentUser is available
+      try {
+        if (isLoggedIn) {
           setReadDataLoading(true); // Set loading to true while we fetch the userSelection
           const userSelection = await readFromUsersDB("userSelection");
-          if(userSelection){
-            console.log("read online userSelection in quiz from database: ", userSelection);
+          if (userSelection) {
+            console.log(
+              "read online userSelection in quiz from database: ",
+              userSelection
+            );
             setLengthInCanada(userSelection.lengthInCanada);
             setOccupation(userSelection.occupation);
             setStudentWork(userSelection.studentWork);
@@ -56,26 +63,24 @@ const Questionnaire = ({ navigation, route }) => {
             setStudentWork(route.params.userSelection.studentWork);
             setDrive(route.params.userSelection.drive);
             setComeWithFamily(route.params.userSelection.comeWithFamily);
-            setNeedPublicTransportation(route.params.userSelection.needPublicTransportation);
+            setNeedPublicTransportation(
+              route.params.userSelection.needPublicTransportation
+            );
           }
         }
         setReadDataLoading(false);
-      } catch (err){
-        console.log("Error from getting remote userSelection of quiz: ", err)
+      } catch (err) {
+        console.log("Error from getting remote userSelection of quiz: ", err);
       }
-    }
+    };
     getUserSelection();
   }, [isLoggedIn, auth.currentUser]);
-
 
   const questions = [
     {
       id: "1",
       question: "How long do you plan to stay in Canada?",
-      options: [
-        "Less than 3 months",
-        "More than 3 months",
-      ],
+      options: ["Less than 3 months", "More than 3 months"],
       answer: lengthInCanada,
       setAnswer: setLengthInCanada,
     },
@@ -119,113 +124,91 @@ const Questionnaire = ({ navigation, route }) => {
   ];
 
   const renderQuestion = ({ item }) => {
-    if (item.id === '3' && occupation !== "Student") {
-        return null;
-      } else {
-    return (
-      <View style={styles.questionContainer}>
-        <Text style={styles.question}>{item.question}</Text>
-        {item.options.map((option, index) => (
-          <View key={index} style={styles.optionContainer}>
-            <Checkbox
-              value={item.answer === option}
-              onValueChange={(newValue) => {
-                if (newValue) {
-                  item.setAnswer(option);
-                }
-              }}
-              color={item.answer === option ? "#4630EB" : undefined}
-            />
-            <Text style={styles.option}>{option}</Text>
-          </View>
-        ))}
-      </View>
-    )}
+    if (item.id === "3" && occupation !== "Student") {
+      return null;
+    } else {
+      return (
+        <View style={questionnaireStyles.questionContainer}>
+          <Text style={questionnaireStyles.question}>{item.question}</Text>
+          {item.options.map((option, index) => (
+            <View key={index} style={questionnaireStyles.optionContainer}>
+              <Checkbox
+                value={item.answer === option}
+                onValueChange={(newValue) => {
+                  if (newValue) {
+                    item.setAnswer(option);
+                  }
+                }}
+                color={item.answer === option ? "#4630EB" : undefined}
+              />
+              <Text style={questionnaireStyles.option}>{option}</Text>
+            </View>
+          ))}
+        </View>
+      );
+    }
   };
 
   const generateMustDoList = () => {
     let mustDoList = [];
     mustDoList.push("nothing");
 
-    if(lengthInCanada === "More than 3 months" && occupation !== "Traveller"){
+    if (lengthInCanada === "More than 3 months" && occupation !== "Traveller") {
       mustDoList.push("msp");
     }
 
-    if(occupation === "Worker" || studentWork === "Yes"){
+    if (occupation === "Worker" || studentWork === "Yes") {
       mustDoList.push("sin");
     }
 
-    if(drive === "Yes"){
+    if (drive === "Yes") {
       mustDoList.push("driverLicense");
     }
 
-    if(needPublicTransportation === "Yes"){
+    if (needPublicTransportation === "Yes") {
       mustDoList.push("compassCard");
     }
 
     return mustDoList;
-  }
+  };
 
   const handleSubmit = async () => {
     const userSelection = {
-        userSelection: {
-          lengthInCanada,
-          occupation,
-          studentWork,
-          comeWithFamily,
-          drive,
-          needPublicTransportation,
-    }}
-    const mustDoList = {generatedMustDoList: generateMustDoList()};
+      userSelection: {
+        lengthInCanada,
+        occupation,
+        studentWork,
+        comeWithFamily,
+        drive,
+        needPublicTransportation,
+      },
+    };
+    const mustDoList = { generatedMustDoList: generateMustDoList() };
 
     if (isLoggedIn) {
       setSubmitLoading(true); // Set loading to true while we submit the questionnaire
       await writeToUsersDB({
-          ...userSelection,
-        }
-      );
+        ...userSelection,
+      });
       await writeToBookmarksDB({
-          ...mustDoList,
-        }
-      )
+        ...mustDoList,
+      });
       setSubmitLoading(false); // Set loading to false once we have submitted the questionnaire
       navigation.replace("MustDoList");
     } else {
       //If user is not logged in, pass the userSelection and generated mustDoList to "MustDoList" Screen
       navigation.replace("MustDoList", {
-          ...userSelection, ...mustDoList
-        }
-      )};
-      // Alert.alert(
-      //   "Authentication Required",
-      //   "Please log in to submit your answer",
-      //   [
-      //     {
-      //       text: "Cancel",
-      //       onPress: () => console.log("Cancel Pressed"),
-      //       style: "cancel",
-      //     },
-      //     {
-      //       text: "Confirm",
-      //       onPress: () => {
-      //         // Navigate to the Login page
-      //         // Assuming you are using React Navigation
-      //         navigation.navigate("Auth", { screen: "LogIn" });
-      //       },
-      //     },
-      //   ],
-      //   { cancelable: true }
-      // );
-    // }
+        ...userSelection,
+        ...mustDoList,
+      });
+    }
   };
 
   return (
     <View style={{ flex: 1 }}>
       {!isLoggedIn && (
-        <View style={styles.reminderContainer}>
-          <Text style={styles.reminderText}>
-            Log in to save your answers
-          </Text>
+        <View style={questionnaireStyles.reminderContainer}>
+          <Text style={questionnaireStyles.reminderText}>Log in to save your answers</Text>
         </View>
       )}
 
@@ -241,7 +224,7 @@ const Questionnaire = ({ navigation, route }) => {
               {submitLoading ? (
                 <ActivityIndicator size="small" color="white" />
               ) : (
-              <Text>Submit</Text>
+                <Text>Submit</Text>
               )}
             </TextButton>
           )}
@@ -249,44 +232,10 @@ const Questionnaire = ({ navigation, route }) => {
             padding: 10,
             alignItems: "center",
           }}
-        />)
-      }
+        />
+      )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  questionContainer: {
-    marginVertical: 10,
-    padding: 10,
-    backgroundColor: "#f0f0f0",
-    borderRadius: 5,
-  },
-  question: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  optionContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 5,
-  },
-  option: {
-    fontSize: 16,
-    marginLeft: 10,
-  },
-  reminderContainer: {
-    backgroundColor: "#ffcccb", // Light red for visibility, adjust as needed
-    padding: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  reminderText: {
-    fontSize: 16,
-    color: "black", // Adjust color as needed
-    alignSelf: "center"
-  },
-});
 
 export default Questionnaire;
