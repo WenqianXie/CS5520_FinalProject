@@ -126,29 +126,6 @@ export function ProfileScreen({ navigation }) {
       style={profileStyles.welcomeBackground}
     >
       <SafeAreaView style={profileStyles.profileContainer}>
-        {/* <View style={profileStyles.profilePhotoAndUsername}>
-          <Pressable
-            onPress={isLoggedIn ? enlargeProfilePic : handleLogInPress}
-            style={({ pressed }) => [
-              profileStyles.profileAvatar,
-              pressed && profileStyles.buttonOnPress,
-            ]}
-          >
-            {getImage(profileStyles.profileAvatar)}
-          </Pressable>
-
-          {isLoggedIn ? (
-            loading ? (
-              <ActivityIndicator size="large" color={colors.themeDark} />
-            ) : (
-              <Text style={profileStyles.buttonText}>{displayedName}</Text>
-            )
-          ) : (
-            <TextButton onPress={handleLogInPress}>
-              <Text style={profileStyles.buttonText}>Log in</Text>
-            </TextButton>
-          )}
-        </View> */}
         <View style={profileStyles.profilePhotoAndUsername}>
           <Pressable
             onPress={isLoggedIn ? enlargeProfilePic : null} // Pressable only enlarges the profile picture if logged in, does nothing if not logged in

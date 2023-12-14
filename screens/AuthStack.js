@@ -9,11 +9,22 @@ export default function AuthNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerBackTitleVisible: false, // Hides the back button title (screen name)
+        headerBackTitleVisible: false, 
+        headerStyle: { backgroundColor: "#FFBF1F" }, 
+        headerTintColor: "#023047", 
+        headerTitleStyle: { fontWeight: "bold" }, 
       }}
     >
-      <Stack.Screen name="LogIn" component={LogIn} />
-      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen
+        name="LogIn"
+        component={LogIn}
+        options={{ title: "Log In" }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ title: "Sign Up" }}
+      />
     </Stack.Navigator>
   );
 }

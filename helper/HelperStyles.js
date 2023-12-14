@@ -107,6 +107,54 @@ export const profileStyles = StyleSheet.create({
   },
 });
 
+export const exploreStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textContainer: {
+    backgroundColor: colors.transparentWhite,
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    shadowColor: "#FFEEC2",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 6,
+    maxWidth: "50%",
+    marginVertical: 10,
+  },
+  text: {
+    fontSize: 20,
+  },
+  arrowButtonPosition: {
+    position: "absolute",
+    top: "5%",
+    right: "5%",
+  },
+  backgroundPic: {
+    height: "100%",
+    width: "100%",
+    justifyContent: "flex-start",
+  },
+  essentialButtonPosition: {
+    position: "absolute",
+    top: "20%",
+    left: "35%",
+  },
+  medicineButtonPosition: {
+    position: "absolute",
+    bottom: "40%",
+    left: "28%",
+  },
+  transitButtonPosition: {
+    position: "absolute",
+    bottom: "18%",
+    right: "1%",
+  },
+});
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -120,7 +168,7 @@ export const styles = StyleSheet.create({
     letterSpacing: 1.5,
     textTransform: "uppercase",
     color: "#EAE2B7",
-    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowColor: colors.transparentWhite,
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 3,
   },
@@ -131,7 +179,7 @@ export const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 2,
     color: "#d4a373",
-    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowColor: colors.transparentWhite,
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
     paddingTop: 10,
@@ -237,12 +285,12 @@ export const styles = StyleSheet.create({
     marginLeft: 25,
   },
   bottomRow: {
-    position: "absolute", // Keeps the component in a fixed position
-    flexDirection: "column", // Stacks the children vertically
-    justifyContent: "center", // Centers the children vertically within the container
-    alignItems: "flex-start", // Aligns children to the start (left side) of the container
-    backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent white background
-    width: "95%", // Adjust the width as needed
+    position: "absolute",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    backgroundColor: colors.transparentWhite,
+    width: "95%",
     height: windowHeight * 0.35,
     borderRadius: 20,
     shaloowColor: "black",

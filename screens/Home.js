@@ -11,7 +11,7 @@ import WelcomeScreen from "./WelcomeScreen";
 
 const Tab = createBottomTabNavigator();
 
-export default function Home({ navigation}) {
+export default function Home({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [modalVisible, setModalVisible] = useState(true);
   const [modalHasShown, setModalHasShown] = useState(false);
@@ -19,16 +19,16 @@ export default function Home({ navigation}) {
   useEffect(() => {
     if (!modalHasShown) {
       setTimeout(() => {
-        setModalVisible(false)}, 2000);
+        setModalVisible(false);
+      }, 2000);
       setModalHasShown(true);
     }
-  }, [modalHasShown])
+  }, [modalHasShown]);
 
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
-        // You can load as many fonts as you like here
+        "Quicksand-Regular": require("../assets/fonts/Quicksand-Bold.ttf"),
       });
       setFontsLoaded(true);
     }
@@ -37,9 +37,7 @@ export default function Home({ navigation}) {
 
   return (
     <>
-      <Modal
-        animationType="fade"
-        visible={modalVisible}>
+      <Modal animationType="fade" visible={modalVisible}>
         <WelcomeScreen />
       </Modal>
       <Tab.Navigator
@@ -47,14 +45,13 @@ export default function Home({ navigation}) {
           headerStyle: {
             backgroundColor: "#FFBF1F",
           },
-          headerTintColor: "#A35700",
+          headerTintColor: "#023047",
           headerTitleStyle: {
             fontWeight: "bold",
             fontSize: 24,
-            // fontFamily: "Quicksand-Regular",
           },
-          tabBarActiveTintColor: "#A35700",
-          tabBarInactiveTintColor: "#ffdab9",
+          tabBarActiveTintColor: "#023047",
+          tabBarInactiveTintColor: "#DAD7CD",
           tabBarStyle: {
             backgroundColor: "#FFBF1F",
           },
