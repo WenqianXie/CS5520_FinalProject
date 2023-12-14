@@ -58,17 +58,14 @@ export default function SignUp({ navigation }) {
       autoLogin();
     } catch (err) {
       switch (err.code) {
-        case "auth/user-not-found":
-          Alert.alert("Incorrect email or password.");
-          break;
-        case "auth/wrong-password":
-          Alert.alert("Incorrect email or password.");
-          break;
         case "auth/invalid-email":
-          Alert.alert("Invalid Email address.");
+          Alert.alert("Invalid Email Format.");
+          break;
+        case "auth/weak-password":
+          Alert.alert("Password should be minimum 6 characters");
           break;
         default:
-          Alert.alert("An error occurred. Please try again.");
+          Alert.alert("An error occurred during signup. Please try again.");
           break;
       }
     }
