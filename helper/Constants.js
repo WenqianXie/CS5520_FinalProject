@@ -1,3 +1,5 @@
+// Purpose: Constants for the app
+
 export const DEFAULT_SCREEN_WIDTH = 411.42857142857144;
 export const FONTSIZE_CONTROLLER = 0.95;
 export const BASE_ICON_SIZE = 50;
@@ -21,5 +23,5 @@ if (screenHeight < 640) {
   imageScaleHeight = 1.45; // Larger screens
 }
 
-let imageScale = Math.min(imageScaleWidth, imageScaleHeight);
+const imageScale = Math.min(imageScaleWidth, imageScaleHeight);
 export { imageScale };
