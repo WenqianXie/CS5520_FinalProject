@@ -14,39 +14,41 @@ const driverLicense = {
   contents: [
     {
       subtitle: "If you are new drivers",
-      content:
-        "First step: Get your L license (on or after your 16th birthday)\n" +
-        "What is L license? Kowledge test + vision creening!\n",
-      link: {
-        title: "Book your knowledge test",
-        url: "https://www.icbc.com/driver-licensing/visit-dl-office/Book-a-knowledge-test-and-other-services",
-      },
-      content:
-        "Second step: Get your N license (after 12 months of L license)" +
-        " What is N license? 1 year with supervisor + Class 7 road test!",
-      link: {
-        title: "- Book your road test",
-        url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
-      },
-      content:
-        "Third step: Get your full license (after 24 months of N license)" +
-        " What is full license? 2 years with N license + Class 5 road test!",
-      link: {
-        title: "- Book your road test",
-        url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
-      },
+      list: [
+        {content:
+          "First step: Get your L license (on or after your 16th birthday)\n" +
+          "What is L license? Kowledge test + vision creening!\n",
+        link: {
+          title: "Book your knowledge test",
+          url: "https://www.icbc.com/driver-licensing/visit-dl-office/Book-a-knowledge-test-and-other-services",
+        }},
+        {content:
+          "Second step: Get your N license (after 12 months of L license)" +
+          " What is N license? 1 year with supervisor + Class 7 road test!",
+        link: {
+          title: "- Book your road test",
+          url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
+        }},
+        {content:
+          "Third step: Get your full license (after 24 months of N license)" +
+          " What is full license? 2 years with N license + Class 5 road test!",
+        link: {
+          title: "- Book your road test",
+          url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
+        }}
+      ]
     },
     {
       subtitle: "If you are new to BC",
-    },
-    {
-      content:
-        "If you have a valid driver's license from another country, you can use it for 90 days. " +
-        "After 90 days, you need to get a BC driver's license.",
-      link: {
-        title: "- Book your road test",
-        url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
-      },
+      list: [
+        {content:
+          "If you have a valid driver's license from another country, you can use it for 90 days. " +
+          "After 90 days, you need to get a BC driver's license.",
+        link: {
+          title: "- Book your road test",
+          url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
+        }}
+      ]
     },
   ],
 };

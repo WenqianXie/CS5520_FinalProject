@@ -87,10 +87,10 @@ const BulletPointContent = ({ bulletPointContent }) => {
   // );
   return (
     <>
-      <View>
+      <View style={bulletPointContentStyles.sectionContainer}>
         {/* Subtitle if needed */}
         {bulletPointContent.subtitle && (
-          <View style={bulletPointContentStyles.sectionContainer}>
+          <View >
             <Text style={bulletPointContentStyles.subtitle}>
               {bulletPointContent.subtitle}
             </Text>
@@ -99,7 +99,7 @@ const BulletPointContent = ({ bulletPointContent }) => {
 
         {/* Content if needed */}
         {bulletPointContent.content && (
-          <View style={bulletPointContentStyles.sectionContainer}>
+          <View>
             <Text style={bulletPointContentStyles.detailsContent}>
               {bulletPointContent.content}
             </Text>
@@ -108,14 +108,14 @@ const BulletPointContent = ({ bulletPointContent }) => {
 
         {/* WebLink if needed */}
         {bulletPointContent.link && (
-          <View style={bulletPointContentStyles.sectionContainer}>
+          <View>
             <WebLink linkRequest={bulletPointContent.link} />
           </View>
         )}
 
         {/* Image if needed */}
         {bulletPointContent.image && (
-          <View style={bulletPointContentStyles.sectionContainer}>
+          <View>
             {!downloadImageURL ? (
               <ActivityIndicator size="large" color={colors.themeDark} />
             ) : (
@@ -130,14 +130,14 @@ const BulletPointContent = ({ bulletPointContent }) => {
 
         {/* Map if needed */}
         {bulletPointContent.map && (
-          <View style={bulletPointContentStyles.sectionContainer}>
+          <View>
             <MapManager requestedMap={bulletPointContent.map} />
           </View>
         )}
 
         {/* WebView if needed */}
         {bulletPointContent.webview && (
-          <View style={bulletPointContentStyles.sectionContainer}>
+          <View>
             <WebView
               source={{ uri: bulletPointContent.webview }}
               style={bulletPointContentStyles.webview}
