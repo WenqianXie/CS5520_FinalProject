@@ -40,3 +40,15 @@ New Styles of:
 - Medicine Entry
 - Transit Entry
 - Essential Docs Entry
+
+==================================================================================================================================================
+Iteration 3:
+
+New Features:
+
+- Add unsplash image API to fetch random image of Canada and make the image as the background of sign up, log in and must-do-list pages.
+- Add a notification in must-do-list so the user can view their tasks, and set up a time to send a notification for them. Also, when user clicked the notification, it will automatically switch to the to-do-list.
+- Add navigation in must-do-list so that when user click on the task, it will a
+- Add external links in the details page so that when user click on them, it will direct user to the web.
+
+Also, we adjusted all styles for all pages, filled the details page and uploaded all the data sets to firebase.

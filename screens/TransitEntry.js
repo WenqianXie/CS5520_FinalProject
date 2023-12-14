@@ -9,44 +9,6 @@ import { styles } from "../helper/HelperStyles";
 import React from "react";
 import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
 
-const detailsContent = {
-  title: "Hospital",
-  contents: [
-    {
-      subtitle: "Emergency",
-      content: "Call 911",
-    },
-    {
-      subtitle: "Non-Emergency",
-      content: "Call 311",
-      map: requestedMap,
-      link: {
-        title: "Boston 311",
-        url: "https://www.boston.gov/departments/311",
-      },
-    },
-  ],
-};
-
-const requestedMap = {
-  initialRegion: {
-    latitude: 42.3601,
-    longitude: -71.0589,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  },
-  markersList: [
-    {
-      coordinate: {
-        latitude: 42.3601,
-        longitude: -71.0589,
-      },
-      title: "This is a Marker's Title",
-    },
-  ],
-  style: null,
-};
-
 const compassCard = {
   title: "Get A Compass Card",
   contents: [
@@ -217,7 +179,11 @@ const TransitEntry = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             // navigation.navigate("Details", { topic: "compassCard" })
-            navigation.navigate('Details', {detailsContent: compassCard, category: "transit", docID: "compassCard"})
+            navigation.navigate("Details", {
+              detailsContent: compassCard,
+              category: "transit",
+              docID: "compassCard",
+            })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -233,9 +199,13 @@ const TransitEntry = ({ navigation }) => {
 
         {/* SkyTrain */}
         <TouchableOpacity
-          onPress={() => 
+          onPress={() =>
             // navigation.navigate("Details", { topic: "skyTrain" })
-            navigation.navigate('Details', {detailsContent: skyTrain, category: "transit", docID: "skyTrain"})
+            navigation.navigate("Details", {
+              detailsContent: skyTrain,
+              category: "transit",
+              docID: "skyTrain",
+            })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -251,9 +221,14 @@ const TransitEntry = ({ navigation }) => {
 
         {/* Bus */}
         <TouchableOpacity
-          onPress={() => 
+          onPress={() =>
             // navigation.navigate("Details", { topic: "bus" })}
-            navigation.navigate('Details', {detailsContent: bus, category: "transit", docID: "bus"})}
+            navigation.navigate("Details", {
+              detailsContent: bus,
+              category: "transit",
+              docID: "bus",
+            })
+          }
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -266,9 +241,14 @@ const TransitEntry = ({ navigation }) => {
 
         {/* Seabus */}
         <TouchableOpacity
-          onPress={() => 
+          onPress={() =>
             // navigation.navigate("Details", { topic: "seabus" })}
-            navigation.navigate('Details', {detailsContent: seabus, category: "transit", docID: "seabus"})}
+            navigation.navigate("Details", {
+              detailsContent: seabus,
+              category: "transit",
+              docID: "seabus",
+            })
+          }
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
