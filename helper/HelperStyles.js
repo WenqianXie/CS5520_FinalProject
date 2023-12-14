@@ -204,7 +204,7 @@ export const questionnaireStyles = StyleSheet.create({
   },
 });
 
-export const bulletPointContentStyles = StyleSheet.create({
+export const bulletPointListStyles = StyleSheet.create({
   subtitleContainer: {
     flexDirection: "row",
     alignItems: "center",
