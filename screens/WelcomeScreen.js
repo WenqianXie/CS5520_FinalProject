@@ -1,16 +1,10 @@
-// WelcomeScreen.js
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text } from "react-native";
 import { styles } from "../helper/HelperStyles";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function WelcomeScreen() {
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     navigation.navigate("Home");
-  //   }, 2000); // 2 second
-  // }, [navigation]);
-
+  //this is the welcome screen to be shown to the user only when the app is first opened
   return (
     <LinearGradient
       // Background Linear Gradient
