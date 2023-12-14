@@ -6,6 +6,7 @@ import {
   Image,
   ActivityIndicator,
   Pressable,
+  ImageBackground,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextButton from "../components/TextButton";
@@ -126,23 +127,45 @@ export function ProfileScreen({ navigation }) {
       style={profileStyles.welcomeBackground}
     >
       <SafeAreaView style={profileStyles.profileContainer}>
+        <Modal
+          animationType="fade"
+          visible={modalVisible}
+          onRequestClose={closeModal}
+        >
+          {/* Wrap the whole modal in a Pressable to close the modal when the user clicks outside of the modal */}
+          {/* The Pressable will be disabled when some function is running, to prevent the user from closing the modal before the function is finished */}
+          <Pressable 
+            onPress={closeModal}
+            style={profileStyles.profileAvatarModalContainer}
+          >
+            <IconButton
+              onPress={closeModal}
+              type="close"
+              position={profileStyles.profileAvatarModalCloseButton}
+            />
+            {getImage(profileStyles.profileAvatarModal)}
+            <ImageManager closeModal={closeModal} currAvatarURL={currAvatarURL}/>
+          </Pressable>
+        </Modal>
+
         <View style={profileStyles.profilePhotoAndUsername}>
           <Pressable
             onPress={isLoggedIn ? enlargeProfilePic : null} // Pressable only enlarges the profile picture if logged in, does nothing if not logged in
             style={({ pressed }) => [
-              profileStyles.profileAvatar,
               pressed && profileStyles.buttonOnPress,
             ]}
           >
             {getImage(profileStyles.profileAvatar)}
           </Pressable>
 
-          {isLoggedIn &&
-            (loading ? (
-              <ActivityIndicator size="large" color={colors.themeDark} />
-            ) : (
-              <Text style={profileStyles.buttonText}>{displayedName}</Text>
-            ))}
+          <View style={profileStyles.profileUsernameContainer}>
+            {isLoggedIn &&
+              (loading ? (
+                <ActivityIndicator size="large" color={colors.themeDark} />
+              ) : (
+                <Text style={profileStyles.profileUsername}>{displayedName}</Text>
+              ))}
+          </View>
         </View>
 
         <TextButton

@@ -58,15 +58,38 @@ export const profileStyles = StyleSheet.create({
   profileAvatar: {
     width: 150,
     height: 150,
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: 'white',
   },
   profileAvatarModalContainer: {
     flex: 1,
     backgroundColor: "black",
     alignItems: "center",
+    justifyContent: "center"
+  },
+  profileAvatarModalCloseButton :{
+    marginVertical: 10,
   },
   profileAvatarModal: {
     width: "100%",
     height: "45%",
+  },
+  profileAvatarModalMask: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: 'white',
+    borderRadius: 100,
+  },
+  profileUsernameContainer:{
+    marginTop: 10,
+  },
+  profileUsername:{
+    fontSize: 22,
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   profileContainer: {
     flex: 1,
