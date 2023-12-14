@@ -252,7 +252,7 @@ export const bulletPointListStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
-    elevation: 3, 
+    elevation: 3,
   },
   bullet: {
     fontSize: 18,
@@ -273,12 +273,61 @@ export const bulletPointListStyles = StyleSheet.create({
   image: {
     width: "100%",
     height: 200,
-    borderRadius: 10, 
+    borderRadius: 10,
   },
   webview: {
     height: 400,
-    borderRadius: 10, 
-    overflow: "hidden", 
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+});
+
+export const mustDoListStyles = StyleSheet.create({
+  outerContainer: {},
+  fullscreen: {
+    flex: 1,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject, // This ensures the overlay covers the full screen
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+  },
+  toDoTask: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderRadius: 20,
+    marginHorizontal: 10,
+  },
+  taskText: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  taskContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    borderRadius: 15,
+    marginTop: 5,
+    padding: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonContainer: { marginTop: 50 },
+  button: {
+    backgroundColor: "#FFB703",
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 10,
+    marginBottom: 10,
+    padding: 8,
+  },
+  clearDataButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 

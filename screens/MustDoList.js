@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  StyleSheet,
   Alert,
   Modal,
   ImageBackground,
@@ -10,7 +9,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { onSnapshot, doc } from "firebase/firestore";
 import { auth } from "../firebase/FirebaseSetup";
-import TextButton from "../components/TextButton";
 import { deleteSelectionsFromUsersDB } from "../firebase/FirebaseHelper";
 import { FlatList } from "react-native-gesture-handler";
 import { bookmarksCollectionRef } from "../firebase/FirebaseSetup";
@@ -18,7 +16,7 @@ import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
 import { onAuthStateChanged } from "firebase/auth";
 import IconButton from "../components/IconButton";
 import ReminderSetter from "../components/ReminderSetter";
-import { authStyles } from "../helper/HelperStyles";
+import { mustDoListStyles } from "../helper/HelperStyles";
 
 export default function MustDoList({ navigation, route }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -293,51 +291,3 @@ export default function MustDoList({ navigation, route }) {
     </ImageBackground>
   );
 }
-
-const mustDoListStyles = StyleSheet.create({
-  outerContainer: {},
-  fullscreen: {
-    flex: 1,
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject, // This ensures the overlay covers the full screen
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
-  },
-  toDoTask: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderRadius: 20,
-    marginHorizontal: 10,
-  },
-  taskText: {
-    color: "black",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  taskContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-    borderRadius: 15,
-    marginTop: 5,
-    padding: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  buttonContainer: { marginTop: 50 },
-  button: {
-    backgroundColor: "#FFB703",
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    marginHorizontal: 10,
-    marginBottom: 10,
-  },
-  clearDataButtonText: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-});
