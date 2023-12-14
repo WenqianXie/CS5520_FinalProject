@@ -1,3 +1,5 @@
+// Purpose: This file creates a button with an icon and text.
+
 import { Text, Pressable } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
@@ -16,6 +18,7 @@ const IconButton = ({onPress, type, text="", scale=1, position=null, textStyle=n
     fontScale = scale*FONTSIZE_CONTROLLER;
   }
 
+  //This component could be compatible to multiple types of icons
   let buttonStyle = null;
   let iconButton = null;
   switch (type){
