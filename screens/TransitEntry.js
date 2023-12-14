@@ -9,195 +9,8 @@ import { styles } from "../helper/HelperStyles";
 import React from "react";
 import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
 
-const compassCard = {
-  title: "Get A Compass Card",
-  contents: [
-    {
-      subtitle: "What is Compass Card?",
-      content:
-        "- Compass Cards are convenient, reloadable fare cards that can be used when taking transit within Metro Vancouver." +
-        "\n- Compass Cards can be loaded with Stored Value, or with prepaid passes (such as Monthly and DayPasses)."+
-        "\n- Stored Value can be used to pay for single fares, DayPasses, and add-ons such as the YVR AddFare."+
-        "\n- Passes can be used for unlimited travel within the selected zones and time period.",
-    },
-    {
-      subtitle: "How compass card works?",
-      content:
-        "- Tap your card on the reader when entering buses, HandyDART, and at the gates when entering and exiting buses, SkyTrain stations or SeaBus terminals." +
-        "\n- The card reader will beep and display lights to show that your card has been read." +
-        "\n- The fare is automatically deducted from the stored value on your card.",
-    },
-    {
-      subtitle: "Where to get a compass card?",
-      content:
-        "- Compass Cards can be purchased at Compass Vending Machines located at all SkyTrain, SeaBus and West Coast Express stations."+
-        "\n- It requires a $6 refundable deposit.",
-      link: {
-        title: "- You can also Purchase Online",
-        url: "https://www.compasscard.ca/OrderCard",
-      },
-    },
-    {
-      subtitle: "Wait...If you are a student!",
-      content:
-        "- U-Passes are available to students enrolled in participating universities only, they are linked to the Compass Card." +
-        "\n- U-passes offer lower transit fares across all zones–including unlimited use of bus, SkyTrain and SeaBus services within Metro Vancouver.",
-      link: {
-        title: "- Purchase a U-Pass",
-        url: "https://upassbc.translink.ca/",
-      },
-    },
-  ],
-};
-
-const skyTrain = {
-  title: "Taking the SkyTrain",
-  contents: [
-    {
-      subtitle: "What is SkyTrain?",
-      content:
-        "- SkyTrain is the medium-capacity rapid transit system serving the Metro Vancouver region." +
-        "\n- SkyTrain has 3 lines and 53 stations serving Metro Vancouver."+
-        "\n- The Expo and Millennium lines connect downtown Vancouver with the cities of Burnaby, New Westminster and Surrey."+
-        "\n- The Canada Line connects downtown Vancouver to the Vancouver International Airport (YVR) and the city of Richmond." +
-        "\n! Children 12 and under can ride TransLink services free of charge !",
-    },
-    {
-      subtitle: "How to take a SkyTrain?",
-      list: [
-        {
-          content:
-            "- Compass Cards are convenient, reloadable fare cards that can be used when taking transit within Metro Vancouver.\n" +
-            "- Or if you are a student, you can purchase a U-Pass!\n" +
-            "- Or you can simply tap your credit or debit card!",
-          link:
-          {
-            title: "- Purchase a compass card",
-            url: "https://www.translink.ca/transit-fares/where-to-buy",
-          },
-        },
-        {
-          link:
-          {
-            title: "- Purchase a U-Pass",
-            url: "https://upassbc.translink.ca/",
-          },
-        }
-      ],
-    },
-    {
-      subtitle: "Find SkyTrain stations near You!",
-    },
-    {
-      webview:
-        "https://www.google.com/maps/d/viewer?mid=1KyVPelPCtKalIehQ9DV3DLyaCM1NaYj2&femb=1&ll=49.22669719438806%2C-123.00673110909199&z=12",
-    },
-  ],
-};
-
-const bus = {
-  title: "Using the Bus",
-  contents: [
-    {
-      subtitle: "What is Bus?",
-      content:
-        "- Buses connect all neighbourhoods of Vancouver and run frequently."+
-        "\n- All buses are equipped with accessibility measures for wheelchairs and strollers." +
-        "\n! Children 12 and under can ride TransLink services free of charge !",
-    },
-    {
-      subtitle: "How to take a Bus?",
-      list: [
-        {
-          content:
-            "- Compass Cards are convenient, reloadable fare cards that can be used when taking transit within Metro Vancouver.\n" +
-            "- Or if you are a student, you can purchase a U-Pass!\n" +
-            "- Or you can simply tap your credit or debit card!",
-          link:
-          {
-            title: "- Purchase a compass card",
-            url: "https://www.translink.ca/transit-fares/where-to-buy",
-          },
-        },
-        {
-          link:
-          {
-            title: "- Purchase a U-Pass",
-            url: "https://upassbc.translink.ca/",
-          },
-        }
-      ],
-    },
-  ],
-};
-
-const seabus = {
-  title: "Using the Seabus",
-  contents: [
-    {
-      subtitle: "What is Seabus?",
-      content:
-        "- The SeaBus is a passenger-only ferry service in Metro Vancouver."+
-        "\n- It crosses Burrard Inlet to connect the cities of Vancouver and North Vancouver." +
-        "\n! Children 12 and under can ride TransLink services free of charge !",
-    },
-    {
-      subtitle: "How to take a seabus?",
-      list: [
-        {
-          content:
-            "- Compass Cards are convenient, reloadable fare cards that can be used when taking transit within Metro Vancouver.\n" +
-            "- Or if you are a student, you can purchase a U-Pass!\n" +
-            "- Or you can simply tap your credit or debit card!",
-          link:
-          {
-            title: "- Purchase a compass card",
-            url: "https://www.translink.ca/transit-fares/where-to-buy",
-          },
-        },
-        {
-          link:
-          {
-            title: "- Purchase a U-Pass",
-            url: "https://upassbc.translink.ca/",
-          },
-        }
-      ],
-    },
-    {
-      subtitle: "Where to take a Seabus?",
-      content:"- Seabus route map",
-    },
-    {
-      image: "infoDataImages/seabus_map.png",
-    },
-    {
-      map: {
-        markersList: [
-          {
-            coordinate: {
-              latitude: 49.28706,
-              longitude: -123.108894,
-            },
-            title: "Waterfront SeaBus Terminal",
-            icon: "directions-boat",
-          },
-          {
-            coordinate: {
-              latitude: 49.309636,
-              longitude: -123.083865,
-            },
-            title: "Lonsdale Quay SeaBus Terminal",
-            icon: "directions-boat",
-          },
-        ],
-        style: null,
-      },
-    },
-  ],
-};
-
 const TransitEntry = ({ navigation }) => {
+  // this is the entry page for transit related topics
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -210,11 +23,6 @@ const TransitEntry = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { topic: "compassCard" })
-            // navigation.navigate("Details", {
-              // detailsContent: compassCard,
-              // category: "transit",
-              // docID: "compassCard",
-            // })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -232,11 +40,6 @@ const TransitEntry = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { topic: "skyTrain" })
-            // navigation.navigate("Details", {
-            //   detailsContent: skyTrain,
-            //   category: "transit",
-            //   docID: "skyTrain",
-            // })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -254,11 +57,6 @@ const TransitEntry = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { topic: "bus" })
-            // navigation.navigate("Details", {
-            //   detailsContent: bus,
-            //   category: "transit",
-            //   docID: "bus",
-            // })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -274,11 +72,6 @@ const TransitEntry = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Details", { topic: "seabus" })
-            // navigation.navigate("Details", {
-            //   detailsContent: seabus,
-            //   category: "transit",
-            //   docID: "seabus",
-            // })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
