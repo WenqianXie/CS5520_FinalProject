@@ -21,6 +21,7 @@ import { profileStyles } from "../helper/HelperStyles";
 import { LinearGradient } from "expo-linear-gradient";
 
 export function ProfileScreen({ navigation }) {
+  // this is the profile page
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
   const [loading, setLoading] = useState(false); // State to track login status
   const [displayedName, setDisplayedName] = useState(null); // State to track displayed name
@@ -41,12 +42,13 @@ export function ProfileScreen({ navigation }) {
   }, [auth.currentUser]);
 
   useEffect(() => {
+    // Async function to get the download URL of the avatar photo
     async function getURL(avatarUrl) {
       const imageUriRef = ref(storage, avatarUrl);
       const url = await getDownloadURL(imageUriRef);
       setDownloadAvatarURL(url);
     }
-    if (isLoggedIn) {
+    if (isLoggedIn) { //if logged in, get the avatar photo from the database
       setLoading(true); // Set loading to true while we fetch the users list
       const unsubscribe = onSnapshot(
         query(
@@ -59,7 +61,6 @@ export function ProfileScreen({ navigation }) {
             querySnapshot.docs.forEach((docSnap) => {
               usersList.push({ ...docSnap.data(), id: docSnap.id });
             });
-            console.log("userList from ProfileScreen: ", usersList);
             setDisplayedName(usersList[0].username);
             if (usersList[0].avatarURL) {
               setCurrAvatarURL(usersList[0].avatarURL);
@@ -76,6 +77,7 @@ export function ProfileScreen({ navigation }) {
 
   //Function to get the image to display, depending on whether the user is logged in and has uploaded an avatar photo before
   const getImage = (imageStyle) => {
+    // Only display the image if the user is logged in and has uploaded an avatar photo before
     if (isLoggedIn && downloadAvatarURL) {
       return (
         <Image
@@ -97,19 +99,15 @@ export function ProfileScreen({ navigation }) {
   const closeModal = () => {
     setModalVisible(false);
   };
-
   const enlargeProfilePic = () => {
     setModalVisible(!modalVisible);
   };
-
   const handleLogInPress = () => {
     navigation.push("Auth", { screen: "Login" }, "Profile"); // Navigate to the Login screen
   };
-
   const handleMyListPress = () => {
     navigation.navigate("MustDoList");
   };
-
   const handleLogOutPress = () => {
     try {
       signOut(auth);
@@ -117,6 +115,7 @@ export function ProfileScreen({ navigation }) {
       console.log("signout err", err);
     }
   };
+
   return (
     <LinearGradient
       // Background Linear Gradient
@@ -126,23 +125,45 @@ export function ProfileScreen({ navigation }) {
       style={profileStyles.welcomeBackground}
     >
       <SafeAreaView style={profileStyles.profileContainer}>
+        <Modal
+          animationType="fade"
+          visible={modalVisible}
+          onRequestClose={closeModal}
+        >
+          {/* Wrap the whole modal in a Pressable to close the modal when the user clicks outside of the modal */}
+          {/* The Pressable will be disabled when some function is running, to prevent the user from closing the modal before the function is finished */}
+          <Pressable 
+            onPress={closeModal}
+            style={profileStyles.profileAvatarModalContainer}
+          >
+            <IconButton
+              onPress={closeModal}
+              type="close"
+              position={profileStyles.profileAvatarModalCloseButton}
+            />
+            {getImage(profileStyles.profileAvatarModal)}
+            <ImageManager closeModal={closeModal} currAvatarURL={currAvatarURL}/>
+          </Pressable>
+        </Modal>
+
         <View style={profileStyles.profilePhotoAndUsername}>
           <Pressable
             onPress={isLoggedIn ? enlargeProfilePic : null} // Pressable only enlarges the profile picture if logged in, does nothing if not logged in
             style={({ pressed }) => [
-              profileStyles.profileAvatar,
               pressed && profileStyles.buttonOnPress,
             ]}
           >
             {getImage(profileStyles.profileAvatar)}
           </Pressable>
 
-          {isLoggedIn &&
-            (loading ? (
-              <ActivityIndicator size="large" color={colors.themeDark} />
-            ) : (
-              <Text style={profileStyles.buttonText}>{displayedName}</Text>
-            ))}
+          <View style={profileStyles.profileUsernameContainer}>
+            {isLoggedIn &&
+              (loading ? (
+                <ActivityIndicator size="large" color={colors.themeDark} />
+              ) : (
+                <Text style={profileStyles.profileUsername}>{displayedName}</Text>
+              ))}
+          </View>
         </View>
 
         <TextButton

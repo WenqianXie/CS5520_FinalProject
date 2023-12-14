@@ -63,3 +63,8 @@ New Features:
 - Add external links in the details page so that when user click on them, it will direct user to the web.
 
 Also, we adjusted all styles for all pages, filled the details page and uploaded all the data sets to firebase.
+
+
+==================================================================================================================================================
+Final Submission:
+Project Demo Link: https://www.youtube.com/watch?v=2VqOE6od3YU

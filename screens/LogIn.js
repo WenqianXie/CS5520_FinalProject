@@ -12,6 +12,7 @@ import { auth } from "../firebase/FirebaseSetup";
 import { authStyles } from "../helper/HelperStyles";
 
 export default function Login({ navigation }) {
+  // this is the login page
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [randomImageUrl, setRandomImageUrl] = useState("");
@@ -19,24 +20,6 @@ export default function Login({ navigation }) {
   const signupHandler = () => {
     navigation.replace("SignUp");
   };
-
-  // const loginHandler = async () => {
-  //   if (!email || !password) {
-  //     Alert.alert("Please fill all the fields");
-  //     return;
-  //   }
-
-  //   try {
-  //     const userCred = await signInWithEmailAndPassword(auth, email, password);
-  //     console.log(userCred);
-  //     navigation.navigate("Profile");
-  //   } catch (err) {
-  //     console.log(err);
-  //     if (err.code === "auth/invalid-login-credentials") {
-  //       Alert.alert("invalid credentials");
-  //     }
-  //   }
-  // };
 
   const loginHandler = async () => {
     if (!email || !password) {
@@ -49,15 +32,16 @@ export default function Login({ navigation }) {
       console.log(userCred);
       navigation.navigate("Profile");
     } catch (err) {
+      // Handle error with Alert to user
       switch (err.code) {
         case "auth/user-not-found":
-          Alert.alert("The email does not exist.");
+          Alert.alert("Incorrect email or password.");
           break;
         case "auth/wrong-password":
-          Alert.alert("The password is not correct.");
+          Alert.alert("Incorrect email or password.");
           break;
         case "auth/invalid-email":
-          Alert.alert("The email address is not valid.");
+          Alert.alert("Invalid Email address.");
           break;
         default:
           Alert.alert("An error occurred. Please try again.");
@@ -100,7 +84,7 @@ export default function Login({ navigation }) {
     };
 
     fetchImage();
-  }, []); // The empty dependency array ensures this effect runs once after the initial render
+  }, []); // Run only once
 
   return (
     <ImageBackground

@@ -15,6 +15,7 @@ import { writeToUsersDB } from "../firebase/FirebaseHelper";
 import { authStyles } from "../helper/HelperStyles";
 
 export default function SignUp({ navigation }) {
+  // this is the signup page
   const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -26,6 +27,7 @@ export default function SignUp({ navigation }) {
   };
 
   const autoLogin = async () => {
+    // auto login after sign up
     try {
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       navigation.navigate("Profile");
@@ -52,15 +54,19 @@ export default function SignUp({ navigation }) {
         email,
         password
       );
-      console.log(userCred);
       writeToUsersDB({ username: username, email: email });
       autoLogin();
     } catch (err) {
-      console.log("sign up error ", err.code);
-      if (err.code === "auth/invalid-email") {
-        Alert.alert("email is invalid");
-      } else if (err.code === "auth/weak-password") {
-        Alert.alert("password should be minimum 6 characters");
+      switch (err.code) {
+        case "auth/invalid-email":
+          Alert.alert("Invalid Email Format.");
+          break;
+        case "auth/weak-password":
+          Alert.alert("Password should be minimum 6 characters");
+          break;
+        default:
+          Alert.alert("An error occurred during signup. Please try again.");
+          break;
       }
     }
   };

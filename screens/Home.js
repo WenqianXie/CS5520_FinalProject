@@ -1,4 +1,3 @@
-import { auth } from "../firebase/FirebaseSetup";
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-native";
 import { ExploreScreen } from "./ExploreScreen";
@@ -6,16 +5,17 @@ import { ProfileScreen } from "./ProfileScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Font from "expo-font";
-import { onAuthStateChanged } from "firebase/auth";
 import WelcomeScreen from "./WelcomeScreen";
 
 const Tab = createBottomTabNavigator();
 
 export default function Home({ navigation }) {
+  // this is the home page with bottom tab navigation, "Explore" and "Profile"
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [modalVisible, setModalVisible] = useState(true);
   const [modalHasShown, setModalHasShown] = useState(false);
 
+  // show the welcome screen for 2 seconds before navigating to the home page
   useEffect(() => {
     if (!modalHasShown) {
       setTimeout(() => {

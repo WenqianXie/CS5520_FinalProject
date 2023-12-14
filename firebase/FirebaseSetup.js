@@ -1,3 +1,5 @@
+// Purpose: Firebase setup for the app
+
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";

@@ -1,3 +1,5 @@
+// Purpose: This file creates a component that displays a link to a website.
+
 import React from 'react';
 import { View, Text, TouchableOpacity, Linking, StyleSheet } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons'; 

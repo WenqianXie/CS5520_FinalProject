@@ -1,3 +1,5 @@
+// Purpose: This file creates a component that displays a single bullet point
+
 import { View, Text, Image} from 'react-native'
 import { useState, useEffect } from 'react';
 import React from 'react'
@@ -9,8 +11,9 @@ import { storage } from "../firebase/FirebaseSetup";
 import { bulletPointListStyles } from '../helper/HelperStyles';
 
 const SingleBulletPoint = ({singleBulletPoint}) => {
-  console.log("singleBulletPoint: ", singleBulletPoint);
-const [downloadImageURL, setDownloadImageURL] = useState(null);
+  const [downloadImageURL, setDownloadImageURL] = useState(null);
+
+  // useEffect to get the download URL of the image only if there is an image
   useEffect(() => {
     if (singleBulletPoint.image) {
       const getURL = async () => {

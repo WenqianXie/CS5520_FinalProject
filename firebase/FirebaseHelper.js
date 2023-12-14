@@ -1,12 +1,9 @@
+// Purpose: Helper functions to read and write to the database
+
 import {
-  addDoc,
-  deleteDoc,
   setDoc,
   doc,
   updateDoc,
-  query,
-  where,
-  getDocs,
   getDoc,
 } from "firebase/firestore";
 import {
@@ -14,25 +11,13 @@ import {
   bookmarksCollectionRef,
   infoDataCollectionRef,
 } from "./FirebaseSetup";
-import { database } from "./FirebaseSetup";
 import { auth } from "./FirebaseSetup";
 
 // Helper function to write to the user's collection, update, and delete documents
-
 export async function writeToUsersDB(userData) {
   try {
     const userDocRef = doc(usersCollectionRef, auth.currentUser.uid);
     const docSnap = await getDoc(userDocRef);
-    // const userQuery = query(
-    //   usersCollectionRef,
-    //   where("userId", "==", auth.currentUser.uid)
-    // );
-    // const querySnapshot = await getDocs(userQuery);
-
-    // if (!querySnapshot.empty) {
-      // const userDocRef = querySnapshot.docs[0].ref;
-
-      // User document exists, update it
     if(docSnap.exists()){
       await updateDoc(userDocRef, {
         ...userData,
@@ -49,6 +34,7 @@ export async function writeToUsersDB(userData) {
   }
 }
 
+// Helper function to read from the user's collection
 export async function readFromUsersDB(targetField=null){
   try{
     const userDocRef = doc(usersCollectionRef, auth.currentUser.uid);
@@ -72,6 +58,7 @@ export async function readFromUsersDB(targetField=null){
   }
 }
 
+// Helper function to write to the bookmarks collection
 export async function writeToBookmarksDB(bookmarkData) {
   try {
     // Just pass the bookmarkData to addDoc with bookmarksCollectionRef
@@ -93,6 +80,7 @@ export async function writeToBookmarksDB(bookmarkData) {
   }
 }
 
+// Helper function to read from the bookmarks collection
 export async function writeToInfoDataDB(infoData, category, dataId) {
   try{
     let collectionName;
@@ -116,6 +104,7 @@ export async function writeToInfoDataDB(infoData, category, dataId) {
   }
 }
 
+// Helper function to read from the bookmarks collection
 export async function deleteSelectionsFromUsersDB() {
   try {
     const userDoc = doc(usersCollectionRef, auth.currentUser.uid);
@@ -126,12 +115,12 @@ export async function deleteSelectionsFromUsersDB() {
     await updateDoc(bookmarkDoc,{
       generatedMustDoList: null
     })
-    // await deleteDoc(doc(usersCollectionRef, userId)); // delete the document from users collection
   } catch (err) {
     console.error("Error deleting from users collection: ", err);
   }
 }
 
+// Helper function to read from the bookmarks collection
 export async function readInfoData(topic){
   try{
     let docRef;

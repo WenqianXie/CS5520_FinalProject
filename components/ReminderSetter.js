@@ -1,7 +1,8 @@
+// Purpose: This file creates a modal that allows users to set a reminder for a specific date and time.
+
 import { Platform, View, Text, StyleSheet } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TextButton from "./TextButton";
 import createLocalNotification from "../helper/CreateLocalNotification";
 
@@ -14,12 +15,14 @@ const ReminderSetter = ({
   const [iosPickerVisible, setIosPickerVisible] = useState(false);
   const [dateTimePickerMode, setDateTimePickerMode] = useState("date");
 
+  // This function is called when the user changes the date or time in the picker
   const onDateTimePickerChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     changeDateTime(currentDate);
     setIosPickerVisible(false);
   };
 
+  // This function is called when the user presses the "Set Date" or "Set Time" button
   const callPicker = (mode) => {
     if (Platform.OS === "ios" || Platform.OS === "android") {
       setIosPickerVisible(true);
@@ -32,15 +35,12 @@ const ReminderSetter = ({
   const callDatePicker = () => {
     callPicker("date");
   };
-
   const callTimePicker = () => {
     callPicker("time");
   };
-
   const cancelSettingReminderHandler = () => {
     keepOpen(false);
   };
-
   const confirmSettingReminderHandler = () => {
     createLocalNotification(dateTime, reminderInfo);
     keepOpen(false);

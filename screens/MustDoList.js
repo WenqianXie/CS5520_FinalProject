@@ -5,6 +5,7 @@ import {
   Modal,
   ImageBackground,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { onSnapshot, doc } from "firebase/firestore";
@@ -17,9 +18,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import IconButton from "../components/IconButton";
 import ReminderSetter from "../components/ReminderSetter";
 import { mustDoListStyles } from "../helper/HelperStyles";
+import { colors } from "../helper/HelperColors";
+import { questionnaireStyles } from "../helper/HelperStyles";
 
 export default function MustDoList({ navigation, route }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [generatedMustDoList, setGeneratedMustDoList] = useState([]);
   const [bookmarkList, setBookmarkList] = useState([]);
   const [randomImageUrl, setRandomImageUrl] = useState("");
@@ -30,10 +34,6 @@ export default function MustDoList({ navigation, route }) {
     data: null,
   });
   const [reminderDateTime, setReminderDateTime] = useState();
-
-  const passDateTime = (currentDate) => {
-    setDateTime(currentDate);
-  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -50,16 +50,15 @@ export default function MustDoList({ navigation, route }) {
   useEffect(() => {
     // if a user is logged in, fetch the data from the database
     if (isLoggedIn) {
+      setLoading(true);
       const bookmarkDocRef = doc(bookmarksCollectionRef, auth.currentUser.uid);
 
       const unsubscribe = onSnapshot(bookmarkDocRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
-          console.log(
-            "Received generatedMustDoList from database: ",
-            docSnapshot.data().generatedMustDoList
-          );
+          setLoading(true);
           setGeneratedMustDoList(docSnapshot.data().generatedMustDoList);
           setBookmarkList(docSnapshot.data().bookmarkList);
+          setLoading(false);
         }
       });
 
@@ -74,7 +73,7 @@ export default function MustDoList({ navigation, route }) {
         setGeneratedMustDoList(route.params.generatedMustDoList);
       }
     }
-  }, [isLoggedIn, auth.currentUser]); // Empty dependency array means this effect runs once after the component mounts
+  }, [isLoggedIn, auth.currentUser]); // only re-run the effect if isLoggedIn or auth.currentUser changes
 
   const passModalVisible = (visible) => {
     setModalVisible(visible);
@@ -84,7 +83,6 @@ export default function MustDoList({ navigation, route }) {
     setReminderDateTime(new Date()); // default reminder's date and time is now
     const info = EntryButtonTextHelper(item);
     const data = { navigation: item };
-    console.log("reminder data: ", data);
     setReminderInfo({
       title: info,
       body: "Tap to know how to " + info,
@@ -203,7 +201,7 @@ export default function MustDoList({ navigation, route }) {
     };
 
     fetchImage();
-  }, []); // The empty dependency array ensures this effect runs once after the initial render
+  }, []); // only run this effect once
 
   const goToDetails = (topic) => {
     navigation.navigate("Details", { topic: topic });
@@ -215,6 +213,14 @@ export default function MustDoList({ navigation, route }) {
       style={mustDoListStyles.fullscreen}
       resizeMode="cover"
     >
+      {!isLoggedIn && (
+        <View style={questionnaireStyles.reminderContainer}>
+          <Text style={questionnaireStyles.reminderText}>
+            Log in to save your answers
+          </Text>
+        </View>
+      )}
+
       {/*Modal for setting reminder by dateTime*/}
       <Modal transparent={true} animationType="fade" visible={modalVisible}>
         <ReminderSetter
@@ -224,44 +230,51 @@ export default function MustDoList({ navigation, route }) {
           keepOpen={passModalVisible}
         />
       </Modal>
-      <View style={mustDoListStyles.outerContainer}>
-        <FlatList
-          data={generatedMustDoList}
-          style={{ marginTop: 100, marginBottom: 10 }}
-          renderItem={({ item, index }) => {
-            if (item === "nothing") {
-              return (
-                <View style={mustDoListStyles.taskContainer}>
-                  <Text style={mustDoListStyles.taskText}>
-                    {
-                      "Great news!\nYou've covered all the essential tasks based on the information provided."
-                    }
-                  </Text>
-                </View>
-              );
-            } else {
-              return (
-                <View style={mustDoListStyles.taskContainer}>
-                  <View style={mustDoListStyles.toDoTask}>
-                    <TouchableOpacity
-                      onPress={() => goToDetails(item)}
-                      style={mustDoListStyles.buttonTextContainer}
-                    >
-                      <Text style={mustDoListStyles.taskText}>
-                        {EntryButtonTextHelper(item)}
-                      </Text>
-                    </TouchableOpacity>
-                    <IconButton
-                      onPress={() => createReminderHandler(item)}
-                      type="reminder"
-                    />
+      {loading ? (
+        <View style={mustDoListStyles.activityIndicatorContainer}>
+          <ActivityIndicator size="large" color={colors.themeDark} />
+        </View>
+      ) : (
+        <View style={mustDoListStyles.outerContainer}>
+          <FlatList
+            data={generatedMustDoList}
+            style={{ marginTop: 100, marginBottom: 10 }}
+            renderItem={({ item, index }) => {
+              if (item === "nothing") {
+                return (
+                  <View style={mustDoListStyles.taskContainer}>
+                    <Text style={mustDoListStyles.taskText}>
+                      {
+                        "Great news!\nYou've covered all the essential tasks based on the information provided."
+                      }
+                    </Text>
                   </View>
-                </View>
-              );
-            }
-          }}
-        />
-      </View>
+                );
+              } else {
+                return (
+                  <View style={mustDoListStyles.taskContainer}>
+                    <View style={mustDoListStyles.toDoTask}>
+                      <TouchableOpacity
+                        onPress={() => goToDetails(item)}
+                        style={mustDoListStyles.buttonTextContainer}
+                      >
+                        <Text style={mustDoListStyles.taskText}>
+                          {EntryButtonTextHelper(item)}
+                        </Text>
+                      </TouchableOpacity>
+                      <IconButton
+                        onPress={() => createReminderHandler(item)}
+                        type="reminder"
+                      />
+                    </View>
+                  </View>
+                );
+              }
+            }}
+          />
+        </View>
+      )}
+
       <View style={mustDoListStyles.buttonContainer}>
         <TouchableOpacity
           onPress={handleClearSelections}

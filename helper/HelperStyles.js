@@ -1,3 +1,5 @@
+// Support file for styling the app
+
 import { StyleSheet, Dimensions } from "react-native";
 import { colors } from "./HelperColors";
 import { BASE_ICON_SIZE } from "./Constants";
@@ -58,15 +60,38 @@ export const profileStyles = StyleSheet.create({
   profileAvatar: {
     width: 150,
     height: 150,
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: "white",
   },
   profileAvatarModalContainer: {
     flex: 1,
     backgroundColor: "black",
     alignItems: "center",
+    justifyContent: "center",
+  },
+  profileAvatarModalCloseButton: {
+    marginVertical: 10,
   },
   profileAvatarModal: {
     width: "100%",
     height: "45%",
+  },
+  profileAvatarModalMask: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "transparent",
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 100,
+  },
+  profileUsernameContainer: {
+    marginTop: 10,
+  },
+  profileUsername: {
+    fontSize: 22,
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   profileContainer: {
     flex: 1,
@@ -188,6 +213,7 @@ export const questionnaireStyles = StyleSheet.create({
   option: {
     fontSize: 16,
     color: "#555555",
+    marginRight: 2,
   },
   reminderContainer: {
     backgroundColor: "#D48788",
@@ -234,7 +260,7 @@ export const bulletPointListStyles = StyleSheet.create({
     borderRadius: 8,
   },
   webview: {
-    flex:1,
+    flex: 1,
     // height: 400,
     // marginVertical: 10,
   },
@@ -286,7 +312,9 @@ export const bulletPointListStyles = StyleSheet.create({
 });
 
 export const mustDoListStyles = StyleSheet.create({
-  outerContainer: {},
+  activityIndicatorContainer: {
+    marginTop: 40,
+  },
   fullscreen: {
     flex: 1,
   },
@@ -317,6 +345,7 @@ export const mustDoListStyles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  buttonTextContainer: {},
   buttonContainer: { marginTop: 50 },
   button: {
     backgroundColor: "#FFB703",

@@ -1,6 +1,7 @@
+// Purpose: This file creates a button that is used in the dialog box.
+
 import { View, Text, Pressable, ImageBackground } from 'react-native'
 import React from 'react'
-import { useState } from 'react'
 import { styles } from '../helper/HelperStyles'
 import { FONTSIZE_CONTROLLER } from '../helper/Constants'
 
@@ -13,6 +14,8 @@ const DialogButton = ({onPress, text, scale=1, position}) => {
   else if (scale > 1){
     fontScale = scale*FONTSIZE_CONTROLLER;
   }
+
+  //This component could be scaled to any size
   return (
     <Pressable
       onPress={onPress}

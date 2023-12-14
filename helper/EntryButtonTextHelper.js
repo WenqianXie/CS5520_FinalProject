@@ -1,3 +1,5 @@
+// Purpose: Helper function to return the text for the button in the Entry component
+
 const EntryButtonTextHelper = (topic) => {
   switch (topic) {
     // Essentials Entry

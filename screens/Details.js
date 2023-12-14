@@ -1,33 +1,20 @@
-import { StyleSheet, Text, SafeAreaView, Button, FlatList } from "react-native";
+import { StyleSheet, Text, SafeAreaView, FlatList } from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
 import BulletPointList from "../components/BulletPointList";
-import { readInfoData, writeToInfoDataDB } from "../firebase/FirebaseHelper";
+import { readInfoData } from "../firebase/FirebaseHelper";
 
 const Details = ({ navigation, route }) => {
-  //Temporary Manual Data
-  const manualContents = route.params.detailsContent;
-  const manualCategory = route.params.category;
-  const manualDocID = route.params.docID;
+  // this is the screen for the details of a specific topic
+  // which will be rendered according to the topic selected
 
-  //Online data
   const [contents, setContents] = useState("")
-
-  let headerTitle; 
-  if (manualContents) {
-    headerTitle = manualContents.title;
-  }  else {
-    headerTitle = "Loading";
-  }
-
-  useEffect(() => {
-    navigation.setOptions({ title: headerTitle });
-  }, [navigation]);
-
+  
+  // fetch the data from the database and set the header title to the topic name
   useEffect(() => {
     const getContent = async () => {
       try{
-        if(route.params.topic){ //to be deleted
+        if(route.params.topic){ 
           const downloadedContent = await readInfoData(route.params.topic)
           setContents(downloadedContent)
           navigation.setOptions({title: downloadedContent.title})
@@ -41,10 +28,9 @@ const Details = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={detailsStyles.detailsContainer}>
-      {!manualContents && !contents  
-        && <Text>Loading</Text>
-      }
-      {contents &&
+      {!contents ? ( // if the contents is not loaded yet, show loading
+        <Text>Loading</Text>
+      ) : ( // if the contents is loaded, show the contents
         <FlatList
           style={{flex:1}}
           data={contents.contents}
@@ -53,21 +39,8 @@ const Details = ({ navigation, route }) => {
             <BulletPointList bulletPointList={item} key={index}/>
           )}
         />
-         }
+      )}
 
-      {manualContents && 
-        <FlatList
-          style={{flex:1}}
-          data={manualContents.contents}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item, index }) => (
-            <BulletPointList bulletPointList={item} key={index}/>
-          )}
-        />
-        }
-      {manualCategory && 
-        <Button title="All good. Upload to Firebase" onPress={() => writeToInfoDataDB(manualContents, manualCategory, manualDocID)}/>
-      }
     </SafeAreaView>
   );
 };

@@ -1,5 +1,7 @@
+// Purpose: Helper component to handle uploading image to the database
+
 import React, { useState } from 'react'
-import { Text, Alert, ActivityIndicator, SafeAreaView, StyleSheet, Modal, View } from 'react-native';
+import { Text, Alert, ActivityIndicator, StyleSheet, Modal, View } from 'react-native';
 import TextButton from './TextButton';
 import * as ImagePicker from "expo-image-picker";
 import { styles } from '../helper/HelperStyles';
@@ -92,7 +94,8 @@ const ImageManager = ({closeModal, currAvatarURL}) => {
     }
   }
 
-
+// component will pull up the camera to take a photo, then upload the photo to the database
+// while uploading, a modal will be shown to indicate the uploading status and prevent user from stopping the upload
   return (
     <View>
       <Modal
