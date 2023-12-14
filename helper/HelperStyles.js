@@ -232,8 +232,9 @@ export const bulletPointListStyles = StyleSheet.create({
     borderRadius: 8,
   },
   webview: {
-    height: 400,
-    marginVertical: 10,
+    flex:1,
+    // height: 400,
+    // marginVertical: 10,
   },
   map: {
     marginVertical: 10,
