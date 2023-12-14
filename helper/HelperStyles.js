@@ -214,6 +214,7 @@ export const bulletPointListStyles = StyleSheet.create({
     fontSize: 18,
     color: "#333",
     fontWeight: "600",
+    marginVertical: 2,
   },
   contentContainer: {
     justifyContent: "flex-start",
@@ -224,6 +225,7 @@ export const bulletPointListStyles = StyleSheet.create({
     letterSpacing: 0.5,
     lineHeight: 24,
     color: "#333",
+    marginVertical: 2,
   },
   image: {
     width: "100%",
@@ -244,9 +246,9 @@ export const bulletPointListStyles = StyleSheet.create({
   sectionContainer: {
     backgroundColor: "#ffffff",
     borderRadius: 10,
-    padding: 15,
+    padding: 10,
     marginVertical: 8,
-    marginHorizontal: 16,
+    marginHorizontal: 5,
     borderWidth: 1,
     borderColor: "#ddd",
     shadowColor: "#000",
