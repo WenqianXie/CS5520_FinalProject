@@ -5,7 +5,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect } from "react";
 import Home from "./screens/Home";
 import AuthNavigator from "./screens/AuthStack";
-import Reset from "./screens/Reset";
 import EssentialDocsEntry from "./screens/EssentialDocsEntry";
 import MedicineEntry from "./screens/MedicineEntry";
 import TransitEntry from "./screens/TransitEntry";
@@ -56,11 +55,6 @@ export default function App() {
           name="Auth"
           component={AuthNavigator}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Reset"
-          component={Reset}
-          options={({ route }) => ({ title: route.params.headerTitle })}
         />
         <Stack.Screen
           name="Essential"
