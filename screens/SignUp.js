@@ -56,11 +56,19 @@ export default function SignUp({ navigation }) {
       writeToUsersDB({ username: username, email: email });
       autoLogin();
     } catch (err) {
-      console.log("sign up error ", err.code);
-      if (err.code === "auth/invalid-email") {
-        Alert.alert("email is invalid");
-      } else if (err.code === "auth/weak-password") {
-        Alert.alert("password should be minimum 6 characters");
+      switch (err.code) {
+        case "auth/user-not-found":
+          Alert.alert("Incorrect email or password.");
+          break;
+        case "auth/wrong-password":
+          Alert.alert("Incorrect email or password.");
+          break;
+        case "auth/invalid-email":
+          Alert.alert("Invalid Email address.");
+          break;
+        default:
+          Alert.alert("An error occurred. Please try again.");
+          break;
       }
     }
   };
