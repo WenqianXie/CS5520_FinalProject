@@ -51,13 +51,13 @@ export default function Login({ navigation }) {
     } catch (err) {
       switch (err.code) {
         case "auth/user-not-found":
-          Alert.alert("The email does not exist.");
+          Alert.alert("Incorrect email or password.");
           break;
         case "auth/wrong-password":
-          Alert.alert("The password is not correct.");
+          Alert.alert("Incorrect email or password.");
           break;
         case "auth/invalid-email":
-          Alert.alert("The email address is not valid.");
+          Alert.alert("Invalid Email address.");
           break;
         default:
           Alert.alert("An error occurred. Please try again.");
