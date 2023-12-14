@@ -57,7 +57,6 @@ export default function SignUp({ navigation }) {
       writeToUsersDB({ username: username, email: email });
       autoLogin();
     } catch (err) {
-<<<<<<< HEAD
       switch (err.code) {
         case "auth/user-not-found":
           Alert.alert("Incorrect email or password.");
@@ -71,14 +70,6 @@ export default function SignUp({ navigation }) {
         default:
           Alert.alert("An error occurred. Please try again.");
           break;
-=======
-      // Handle error with Alert to user
-      console.log("sign up error ", err.code);
-      if (err.code === "auth/invalid-email") {
-        Alert.alert("email is invalid");
-      } else if (err.code === "auth/weak-password") {
-        Alert.alert("password should be minimum 6 characters");
->>>>>>> b17fd4b (Add docs and Remove un-needed codes in Profile Screen and Signup)
       }
     }
   };
