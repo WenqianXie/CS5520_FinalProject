@@ -204,6 +204,84 @@ export const questionnaireStyles = StyleSheet.create({
   },
 });
 
+export const bulletPointContentStyles = StyleSheet.create({
+  subtitleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: "#333",
+    fontWeight: "600",
+  },
+  contentContainer: {
+    justifyContent: "flex-start",
+    marginVertical: 5,
+  },
+  detailsContent: {
+    fontSize: 16,
+    letterSpacing: 0.5,
+    lineHeight: 24,
+    color: "#333",
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    marginVertical: 10,
+    borderRadius: 8,
+  },
+  webview: {
+    height: 400,
+    marginVertical: 10,
+  },
+  map: {
+    marginVertical: 10,
+    borderRadius: 8,
+    overflow: "hidden",
+  },
+  sectionContainer: {
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+    padding: 15,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3, 
+  },
+  bullet: {
+    fontSize: 18,
+    marginRight: 8,
+    color: "#333",
+    fontWeight: "600",
+  },
+  subtitle: {
+    fontSize: 18,
+    color: "#333",
+    fontWeight: "600",
+  },
+  detailsContent: {
+    fontSize: 16,
+    color: "#333",
+    lineHeight: 24,
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    borderRadius: 10, 
+  },
+  webview: {
+    height: 400,
+    borderRadius: 10, 
+    overflow: "hidden", 
+  },
+});
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -338,7 +416,7 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
-    backgroundColor: colors.transparentWhite,
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     width: "95%",
     height: windowHeight * 0.35,
     borderRadius: 20,
@@ -353,8 +431,8 @@ export const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   iconContainer: {
-    flexDirection: "row", // Aligns the image and text horizontally within each TouchableOpacity
-    alignItems: "center", // Centers the items vertically within the TouchableOpacity
+    flexDirection: "row",
+    alignItems: "center",
     marginLeft: 40,
     marginVertical: 3,
   },

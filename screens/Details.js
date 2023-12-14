@@ -39,17 +39,6 @@ const Details = ({ navigation, route }) => {
     getContent()
   },[navigation])
 
-// contents.contents.map((bulletPointContent, index) => (
-//           <BulletPointContent bulletPointContent={bulletPointContent} key={index}/>
-//         ))
-
-
-// manualContents.contents.map((bulletPointContent, index) => (
-//           <BulletPointContent
-//             bulletPointContent={bulletPointContent}
-//             key={index}
-//           />
-//         ))
   return (
     <SafeAreaView style={detailsStyles.detailsContainer}>
       {!manualContents && !contents  

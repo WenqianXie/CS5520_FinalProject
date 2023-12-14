@@ -7,6 +7,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebase/FirebaseSetup";
 import { ActivityIndicator } from "react-native";
 import { colors } from "../helper/HelperColors";
+import { bulletPointContentStyles } from "../helper/HelperStyles";
 
 const BulletPointContent = ({ bulletPointContent }) => {
   const [downloadImageURL, setDownloadImageURL] = useState(null);
@@ -27,23 +28,79 @@ const BulletPointContent = ({ bulletPointContent }) => {
       getURL();
     }
   }, []);
+  // return (
+  //   <>
+  //     <View>
+  //       {/* Subtitle if needed */}
+  //       {bulletPointContent.subtitle && (
+  //         <View style={bulletPointContentStyles.subtitleContainer}>
+  //           <Text style={bulletPointContentStyles.bullet}></Text>
+  //           <Text style={bulletPointContentStyles.subtitle}>
+  //             {bulletPointContent.subtitle}
+  //           </Text>
+  //         </View>
+  //       )}
+
+  //       {/* Content if needed*/}
+  //       {bulletPointContent.content && (
+  //         <View style={bulletPointContentStyles.contentContainer}>
+  //           <Text style={bulletPointContent.detailsContent}>
+  //             {bulletPointContent.content}
+  //           </Text>
+  //         </View>
+  //       )}
+
+  //       {/* WebLink if needed */}
+  //       {bulletPointContent.link && (
+  //         <WebLink linkRequest={bulletPointContent.link} />
+  //       )}
+
+  //       {/* Image if needed */}
+  //       {bulletPointContent.image && (
+  //         <View>
+  //           {!downloadImageURL ? (
+  //             <ActivityIndicator size="large" color={colors.themeDark} />
+  //           ) : (
+  //             <Image
+  //               source={{ uri: downloadImageURL }}
+  //               style={bulletPointContentStyles.image}
+  //               resizeMode="cover"
+  //             />
+  //           )}
+  //         </View>
+  //       )}
+
+  //       {/* Map if needed */}
+  //       {bulletPointContent.map && (
+  //         <MapManager requestedMap={bulletPointContent.map} />
+  //       )}
+
+  //       {/* Webview if needed */}
+  //       {bulletPointContent.webview && (
+  //         <WebView
+  //           source={{ uri: bulletPointContent.webview }}
+  //           style={bulletPointContentStyles.webview}
+  //         />
+  //       )}
+  //     </View>
+  //   </>
+  // );
   return (
     <>
       <View>
         {/* Subtitle if needed */}
         {bulletPointContent.subtitle && (
-          <View style={bulletPointContentStyles.subtitleContainer}>
-            <Text style={bulletPointContentStyles.bullet}></Text>
+          <View style={bulletPointContentStyles.sectionContainer}>
             <Text style={bulletPointContentStyles.subtitle}>
               {bulletPointContent.subtitle}
             </Text>
           </View>
         )}
 
-        {/* Content if needed*/}
+        {/* Content if needed */}
         {bulletPointContent.content && (
-          <View style={bulletPointContentStyles.contentContainer}>
-            <Text style={bulletPointContent.detailsContent}>
+          <View style={bulletPointContentStyles.sectionContainer}>
+            <Text style={bulletPointContentStyles.detailsContent}>
               {bulletPointContent.content}
             </Text>
           </View>
@@ -51,12 +108,14 @@ const BulletPointContent = ({ bulletPointContent }) => {
 
         {/* WebLink if needed */}
         {bulletPointContent.link && (
-          <WebLink linkRequest={bulletPointContent.link} />
+          <View style={bulletPointContentStyles.sectionContainer}>
+            <WebLink linkRequest={bulletPointContent.link} />
+          </View>
         )}
 
         {/* Image if needed */}
         {bulletPointContent.image && (
-          <View>
+          <View style={bulletPointContentStyles.sectionContainer}>
             {!downloadImageURL ? (
               <ActivityIndicator size="large" color={colors.themeDark} />
             ) : (
@@ -71,15 +130,19 @@ const BulletPointContent = ({ bulletPointContent }) => {
 
         {/* Map if needed */}
         {bulletPointContent.map && (
-          <MapManager requestedMap={bulletPointContent.map} />
+          <View style={bulletPointContentStyles.sectionContainer}>
+            <MapManager requestedMap={bulletPointContent.map} />
+          </View>
         )}
 
-        {/* Webview if needed */}
+        {/* WebView if needed */}
         {bulletPointContent.webview && (
-          <WebView
-            source={{ uri: bulletPointContent.webview }}
-            style={bulletPointContentStyles.webview}
-          />
+          <View style={bulletPointContentStyles.sectionContainer}>
+            <WebView
+              source={{ uri: bulletPointContent.webview }}
+              style={bulletPointContentStyles.webview}
+            />
+          </View>
         )}
       </View>
     </>
@@ -87,53 +150,3 @@ const BulletPointContent = ({ bulletPointContent }) => {
 };
 
 export default BulletPointContent;
-
-const bulletPointContentStyles = StyleSheet.create({
-  subtitleContainer: {
-    alignSelf: "right",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    marginVertical: "3%",
-  },
-  bullet: {
-    fontSize: 16,
-    marginRight: 5,
-    color: "black",
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "black",
-    fontWeight: "bold",
-  },
-  contentContainer: {
-    alignSelf: "right",
-    justifyContent: "flex-start",
-    margin: "1%",
-  },
-  detailsContent: {
-    ...Platform.select({
-      ios: {
-        fontFamily: "San Francisco", // 在 iOS 上使用 San Francisco 字体
-      },
-      android: {
-        fontFamily: "Roboto", // 在 Android 上使用 Roboto 字体
-      },
-    }),
-    fontSize: 16,
-    letterSpacing: 3,
-    lineHeight: 30,
-  },
-  map: {
-    margin: "1%",
-  },
-  webview: {
-    height: 400,
-    margin: "1%",
-  },
-  image: {
-    width: "100%",
-    height: 200,
-    margin: "1%",
-  },
-});

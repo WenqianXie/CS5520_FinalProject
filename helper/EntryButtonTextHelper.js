@@ -17,8 +17,6 @@ const EntryButtonTextHelper = (topic) => {
       return "Buy Medicine at Pharmacy";
     case "familyDoctor":
       return "Find Family Doctor";
-    // case "privateHealthInsurance":
-    //   return "Get Private Health Insurance";
 
     // Transit Entry
     case "compassCard":
