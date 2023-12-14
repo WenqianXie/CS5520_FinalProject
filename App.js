@@ -58,28 +58,24 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name="Reset"
+          component={Reset}
+          options={({ route }) => ({ title: route.params.headerTitle })}
+        />
+        <Stack.Screen
           name="Essential"
           component={EssentialDocsEntry}
-          options={{
-            title: "Get Essential Gov Docs",
-            headerStyle: { backgroundColor: "#FFBF1F" },
-          }}
+          options={{ title: "Get Essential Gov Docs" }}
         />
         <Stack.Screen
           name="Medicine"
           component={MedicineEntry}
-          options={{
-            title: "Understanding Healthcare",
-            headerStyle: { backgroundColor: "#FFBF1F" },
-          }}
+          options={{ title: "Understanding Healthcare" }}
         />
         <Stack.Screen
           name="Transit"
           component={TransitEntry}
-          options={{
-            title: "Mastering Public Transit",
-            headerStyle: { backgroundColor: "#FFBF1F" },
-          }}
+          options={{ title: "Mastering Public Transit" }}
         />
         <Stack.Screen
           name="MustDo"

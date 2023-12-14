@@ -216,7 +216,8 @@ const TransitEntry = ({ navigation }) => {
         {/* Compass / UPass */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { topic: "compassCard" })
+            // navigation.navigate("Details", { topic: "compassCard" })
+            navigation.navigate('Details', {detailsContent: compassCard, category: "transit", docID: "compassCard"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -232,9 +233,9 @@ const TransitEntry = ({ navigation }) => {
 
         {/* SkyTrain */}
         <TouchableOpacity
-          onPress={
-            () => navigation.navigate("Details", { topic: "skyTrain" })
-            // navigation.navigate('Details', {detailsContent: skyTrain, category: "transit", docID: "skyTrain"})
+          onPress={() => 
+            // navigation.navigate("Details", { topic: "skyTrain" })
+            navigation.navigate('Details', {detailsContent: skyTrain, category: "transit", docID: "skyTrain"})
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -250,7 +251,9 @@ const TransitEntry = ({ navigation }) => {
 
         {/* Bus */}
         <TouchableOpacity
-          onPress={() => navigation.navigate("Details", { topic: "bus" })}
+          onPress={() => 
+            // navigation.navigate("Details", { topic: "bus" })}
+            navigation.navigate('Details', {detailsContent: bus, category: "transit", docID: "bus"})}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -263,7 +266,9 @@ const TransitEntry = ({ navigation }) => {
 
         {/* Seabus */}
         <TouchableOpacity
-          onPress={() => navigation.navigate("Details", { topic: "seabus" })}
+          onPress={() => 
+            // navigation.navigate("Details", { topic: "seabus" })}
+            navigation.navigate('Details', {detailsContent: seabus, category: "transit", docID: "seabus"})}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >

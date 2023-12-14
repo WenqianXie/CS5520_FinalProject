@@ -6,67 +6,11 @@ import WebView from "react-native-webview";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebase/FirebaseSetup";
 import { bulletPointListStyles } from "../helper/HelperStyles";
+import SingleBulletPoint from "./SingleBulletPoint";
 
 const BulletPointList = ({ bulletPointList }) => {
+  console.log("bulletPointList: ", bulletPointList);
 
-  const getURL = async (imageStorageUrl) => {
-    try {
-      const imageRef = ref(storage, imageStorageUrl);
-      const url = await getDownloadURL(imageRef);
-      return url;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const renderSingleBulletPoint = ({ item }) => (
-      <>
-        {/* Content if needed */}
-        {item.content && (
-          <View>
-            <Text style={bulletPointListStyles.detailsContent}>
-              {item.content}
-            </Text>
-          </View>
-        )}
-
-        {/* WebLink if needed */}
-        {item.link && (
-          <View>
-            <WebLink linkRequest={item.link} />
-          </View>
-        )}
-
-        {/* Image if needed */}
-        {item.image &&  (
-            <View>
-              <Image
-                source={{ uri: getURL(item.image) }}
-                style={bulletPointListStyles.image}
-                resizeMode="cover"
-              />
-            </View>
-          )
-        }
-
-        {/* Map if needed */}
-        {item.map && (
-          <View>
-            <MapManager requestedMap={item.map} />
-          </View>
-        )}
-
-        {/* WebView if needed */}
-        {item.webview && (
-          <View>
-            <WebView
-              source={{ uri: item.webview }}
-              style={bulletPointListStyles.webview}
-            />
-          </View>
-        )}
-      </>
-    )
   // return (
   //   <>
   //     <View>
@@ -140,8 +84,9 @@ const BulletPointList = ({ bulletPointList }) => {
         {bulletPointList.list && (
           <FlatList
             data={bulletPointList.list}
-            renderItem={renderSingleBulletPoint}
-            keyExtractor={(item) => item.id}
+            renderItem={({ item, index}) => (
+              <SingleBulletPoint singleBulletPoint={item} key={index}/>
+            )}
             />
         )}
       </View>

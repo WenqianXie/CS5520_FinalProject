@@ -1,7 +1,7 @@
 import { StyleSheet, Text, SafeAreaView, Button, FlatList } from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
-import BulletPointContent from "../components/BulletPointContent";
+import BulletPointList from "../components/BulletPointList";
 import { readInfoData, writeToInfoDataDB } from "../firebase/FirebaseHelper";
 
 const Details = ({ navigation, route }) => {
@@ -50,7 +50,7 @@ const Details = ({ navigation, route }) => {
           data={contents.contents}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
-            <BulletPointContent bulletPointContent={item} key={index}/>
+            <BulletPointList bulletPointList={item} key={index}/>
           )}
         />
          }
@@ -61,7 +61,7 @@ const Details = ({ navigation, route }) => {
           data={manualContents.contents}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
-            <BulletPointContent bulletPointContent={item} key={index}/>
+            <BulletPointList bulletPointList={item} key={index}/>
           )}
         />
         }

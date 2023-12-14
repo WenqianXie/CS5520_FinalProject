@@ -208,7 +208,9 @@ const MedicineEntry = ({ navigation }) => {
       <View style={styles.bottomRow}>
         {/* MSP */}
         <TouchableOpacity
-          onPress={() => navigation.navigate("Details", { topic: "msp" })}
+          onPress={() => 
+            // navigation.navigate("Details", { topic: "msp" })}
+            navigation.navigate("Details", { detailsContent: msp, category: "medicine", docID: "msp"})}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -221,7 +223,9 @@ const MedicineEntry = ({ navigation }) => {
 
         {/* Hospital */}
         <TouchableOpacity
-          onPress={() => navigation.navigate("Details", { topic: "hospital" })}
+          onPress={() => 
+            // navigation.navigate("Details", { topic: "hospital" })}
+            navigation.navigate("Details", { detailsContent: hospital, category: "medicine", docID: "hospital"})}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -236,7 +240,9 @@ const MedicineEntry = ({ navigation }) => {
 
         {/* Pharmacy */}
         <TouchableOpacity
-          onPress={() => navigation.navigate("Details", { topic: "pharmacy" })}
+          onPress={() => 
+            // navigation.navigate("Details", { topic: "pharmacy" })}
+            navigation.navigate("Details", { detailsContent: pharmacy, category: "medicine", docID: "pharmacy"})}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -252,8 +258,8 @@ const MedicineEntry = ({ navigation }) => {
         {/* Family Doctor */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Details", { topic: "familyDoctor" })
-          }
+            // navigation.navigate("Details", { topic: "familyDoctor" })
+            navigation.navigate("Details", { detailsContent: familyDoctor, category: "medicine", docID: "familyDoctor"})}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
