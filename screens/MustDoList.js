@@ -67,7 +67,9 @@ export default function MustDoList({ navigation, route }) {
   const createReminderHandler = (item) => {
     setReminderDateTime(new Date()) // default reminder's date and time is now
     const info = EntryButtonTextHelper(item)
-    setReminderInfo({title: info, body: "Tap to know how to " + info, data: null})
+    const data = {navigation: item};
+    console.log("reminder data: ", data)
+    setReminderInfo({title: info, body: "Tap to know how to " + info, data: data})
     setModalVisible(true)
   }
 
@@ -224,7 +226,7 @@ export default function MustDoList({ navigation, route }) {
                 </Text>
               </TextButton>
               <IconButton
-                  onPress={(item) => createReminderHandler(item)}
+                  onPress={() => createReminderHandler(item)}
                   type="reminder"
                 />
             </View>)

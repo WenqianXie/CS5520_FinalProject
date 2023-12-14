@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Text } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import WelcomeScreen from "./screens/WelcomeScreen";
+import { useEffect } from "react";
 import Home from "./screens/Home";
 import AuthNavigator from "./screens/AuthStack";
 import Reset from "./screens/Reset";
@@ -27,8 +27,21 @@ Notifications.setNotificationHandler({
 const Stack = createStackNavigator();
 
 export default function App() {
+  const navigationRef = useRef();
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        navigationRef.current?.navigate("Details", {topic: response.notification.request.content.data.navigation})
+      }
+    );
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         screenOptions={{
           headerBackTitleVisible: false, // Hides the back button title (screen name)

@@ -23,7 +23,7 @@ try {
       }
       
       if(dateTime){
-        Notifications.scheduleNotificationAsync({
+        await Notifications.scheduleNotificationAsync({
           content: {
             title: reminderInfo.title,
             body: reminderInfo.body,
@@ -31,7 +31,7 @@ try {
           },
           trigger: dateTime,
         })
-        Alert.alert("Notification Scheduled at " + dateTime.toLocaleString());
+        Alert.alert("Notification Scheduled at\n" + dateTime.toLocaleString());
       }
     } catch (err) {
       console.log("schedule notification error ", err);
