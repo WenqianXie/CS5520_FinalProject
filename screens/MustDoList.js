@@ -5,7 +5,7 @@ import {
   Modal,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { onSnapshot, doc } from "firebase/firestore";
@@ -23,7 +23,7 @@ import { questionnaireStyles } from "../helper/HelperStyles";
 
 export default function MustDoList({ navigation, route }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [generatedMustDoList, setGeneratedMustDoList] = useState([]);
   const [bookmarkList, setBookmarkList] = useState([]);
   const [randomImageUrl, setRandomImageUrl] = useState("");
@@ -50,15 +50,15 @@ export default function MustDoList({ navigation, route }) {
   useEffect(() => {
     // if a user is logged in, fetch the data from the database
     if (isLoggedIn) {
-      setLoading(true)
+      setLoading(true);
       const bookmarkDocRef = doc(bookmarksCollectionRef, auth.currentUser.uid);
 
       const unsubscribe = onSnapshot(bookmarkDocRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
-          setLoading(true)
+          setLoading(true);
           setGeneratedMustDoList(docSnapshot.data().generatedMustDoList);
           setBookmarkList(docSnapshot.data().bookmarkList);
-          setLoading(false)
+          setLoading(false);
         }
       });
 
@@ -216,7 +216,9 @@ export default function MustDoList({ navigation, route }) {
     >
       {!isLoggedIn && (
         <View style={questionnaireStyles.reminderContainer}>
-          <Text style={questionnaireStyles.reminderText}>Log in to save your answers</Text>
+          <Text style={questionnaireStyles.reminderText}>
+            Log in to save your answers
+          </Text>
         </View>
       )}
 
@@ -229,48 +231,50 @@ export default function MustDoList({ navigation, route }) {
           keepOpen={passModalVisible}
         />
       </Modal>
-        {loading ? (
-          <View style={mustDoListStyles.activityIndicatorContainer}>
-            <ActivityIndicator size="large" color={colors.themeDark} />
-          </View>
-        ) : (
-        <FlatList
-          data={generatedMustDoList}
-          style={{ marginTop: 100, marginBottom: 10 }}
-          renderItem={({ item, index }) => {
-            if (item === "nothing") {
-              return (
-                <View style={mustDoListStyles.taskContainer}>
-                  <Text style={mustDoListStyles.taskText}>
-                    {
-                      "Great news!\nYou've covered all the essential tasks based on the information provided."
-                    }
-                  </Text>
-                </View>
-              );
-            } else {
-              return (
-                <View style={mustDoListStyles.taskContainer}>
-                  <View style={mustDoListStyles.toDoTask}>
-                    <TouchableOpacity
-                      onPress={() => goToDetails(item)}
-                      style={mustDoListStyles.buttonTextContainer}
-                    >
-                      <Text style={mustDoListStyles.taskText}>
-                        {EntryButtonTextHelper(item)}
-                      </Text>
-                    </TouchableOpacity>
-                    <IconButton
-                      onPress={() => createReminderHandler(item)}
-                      type="reminder"
-                    />
+      {loading ? (
+        <View style={mustDoListStyles.activityIndicatorContainer}>
+          <ActivityIndicator size="large" color={colors.themeDark} />
+        </View>
+      ) : (
+        <View style={mustDoListStyles.outerContainer}>
+          <FlatList
+            data={generatedMustDoList}
+            style={{ marginTop: 100, marginBottom: 10 }}
+            renderItem={({ item, index }) => {
+              if (item === "nothing") {
+                return (
+                  <View style={mustDoListStyles.taskContainer}>
+                    <Text style={mustDoListStyles.taskText}>
+                      {
+                        "Great news!\nYou've covered all the essential tasks based on the information provided."
+                      }
+                    </Text>
                   </View>
-                </View>
-              );
-            }
-          }}
-        />
-        )}
+                );
+              } else {
+                return (
+                  <View style={mustDoListStyles.taskContainer}>
+                    <View style={mustDoListStyles.toDoTask}>
+                      <TouchableOpacity
+                        onPress={() => goToDetails(item)}
+                        style={mustDoListStyles.buttonTextContainer}
+                      >
+                        <Text style={mustDoListStyles.taskText}>
+                          {EntryButtonTextHelper(item)}
+                        </Text>
+                      </TouchableOpacity>
+                      <IconButton
+                        onPress={() => createReminderHandler(item)}
+                        type="reminder"
+                      />
+                    </View>
+                  </View>
+                );
+              }
+            }}
+          />
+        </View>
+      )}
 
       <View style={mustDoListStyles.buttonContainer}>
         <TouchableOpacity

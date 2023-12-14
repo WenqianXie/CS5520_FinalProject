@@ -60,15 +60,15 @@ export const profileStyles = StyleSheet.create({
     height: 150,
     borderRadius: 100,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: "white",
   },
   profileAvatarModalContainer: {
     flex: 1,
     backgroundColor: "black",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
-  profileAvatarModalCloseButton :{
+  profileAvatarModalCloseButton: {
     marginVertical: 10,
   },
   profileAvatarModal: {
@@ -77,15 +77,15 @@ export const profileStyles = StyleSheet.create({
   },
   profileAvatarModalMask: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: "white",
     borderRadius: 100,
   },
-  profileUsernameContainer:{
+  profileUsernameContainer: {
     marginTop: 10,
   },
-  profileUsername:{
+  profileUsername: {
     fontSize: 22,
     color: "white",
     fontWeight: "bold",
@@ -257,7 +257,7 @@ export const bulletPointListStyles = StyleSheet.create({
     borderRadius: 8,
   },
   webview: {
-    flex:1,
+    flex: 1,
     // height: 400,
     // marginVertical: 10,
   },
@@ -342,6 +342,7 @@ export const mustDoListStyles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  buttonTextContainer: {},
   buttonContainer: { marginTop: 50 },
   button: {
     backgroundColor: "#FFB703",
