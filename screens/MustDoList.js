@@ -5,6 +5,7 @@ import {
   Modal,
   ImageBackground,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { onSnapshot, doc } from "firebase/firestore";
@@ -17,9 +18,11 @@ import { onAuthStateChanged } from "firebase/auth";
 import IconButton from "../components/IconButton";
 import ReminderSetter from "../components/ReminderSetter";
 import { mustDoListStyles } from "../helper/HelperStyles";
+import { colors } from "../helper/HelperColors";
 
 export default function MustDoList({ navigation, route }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true)
   const [generatedMustDoList, setGeneratedMustDoList] = useState([]);
   const [bookmarkList, setBookmarkList] = useState([]);
   const [randomImageUrl, setRandomImageUrl] = useState("");
@@ -30,10 +33,6 @@ export default function MustDoList({ navigation, route }) {
     data: null,
   });
   const [reminderDateTime, setReminderDateTime] = useState();
-
-  const passDateTime = (currentDate) => {
-    setDateTime(currentDate);
-  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -54,12 +53,10 @@ export default function MustDoList({ navigation, route }) {
 
       const unsubscribe = onSnapshot(bookmarkDocRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
-          console.log(
-            "Received generatedMustDoList from database: ",
-            docSnapshot.data().generatedMustDoList
-          );
+          setLoading(true)
           setGeneratedMustDoList(docSnapshot.data().generatedMustDoList);
           setBookmarkList(docSnapshot.data().bookmarkList);
+          setLoading(false)
         }
       });
 
@@ -224,7 +221,11 @@ export default function MustDoList({ navigation, route }) {
           keepOpen={passModalVisible}
         />
       </Modal>
-      <View style={mustDoListStyles.outerContainer}>
+        {loading ? (
+          <View style={mustDoListStyles.activityIndicatorContainer}>
+            <ActivityIndicator size="large" color={colors.themeDark} />
+          </View>
+        ) : (
         <FlatList
           data={generatedMustDoList}
           style={{ marginTop: 100, marginBottom: 10 }}
@@ -261,7 +262,8 @@ export default function MustDoList({ navigation, route }) {
             }
           }}
         />
-      </View>
+        )}
+
       <View style={mustDoListStyles.buttonContainer}>
         <TouchableOpacity
           onPress={handleClearSelections}

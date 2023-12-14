@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Linking, StyleSheet } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons'; 
-import { styles } from '../helper/HelperStyles';
+import { bulletPointListStyles } from '../helper/HelperStyles';
 
 const WebLink = ({linkRequest}) => {
   const handleLinkPress = () => {
@@ -11,7 +11,7 @@ const WebLink = ({linkRequest}) => {
   return (
     <View>
       <TouchableOpacity onPress={handleLinkPress} style={webLinkStyles.linkContainer}>
-        <Text style={[styles.detailsContent, webLinkStyles.linkURL]}>
+        <Text style={[bulletPointListStyles.detailsContent, webLinkStyles.linkURL]}>
           {linkRequest.title}
         </Text>
         <View style={webLinkStyles.linkIcon}>
@@ -29,7 +29,6 @@ const webLinkStyles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'right',
     justifyContent: 'flex-start',
-    margin: "1%",
   },
   linkURL: {
     textDecorationLine: 'underline',

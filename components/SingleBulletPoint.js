@@ -65,10 +65,9 @@ const [downloadImageURL, setDownloadImageURL] = useState(null);
 
       {/* WebView if needed */}
       {singleBulletPoint.webview && (
-        <View>
+        <View style={bulletPointListStyles.webview}>
           <WebView
             source={{ uri: singleBulletPoint.webview }}
-            style={bulletPointListStyles.webview}
           />
         </View>
       )}

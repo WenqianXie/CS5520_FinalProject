@@ -118,8 +118,8 @@ const EssentialDocsEntry = ({ navigation }) => {
         {/* MSP */}
         <TouchableOpacity
           onPress={
-            // () => navigation.navigate("Details", { topic: "msp" })}
-            () => navigation.navigate("Details", { detailsContent: driverLicense, category: "essentials", docID: "driverLicense"})}
+            () => navigation.navigate("Details", { topic: "msp" })}
+            // () => navigation.navigate("Details", { detailsContent: driverLicense, category: "essentials", docID: "driverLicense"})}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -133,13 +133,13 @@ const EssentialDocsEntry = ({ navigation }) => {
         {/* Driver License */}
         <TouchableOpacity
           onPress={
-            // () => navigation.navigate("Details", { topic: "driverLicense" })
-            () =>
-              navigation.navigate("Details", {
-                detailsContent: driverLicense,
-                category: "essentials",
-                docID: "driverLicense",
-              })
+            () => navigation.navigate("Details", { topic: "driverLicense" })
+            // () =>
+            //   navigation.navigate("Details", {
+            //     detailsContent: driverLicense,
+            //     category: "essentials",
+            //     docID: "driverLicense",
+            //   })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -156,12 +156,12 @@ const EssentialDocsEntry = ({ navigation }) => {
         {/* SIN */}
         <TouchableOpacity
           onPress={() =>
-            // navigation.navigate("Details", { topic: "sin" })}
-            navigation.navigate("Details", {
-              detailsContent: SIN,
-              category: "essentials",
-              docID: "sin",
-            })
+            navigation.navigate("Details", { topic: "sin" })
+            // navigation.navigate("Details", {
+            //   detailsContent: SIN,
+            //   category: "essentials",
+            //   docID: "sin",
+            // })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
@@ -176,13 +176,13 @@ const EssentialDocsEntry = ({ navigation }) => {
         {/* BC Services Card */}
         <TouchableOpacity
           onPress={
-            // () => navigation.navigate("Details", { topic: "bcServicesCard" })
-            () =>
-              navigation.navigate("Details", {
-                detailsContent: BCServicesCard,
-                category: "essentials",
-                docID: "bcServicesCard",
-              })
+            () => navigation.navigate("Details", { topic: "bcServicesCard" })
+            // () =>
+            //   navigation.navigate("Details", {
+            //     detailsContent: BCServicesCard,
+            //     category: "essentials",
+            //     docID: "bcServicesCard",
+            //   })
           }
           activeOpacity={0.7}
           style={styles.iconContainer}
