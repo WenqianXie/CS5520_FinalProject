@@ -211,6 +211,7 @@ export const questionnaireStyles = StyleSheet.create({
   option: {
     fontSize: 16,
     color: "#555555",
+    marginRight: 2,
   },
   reminderContainer: {
     backgroundColor: "#D48788",

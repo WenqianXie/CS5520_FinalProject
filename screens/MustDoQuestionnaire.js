@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import Checkbox from "expo-checkbox";
 import { onAuthStateChanged } from "firebase/auth";
-import { database, auth } from "../firebase/FirebaseSetup";
+import { auth } from "../firebase/FirebaseSetup";
 import {
   writeToUsersDB,
   readFromUsersDB,
@@ -12,6 +12,8 @@ import TextButton from "../components/TextButton";
 import { questionnaireStyles } from "../helper/HelperStyles";
 
 const Questionnaire = ({ navigation, route }) => {
+  // this is the questionnaire page for users to generate their must-do list automatically
+
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
   const [readDataLoading, setReadDataLoading] = useState(true); // State to track reading status
   const [submitLoading, setSubmitLoading] = useState(false); // State to track submitting status
@@ -21,8 +23,7 @@ const Questionnaire = ({ navigation, route }) => {
   const [studentWork, setStudentWork] = useState(null);
   const [comeWithFamily, setComeWithFamily] = useState(null);
   const [drive, setDrive] = useState(null);
-  const [needPublicTransportation, setNeedPublicTransportation] =
-    useState(null);
+  const [needPublicTransportation, setNeedPublicTransportation] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -40,14 +41,10 @@ const Questionnaire = ({ navigation, route }) => {
     const getUserSelection = async () => {
       // Ensure currentUser is available
       try {
-        if (isLoggedIn) {
+        if (isLoggedIn) { // If user is logged in, read the userSelection from the database
           setReadDataLoading(true); // Set loading to true while we fetch the userSelection
           const userSelection = await readFromUsersDB("userSelection");
-          if (userSelection) {
-            console.log(
-              "read online userSelection in quiz from database: ",
-              userSelection
-            );
+          if (userSelection) { // If userSelection exists, set the userSelection state to the fetched data
             setLengthInCanada(userSelection.lengthInCanada);
             setOccupation(userSelection.occupation);
             setStudentWork(userSelection.studentWork);
@@ -74,8 +71,9 @@ const Questionnaire = ({ navigation, route }) => {
       }
     };
     getUserSelection();
-  }, [isLoggedIn, auth.currentUser]);
+  }, [isLoggedIn, auth.currentUser]); // only run this effect when the user is logged in
 
+  // Questionnaire questions
   const questions = [
     {
       id: "1",
@@ -149,6 +147,7 @@ const Questionnaire = ({ navigation, route }) => {
     }
   };
 
+  // Generate the mustDoList based on the user's answers
   const generateMustDoList = () => {
     let mustDoList = [];
 
