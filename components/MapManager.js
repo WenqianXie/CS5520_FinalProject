@@ -1,3 +1,5 @@
+// Purpose: This file contains the MapManager component which is used to display a map with markers.
+
 import { View, Button, StyleSheet } from 'react-native'
 import React from 'react'
 import MapView, {Marker} from "react-native-maps";
@@ -71,6 +73,7 @@ const MapManager = ({requestedMap}) => {
     }
   }
   
+  // Zoom the map to include the user's location
   const zoomRegionToIncludeUserLocation = (userLocation) => {
     const minLatitude_temp = Math.min(minLatitude, userLocation.latitude);
     const maxLatitude_temp = Math.max(maxLatitude, userLocation.latitude);
