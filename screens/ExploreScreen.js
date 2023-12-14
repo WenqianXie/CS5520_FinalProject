@@ -6,7 +6,6 @@ import {
   useWindowDimensions,
   ActivityIndicator,
 } from "react-native";
-import { styles } from "../helper/HelperStyles";
 import DialogButton from "../components/DialogButton";
 import IconButton from "../components/IconButton";
 import { DEFAULT_SCREEN_WIDTH } from "../helper/Constants";
@@ -42,11 +41,7 @@ export function ExploreScreen({ navigation, route }) {
   useEffect(() => {
     const getMustDoList = async () => {
       try {
-        if (isLoggedIn) {
-          console.log(
-            "isLoggedIn useEffect triggered from Explore: ",
-            isLoggedIn
-          );
+        if (isLoggedIn) { // if logged in, get the generatedMustDoList from the firestore
           const bookmarkDocRef = doc(
             bookmarksCollectionRef,
             auth.currentUser.uid
@@ -56,11 +51,7 @@ export function ExploreScreen({ navigation, route }) {
             setGeneratedMustDoList(docSnapshot.data().generatedMustDoList);
           }
           setIsLoading(false);
-        } else if (isFocused) {
-          console.log(
-            "isFocused useEffect triggered from Explore: ",
-            isFocused
-          );
+        } else if (isFocused) { // if not logged in, get the generatedMustDoList from the route.params
           setGeneratedMustDoList(route.params?.generatedMustDoList);
           setIsLoading(false);
         }
@@ -70,8 +61,10 @@ export function ExploreScreen({ navigation, route }) {
     };
 
     getMustDoList();
-  }, [auth.currentUser, isLoggedIn, isFocused]);
+  }, [auth.currentUser, isLoggedIn, isFocused]); // only run this effect when the user is logged in or the screen is focused
 
+  //Dynamically change the Text of the ArrowButton on the upper right corner
+  //based on if the user has generatedMustDoList
   useEffect(() => {
     if (generatedMustDoList && generatedMustDoList?.length !== 0) {
       setArrowButtonText("Check\nMy Must-Do");
@@ -80,6 +73,7 @@ export function ExploreScreen({ navigation, route }) {
     }
   }, [generatedMustDoList]);
 
+  //Similarly, dynamically change the navigation destination of the ArrowButton on the upper right corner
   const arrowButtonHandler = () => {
     if (generatedMustDoList && generatedMustDoList?.length !== 0) {
       navigation.navigate("MustDoList", {
