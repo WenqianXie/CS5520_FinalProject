@@ -19,6 +19,7 @@ import IconButton from "../components/IconButton";
 import ReminderSetter from "../components/ReminderSetter";
 import { mustDoListStyles } from "../helper/HelperStyles";
 import { colors } from "../helper/HelperColors";
+import { questionnaireStyles } from "../helper/HelperStyles";
 
 export default function MustDoList({ navigation, route }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -213,6 +214,12 @@ export default function MustDoList({ navigation, route }) {
       style={mustDoListStyles.fullscreen}
       resizeMode="cover"
     >
+      {!isLoggedIn && (
+        <View style={questionnaireStyles.reminderContainer}>
+          <Text style={questionnaireStyles.reminderText}>Log in to save your answers</Text>
+        </View>
+      )}
+
       {/*Modal for setting reminder by dateTime*/}
       <Modal transparent={true} animationType="fade" visible={modalVisible}>
         <ReminderSetter
