@@ -126,6 +126,25 @@ export function ProfileScreen({ navigation }) {
       style={profileStyles.welcomeBackground}
     >
       <SafeAreaView style={profileStyles.profileContainer}>
+        <Modal
+          animationType="fade"
+          visible={modalVisible}
+          onRequestClose={closeModal}
+        >
+          {/* Wrap the whole modal in a Pressable to close the modal when the user clicks outside of the modal */}
+          {/* The Pressable will be disabled when some function is running, to prevent the user from closing the modal before the function is finished */}
+          <Pressable
+            onPress={closeModal}
+            style={profileStyles.profileAvatarModalContainer}
+          >
+            <IconButton onPress={closeModal} type="close" />
+            {getImage(profileStyles.profileAvatarModal)}
+            <ImageManager
+              closeModal={closeModal}
+              currAvatarURL={currAvatarURL}
+            />
+          </Pressable>
+        </Modal>
         <View style={profileStyles.profilePhotoAndUsername}>
           <Pressable
             onPress={isLoggedIn ? enlargeProfilePic : null} // Pressable only enlarges the profile picture if logged in, does nothing if not logged in
