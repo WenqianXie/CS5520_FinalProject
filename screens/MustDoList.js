@@ -22,7 +22,7 @@ import { colors } from "../helper/HelperColors";
 
 export default function MustDoList({ navigation, route }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [generatedMustDoList, setGeneratedMustDoList] = useState([]);
   const [bookmarkList, setBookmarkList] = useState([]);
   const [randomImageUrl, setRandomImageUrl] = useState("");
@@ -49,6 +49,7 @@ export default function MustDoList({ navigation, route }) {
   useEffect(() => {
     // if a user is logged in, fetch the data from the database
     if (isLoggedIn) {
+      setLoading(true)
       const bookmarkDocRef = doc(bookmarksCollectionRef, auth.currentUser.uid);
 
       const unsubscribe = onSnapshot(bookmarkDocRef, (docSnapshot) => {
