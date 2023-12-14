@@ -41,12 +41,12 @@ const MedicineEntry = ({ navigation }) => {
       {
         subtitle: "Who can apply?",
         content:
-          "BC residents must enrol, under the Medicare Protection Act; \n" +
+          "BC residents must enrol, under the Medicare Protection Act. \n" +
           "Study and work permit holders.\n" +
           "Individuals arriving from Ukraine under CUAET.\n" +
           "Spouse and children of MSP beneficiaries.\n",
         link: {
-          title: "- Check full eligibility",
+          title: "Check full eligibility",
           url: "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/eligibility-and-enrolment/are-you-eligible",
         },
       },
@@ -170,13 +170,17 @@ const MedicineEntry = ({ navigation }) => {
     contents: [
       {
         subtitle: "Visit a walk-in clinic",
-        content:
-          "Walk-in clinics are for non-emergency care. They are designed to provide quicker care for non-life-threatening conditions when going to a family doctor is not an option. ",
-        link: {
-          title: "- Find a walk-in clinic near you",
-          url: "https://www.healthlinkbc.ca/services-and-resources/find-services",
-        },
-        content: "- For non-emergency issue, call 811 for 24/7 health advice.",
+        list: [
+          {
+            content:
+              "Walk-in clinics are for non-emergency care. They are designed to provide quicker care for non-life-threatening conditions when going to a family doctor is not an option. ",
+            link: {
+              title: "Find a walk-in clinic near you",
+              url: "https://www.healthlinkbc.ca/services-and-resources/find-services",
+            },
+          },
+        ],
+        content: "For non-emergency issue, call 811 for 24/7 health advice.",
       },
       {
         subtitle: "Visit an urgent care clinic ",
@@ -204,10 +208,7 @@ const MedicineEntry = ({ navigation }) => {
       <View style={styles.bottomRow}>
         {/* MSP */}
         <TouchableOpacity
-          onPress={() =>
-            // navigation.navigate("Details", { detailsContent: msp, category: "medicine", docID: "msp"})
-            navigation.navigate("Details", { topic: "msp" })
-          }
+          onPress={() => navigation.navigate("Details", { topic: "msp" })}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -220,10 +221,7 @@ const MedicineEntry = ({ navigation }) => {
 
         {/* Hospital */}
         <TouchableOpacity
-          onPress={
-            () => navigation.navigate("Details", { topic: "hospital" })
-            // navigation.navigate("Details", { detailsContent: hospital, category: "medicine", docID: "hospital"})
-          }
+          onPress={() => navigation.navigate("Details", { topic: "hospital" })}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -238,10 +236,7 @@ const MedicineEntry = ({ navigation }) => {
 
         {/* Pharmacy */}
         <TouchableOpacity
-          onPress={
-            () => navigation.navigate("Details", { topic: "pharmacy" })
-            // navigation.navigate("Details", { detailsContent: pharmacy, category: "medicine", docID: "pharmacy"})
-          }
+          onPress={() => navigation.navigate("Details", { topic: "pharmacy" })}
           activeOpacity={0.7}
           style={styles.iconContainer}
         >
@@ -257,7 +252,6 @@ const MedicineEntry = ({ navigation }) => {
         {/* Family Doctor */}
         <TouchableOpacity
           onPress={() =>
-            // navigation.navigate("Details", { detailsContent: familyDoctor, category: "medicine", docID: "familyDoctor" })
             navigation.navigate("Details", { topic: "familyDoctor" })
           }
           activeOpacity={0.7}

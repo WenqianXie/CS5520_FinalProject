@@ -101,14 +101,16 @@ const skyTrain = {
         "Compass Cards are convenient, reloadable fare cards that can be used when taking transit within Metro Vancouver.\n" +
         "Or if you are a student, you can purchase a U-Pass!\n" +
         "Or you can simply tap your credit or debit card!",
-      link: {
-        title: "Purchase a compass card",
-        url: "https://www.translink.ca/transit-fares/where-to-buy",
-      },
-      link: {
-        title: "Purchase a U-Pass",
-        url: "https://upassbc.translink.ca/",
-      },
+      link: [
+        {
+          title: "Purchase a compass card",
+          url: "https://www.translink.ca/transit-fares/where-to-buy",
+        },
+        {
+          title: "Purchase a U-Pass",
+          url: "https://upassbc.translink.ca/",
+        },
+      ],
     },
     {
       subtitle: "Find out your SkyTrain stations nearby!",

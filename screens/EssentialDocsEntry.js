@@ -15,40 +15,48 @@ const driverLicense = {
     {
       subtitle: "If you are new drivers",
       list: [
-        {content:
-          "First step: Get your L license (on or after your 16th birthday)\n" +
-          "What is L license? Kowledge test + vision creening!\n",
-        link: {
-          title: "Book your knowledge test",
-          url: "https://www.icbc.com/driver-licensing/visit-dl-office/Book-a-knowledge-test-and-other-services",
-        }},
-        {content:
-          "Second step: Get your N license (after 12 months of L license)" +
-          " What is N license? 1 year with supervisor + Class 7 road test!",
-        link: {
-          title: "- Book your road test",
-          url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
-        }},
-        {content:
-          "Third step: Get your full license (after 24 months of N license)" +
-          " What is full license? 2 years with N license + Class 5 road test!",
-        link: {
-          title: "- Book your road test",
-          url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
-        }}
-      ]
+        {
+          content:
+            "First step: Get your L license (on or after your 16th birthday)\n" +
+            "What is L license? Kowledge test + vision creening!\n",
+          link: {
+            title: "Book your knowledge test",
+            url: "https://www.icbc.com/driver-licensing/visit-dl-office/Book-a-knowledge-test-and-other-services",
+          },
+        },
+        {
+          content:
+            "Second step: Get your N license (after 12 months of L license)" +
+            " What is N license? 1 year with supervisor + Class 7 road test!",
+          link: {
+            title: "- Book your road test",
+            url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
+          },
+        },
+        {
+          content:
+            "Third step: Get your full license (after 24 months of N license)" +
+            " What is full license? 2 years with N license + Class 5 road test!",
+          link: {
+            title: "- Book your road test",
+            url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
+          },
+        },
+      ],
     },
     {
       subtitle: "If you are new to BC",
       list: [
-        {content:
-          "If you have a valid driver's license from another country, you can use it for 90 days. " +
-          "After 90 days, you need to get a BC driver's license.",
-        link: {
-          title: "- Book your road test",
-          url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
-        }}
-      ]
+        {
+          content:
+            "If you have a valid driver's license from another country, you can use it for 90 days. " +
+            "After 90 days, you need to get a BC driver's license.",
+          link: {
+            title: "Book your road test",
+            url: "https://onlinebusiness.icbc.com/webdeas-ui/home",
+          },
+        },
+      ],
     },
   ],
 };
@@ -62,14 +70,16 @@ const SIN = {
         "To work in Canada or access government programs and benefits, you need a 9-digit number known as a Social Insurance Number (SIN)." +
         "Your SIN is confidential. You must protect your SIN. Store any document containing your SIN and personal information in a safe place." +
         "You can apply for a SIN online or by mail.",
-      link: {
-        title: "Apply online",
-        url: "https://www.canada.ca/en/employment-social-development/services/sin/apply.html",
-      },
-      link: {
-        title: "Apply by mail",
-        url: "https://www.canada.ca/en/employment-social-development/services/sin/eligible.html",
-      },
+      link: [
+        {
+          title: "Apply online",
+          url: "https://www.canada.ca/en/employment-social-development/services/sin/apply.html",
+        },
+        {
+          title: "Apply by mail",
+          url: "https://www.canada.ca/en/employment-social-development/services/sin/eligible.html",
+        },
+      ],
     },
   ],
 };
