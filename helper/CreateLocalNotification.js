@@ -1,4 +1,5 @@
 import * as Notifications from "expo-notifications";
+import { Alert } from "react-native";
 
 const verifyPermission = async () => {
   const status = await Notifications.getPermissionsAsync();
@@ -12,7 +13,7 @@ const verifyPermission = async () => {
 };
 
 
-const createLocalNotification = async (dateTime, title, body, data) => {
+const createLocalNotification = async (dateTime, reminderInfo) => {
  
 try {
       const hasPermission = await verifyPermission();
@@ -24,12 +25,13 @@ try {
       if(dateTime){
         Notifications.scheduleNotificationAsync({
           content: {
-            title: title,
-            body: body,
-            data: data,
+            title: reminderInfo.title,
+            body: reminderInfo.body,
+            data: reminderInfo.data,
           },
           trigger: dateTime,
         })
+        Alert.alert("Notification Scheduled at " + dateTime.toLocaleString());
       }
     } catch (err) {
       console.log("schedule notification error ", err);

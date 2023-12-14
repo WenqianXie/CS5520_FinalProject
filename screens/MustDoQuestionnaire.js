@@ -151,7 +151,6 @@ const Questionnaire = ({ navigation, route }) => {
 
   const generateMustDoList = () => {
     let mustDoList = [];
-    mustDoList.push("nothing");
 
     if (lengthInCanada === "More than 3 months" && occupation !== "Traveller") {
       mustDoList.push("msp");
@@ -167,6 +166,10 @@ const Questionnaire = ({ navigation, route }) => {
 
     if (needPublicTransportation === "Yes") {
       mustDoList.push("compassCard");
+    }
+
+    if (mustDoList.length === 0) {
+      mustDoList.push("nothing");
     }
 
     return mustDoList;

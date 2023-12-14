@@ -8,55 +8,20 @@ import { FlatList } from "react-native-gesture-handler";
 import { bookmarksCollectionRef } from "../firebase/FirebaseSetup";
 import EntryButtonTextHelper from "../helper/EntryButtonTextHelper";
 import { onAuthStateChanged } from "firebase/auth";
-import NotificationReminder from "../components/NotificationReminder";
-import DateTimePickerManager from "../components/DateTimePickerManager";
-import createLocalNotification from "../helper/CreateLocalNotification";
 import IconButton from "../components/IconButton";
+import ReminderSetter from "../components/ReminderSetter";
 
 export default function MustDoList({ navigation, route }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [generatedMustDoList, setGeneratedMustDoList] = useState([]); 
   const [bookmarkList, setBookmarkList] = useState([]); 
   const [randomImageUrl, setRandomImageUrl] = useState("");
-  const [dateTime, setDateTime] = useState(new Date()); // default date and time is now
   const [modalVisible, setModalVisible] = useState(false); 
-  const [dateTimePickerVisible, setDateTimePickerVisible] = useState(false); // show the date and time picker
-  const [dateTimePickerMode, setDateTimePickerMode] = useState("date"); // show the date and time picker
-  const [reminderTitle, setReminderTitle] = useState("");
-  const [reminderBody, setReminderBody] = useState("");
-  const [reminderData, setReminderData] = useState(null);
-
-  const callDatePicker = () => {
-    setDateTimePickerMode("date")
-    setDateTimePickerVisible(true)
-  }
-
-  const callTimePicker = () => {
-    setDateTimePickerMode("time")
-    setDateTimePickerVisible(true)
-  }
-
-  const cancelSettingReminderHandler = () => {
-    setDateTimePickerVisible(false)
-    setModalVisible(false)
-  }
-
-  const confirmSettingReminderHandler = () => {
-    createLocalNotification(dateTime, reminderTitle, reminderBody, reminderData)
-    setDateTimePickerVisible(false)
-    setModalVisible(false)
-  }
+  const [reminderInfo, setReminderInfo] = useState({title: "", body: "", data: null});
+  const [reminderDateTime, setReminderDateTime] = useState(); 
 
   const passDateTime = (currentDate) => {
     setDateTime(currentDate)
-  }
-
-  const createReminderHandler = (item) => {
-    const title = EntryButtonTextHelper(item)
-    setReminderTitle(title)
-    setReminderBody("Tap to know how to" + title)
-    setReminderData(null)
-    setModalVisible(true)
   }
 
   useEffect(() => {
@@ -94,6 +59,21 @@ export default function MustDoList({ navigation, route }) {
       }
     }
   }, [isLoggedIn, auth.currentUser]); // Empty dependency array means this effect runs once after the component mounts
+  
+  const passModalVisible = (visible) => {
+    setModalVisible(visible)
+  }
+
+  const createReminderHandler = (item) => {
+    setReminderDateTime(new Date()) // default reminder's date and time is now
+    const info = EntryButtonTextHelper(item)
+    setReminderInfo({title: info, body: "Tap to know how to " + info, data: null})
+    setModalVisible(true)
+  }
+
+  const passChangedDateTime = (dateTime) => {
+    setReminderDateTime(dateTime)
+  }
 
   const finishDeletionAlert = () => (
     Alert.alert(
@@ -211,41 +191,11 @@ export default function MustDoList({ navigation, route }) {
           animationType="fade"
           visible={modalVisible}
         >
-          <View style={mustDoListStyles.modal}>
-          <View style={mustDoListStyles.reminderSettingBanner}>
-            <Text>Create Your Reminder</Text>
-            <View style={mustDoListStyles.reminderSettingButtonRow}>
-              <TextButton onPress={callDatePicker}>
-                <Text>Set Date</Text>
-              </TextButton>
-
-              <TextButton onPress={callTimePicker}>
-                <Text>Set Time</Text>
-              </TextButton>
-            </View>
-            
-            {dateTimePickerVisible && (
-              <DateTimePickerManager 
-                currentMode={dateTimePickerMode}
-                dateTime={dateTime}
-                passDateTime={passDateTime}
-                />
-            )}
-
-            <Text>Do you want to set a reminder at</Text>
-            <Text>{dateTime.toLocaleString()}</Text>
-
-            <View style={mustDoListStyles.reminderSettingButtonRow}>
-              <TextButton onPress={cancelSettingReminderHandler}>
-                <Text>Cancel</Text>
-              </TextButton>
-
-              <TextButton onPress={confirmSettingReminderHandler}>
-                <Text>Confirm</Text>
-              </TextButton>
-            </View>
-          </View>
-          </View>
+          <ReminderSetter
+            reminderInfo={reminderInfo}
+            dateTime={reminderDateTime}
+            changeDateTime={passChangedDateTime}
+            keepOpen={passModalVisible} />
         </Modal>
 
       {/*Screen*/}
@@ -296,26 +246,9 @@ export default function MustDoList({ navigation, route }) {
 }
 
 const mustDoListStyles = StyleSheet.create({
-  modal: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "rgba(255, 255, 255, 0)", // Transparent background
-  },
-  reminderSettingButtonRow:{
-    flexDirection: "row"
-  },
   clearDataButtonText: {
     color: "white", // Text color, change as needed
     fontSize: 16,
-  },
-  reminderSettingBanner: {
-    alignSelf: "center",
-    width: "60%",
-    height: "35%",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
-    borderRadius: 10,
   },
   toDoTask: {
     flexDirection: "row",
