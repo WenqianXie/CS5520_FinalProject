@@ -97,33 +97,35 @@ const MapManager = ({requestedMap}) => {
 
   return (
     <View style={styles.mapContainer}>
-      <MapView
-        region={showRegion}
-        style={[styles.mapView, requestedMap.style && requestedMap.style]}
-      >
-        {requestedMap.markersList.map((marker, index) => (
+      {showRegion && (
+        <MapView
+          region={showRegion}
+          style={[styles.mapView, requestedMap.style && requestedMap.style]}
+        >
+          {requestedMap.markersList.map((marker, index) => (
 
-          <Marker
-            key={index}
-            coordinate={marker.coordinate}
-            title={marker.title}
-          >
-            <MaterialIcons name={marker.icon? marker.icon : "location-pin"} size={24} color={colors.themeDark}/>
-          </Marker>
-          ))
-        }
+            <Marker
+              key={index}
+              coordinate={marker.coordinate}
+              title={marker.title}
+            >
+              <MaterialIcons name={marker.icon? marker.icon : "location-pin"} size={24} color={colors.themeDark}/>
+            </Marker>
+            ))
+          }
 
-        {userLocation && (
-          <Marker
-            coordinate={userLocation}
-            title="My Location"
-            pinColor='blue'
-          >
-            <MaterialIcons name="person-pin-circle" size={30} color="dodgerblue"/>
-          </Marker>
-        )}
+          {userLocation && (
+            <Marker
+              coordinate={userLocation}
+              title="My Location"
+              pinColor='blue'
+            >
+              <MaterialIcons name="person-pin-circle" size={30} color="dodgerblue"/>
+            </Marker>
+          )}
 
-      </MapView>
+        </MapView>
+      )}
       <Button title="My Location" onPress={myLocationHandler}/>
     </View>
   )
